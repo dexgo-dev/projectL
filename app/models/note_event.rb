@@ -1,2 +1,0 @@
-class NoteEvent < ApplicationRecord
-end

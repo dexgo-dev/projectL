@@ -10,16 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160915095916) do
-
-  create_table "note_events", force: :cascade do |t|
-    t.integer  "note_id"
-    t.integer  "event_type_id"
-    t.integer  "user_id"
-    t.text     "note_text"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-  end
+ActiveRecord::Schema.define(version: 20160915121503) do
 
   create_table "notes", force: :cascade do |t|
     t.text     "note_text"
@@ -32,35 +23,35 @@ ActiveRecord::Schema.define(version: 20160915095916) do
   end
 
   create_table "participants", force: :cascade do |t|
-    t.string   "name",           limit: 255
-    t.string   "gender",         limit: 255
+    t.string   "name"
+    t.string   "gender"
     t.date     "date_of_birth"
-    t.string   "contact_number", limit: 255
+    t.string   "contact_number"
     t.text     "home_address"
-    t.string   "email",          limit: 255
+    t.string   "email"
     t.boolean  "active"
     t.integer  "study_id"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "studies", force: :cascade do |t|
-    t.text     "description"
     t.string   "study_name"
+    t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "username",       limit: 255
-    t.string   "password",       limit: 255
-    t.string   "full_name",      limit: 255
-    t.string   "email",          limit: 255
-    t.string   "contact_number", limit: 255
+    t.string   "username"
+    t.string   "password"
+    t.string   "full_name"
+    t.string   "email"
+    t.string   "contact_number"
     t.integer  "team_id"
     t.integer  "supervisor_id"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
 end

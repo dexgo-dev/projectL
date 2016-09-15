@@ -1,6 +1,4 @@
 class ParticipantsController < ApplicationController
-  # before_action does not work in this version of rails below 4.0.
-  # change this when we get to 5.0
   before_action :get_participant_with_id, only: [:show, :edit, :update, :destroy]
 
   def index

@@ -1,5 +1,6 @@
 class NotesController < ApplicationController
-  before_action :require_login
+  #before_action :require_login
+  before_action :get_note_with_id, only: [:show, :edit, :update, :destroy]
 
   def index
     @recent20notes = Note.find(:all, :order => "updated_at desc", :limit => 20)
@@ -19,7 +20,7 @@ class NotesController < ApplicationController
   end
 
   def new
-
+      @this_participant = Participant.find[:id]
   end
 
   def edit

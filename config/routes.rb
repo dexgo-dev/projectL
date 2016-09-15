@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :studies
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :notes, :participants, :users
 
@@ -8,11 +9,11 @@ Rails.application.routes.draw do
   # this works too but would show "<url>/allparticipants" in the address bar
   # get "/allparticipants", to: "participants#index"
 
-  # so to avoid that, i will instead
+  # so to avoid that, i will instead (REDIRECTS HERE)
   get "/allparticipants" => redirect("/participants#index")
   # and that will show "<url>/#<action>" in the address bar
 
-  # and now, more redirects
+  # and now, more paths
   get "/users_login", to: "users#login"
 
   # The priority is based upon order of creation:

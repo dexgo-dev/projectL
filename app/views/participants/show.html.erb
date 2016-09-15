@@ -6,7 +6,7 @@
 <br>Date of Birth (Age): <%=@this_participant.date_of_birth.strftime('%v')%> (<%=Time.now.year - @this_participant.date_of_birth.year%>)
 <br>Study: <%=@this_participant.study_id%> Email: <%=@this_participant.email%></h3>
 
-<p><%= link_to "Create New Note" %></p>
+<p><%= link_to "Create New Note", new_note_path%></p>
 
 <ul>
   <% @this_participants_notes.order("notes.updated_at DESC").each do |n| %>
@@ -15,7 +15,7 @@
     <br>Notify On: <%= n.notify_on %>
     <br>Created: <%= n.created_at %>
     <br>Last Modified: <%= n.updated_at %>
-    <br><%= link_to "Edit"=%> <%= link_to "Delete"%>
+    <br><%= link_to "Edit"%> <%= link_to "Delete"%>
   </li>
   <br>
   <% end %>
