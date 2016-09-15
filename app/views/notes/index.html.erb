@@ -1,0 +1,18 @@
+<h2 align="right"> Logged in as: d.go </h2>
+<h1>Your Recent Notes:</h1>
+<ul>
+<% @recent20notes.each do |n| %>
+  <li>"<%= n.note_text %>"
+    <br>-<%= link_to n.participant.name, participant_path(n.participant.id) %>
+    <br>Important: <%= n.important %>
+    <br>Notify On: <%= n.notify_on %>
+    <br>Created: <%= n.created_at %>
+    <br>Last Modified: <%= n.updated_at %>
+    <br><%= link_to "Edit"=%> <%= link_to "Delete"%>
+  </li>
+  <br>
+<% end %>
+</ul>
+<p><textarea rows="6" cols="50">Sample note</textarea></p>
+<p>Notify On: <input type="text" value="2016/10/03"> Important <select name="Important"><option value="true">True</option><option value="false">False</option></select></p>
+<p><input type="button" value="Save"> <input type="button" value="Cancel"></p>

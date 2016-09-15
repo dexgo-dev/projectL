@@ -1,0 +1,11 @@
+<h2 align="right"> Logged in as: d.go </h2>
+<h1 align="center">Note ID: <%=@this_note.id%></h1>
+<p>"<%=@this_note.note_text%>"</p>
+<p>Logged by: <%= link_to @this_notes_logger.full_name, user_path(@this_notes_logger.id)%>
+  for participant <%= link_to @this_notes_participant.name, participant_path(@this_notes_participant.id)%></p>
+<p>Created: <%= @this_note.created_at%></p>
+<p>Last Updated: <%= @this_note.updated_at%></p>
+<p>Is this note important? <%= @this_note.important%></p>
+<p>When do we need to notify the user/participant for follow-up? <%= @this_note.notify_on.try(:strftime, '%v')%> </p>
+<p>Modifications History:</p>
+<p>Note Events Advanced features here...</p>

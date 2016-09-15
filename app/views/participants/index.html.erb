@@ -1,0 +1,27 @@
+<h2 align="right"> Logged in as: d.go </h2>
+<h1>Research Participants:</h1>
+<p><p><%= link_to "Create New Participant" %></p>
+<p>Recently Contacted Participants:</p>
+<ul>
+<% @allparticipants.each do |p| %>
+  <li><%= link_to p.name, p %> Active = <%= p.active %> (<%= p.notes.count%>)</li>
+<% end %>
+</ul>
+
+<p>Find Participant using Name: <input type="text"> <input type ="button" value="Find"></p>
+
+<p>Upcoming Notifications (within the week):</p>
+<ul>
+<li>
+Lana Kane (2016-Sep-19). <%= link_to "See Note."%>
+</li>
+<li>
+Sterling Archer(2016-Sep-25). <%= link_to "See Note."%>
+</li>
+<li>
+Sterling Archer(2016-Sep-26). <%= link_to "See Note."%>
+</li>
+<li>
+Lana Kane (2016-Sep-26). <%= link_to "See Note."%>
+</li>
+</ul>
