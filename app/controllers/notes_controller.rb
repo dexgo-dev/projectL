@@ -1,13 +1,13 @@
 class NotesController < ApplicationController
   before_action :get_user_from_session
   before_action :get_participant
-  before_action :set_note, only: [:show, :edit, :update]
+  before_action :set_note, only: [:show, :edit, :update, :destroy]
 
   # GET /notes
   # GET /notes.json
   def index
-    @notes = Note.all
-    @recent_notes = Note.recent_notes
+    @all_participant_notes = @participant.notes.order("updated_at desc")
+    #@recent_notes = @notes
   end
 
   # GET /notes/1

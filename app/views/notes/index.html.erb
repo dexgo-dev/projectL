@@ -1,23 +1,24 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Notes</h1>
-
+<h1>Showing All Notes for Participant (<%=@participant.name%>)</h1>
+<%= link_to 'New Note', new_participant_note_path(@participant) %><br/>
+<%= link_to 'Back to ' + @participant.name + '\'s page', participant_path(@participant) %></br>
 <table>
   <thead>
     <tr>
-      <th>Participant</th>
+      <th>Last Modified</th>
       <th>Note text</th>
       <th>Important</th>
       <th>User</th>
       <th>Notify on</th>
-      <th colspan="3"></th>
+      <th colspan="2">Manage</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @recent_notes.each do |note| %>
+    <% @all_participant_notes.each do |note| %>
       <tr>
-        <td><%= note.participant_id %></td>
+        <td><%= time_ago_in_words(note.updated_at)%> ago</td>
         <td><%= note.note_text %></td>
         <td><%= note.important %></td>
         <td><%= note.user_id %></td>
@@ -30,5 +31,3 @@
 </table>
 
 <br>
-
-<%= link_to 'New Note', new_participant_note_path %>

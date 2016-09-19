@@ -10,6 +10,7 @@ class ParticipantsController < ApplicationController
   # GET /participants/1
   # GET /participants/1.json
   def show
+    @recent_notes = @participant.notes.recent_notes
   end
 
   # GET /participants/new

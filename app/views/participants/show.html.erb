@@ -3,7 +3,10 @@
 <h2>
   <%= @participant.name %>
 </h2>
-
+<p>
+<%= link_to 'Edit Profile', edit_participant_path(@participant) %> |
+<%= link_to 'Back to All Participants', participants_path %>
+</p>
 <p>
   <strong>Gender:</strong>
   <%= @participant.gender %>
@@ -27,5 +30,17 @@
   <%= @participant.email %>
 </p>
 <p><%= link_to "Create New Note", new_participant_note_path(@participant)%></p>
-<%= link_to 'Edit', edit_participant_path(@participant) %> |
-<%= link_to 'Back', participants_path %>
+<p><%= link_to "Show All Notes", participant_notes_path(@participant)%></p>
+<p>
+<ul>
+  <% @recent_notes.each do |note| %>
+  <li>"<%= note.note_text %>"
+    <br>Important: <%= note.important %>
+    <br>Notify On: <%= note.notify_on %>
+    <br>Created: <%= note.created_at.inspect %>
+    <br>Last Modified: <%= note.updated_at.inspect %>
+    <br><%= link_to "Edit", edit_participant_note_path(note.participant_id,note.id)%> <%= link_to "Delete", participant_note_path(note.participant_id,note.id), method: :delete, data: { confirm: 'Are you sure?' } %>
+  </li>
+  <br>
+  <% end %>
+</ul>
