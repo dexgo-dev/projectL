@@ -18,7 +18,8 @@
 
   <div class="field">
     <%= f.label :gender %>
-    <%= f.text_field :gender %>
+    <%= f.select :gender, Participant.genders.keys.to_a %>
+    <!-- <%= f.text_field :gender %> -->
   </div>
 
   <div class="field">
@@ -38,12 +39,13 @@
 
   <div class="field">
     <%= f.label :study_id %>
-    <%= f.number_field :study_id %>
+    <%= f.collection_select(:study_id, Study.all, :id, :study_name) %>
+    <!-- <%= f.number_field :study_id %> -->
   </div>
 
   <div class="field">
     <%= f.label :date_of_birth %>
-    <%= f.date_select :date_of_birth %>
+    <%= f.date_select :date_of_birth, start_year: Date.today.year-100, end_year: Date.today.year, default: 21.years.ago%>
   </div>
 
   <div class="field">

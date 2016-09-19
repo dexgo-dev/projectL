@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
-  resources :participants
-  resources :notes
-  resources :users
   resources :studies
+  resources :participants do
+    resources :notes
+  end
+  resources :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   root to: "participants#index"

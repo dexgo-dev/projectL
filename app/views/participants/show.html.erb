@@ -1,44 +1,31 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
+<h2>
   <%= @participant.name %>
-</p>
+</h2>
 
 <p>
   <strong>Gender:</strong>
   <%= @participant.gender %>
-</p>
-
-<p>
-  <strong>Contact number:</strong>
+<br/>
+  <strong>Contact Number:</strong>
   <%= @participant.contact_number %>
-</p>
-
-<p>
-  <strong>Home address:</strong>
+<br/>
+  <strong>Home Address:</strong>
   <%= @participant.home_address %>
-</p>
-
-<p>
+<br/>
   <strong>Active:</strong>
   <%= @participant.active %>
-</p>
-
-<p>
+<br/>
   <strong>Study:</strong>
   <%= @participant.study_id %>
-</p>
-
-<p>
-  <strong>Date of birth:</strong>
+<br/>
+  <strong>Date of Birth:</strong>
   <%= @participant.date_of_birth %>
-</p>
-
-<p>
-  <strong>Email:</strong>
+<br/>
+  <strong>Email Address:</strong>
   <%= @participant.email %>
 </p>
-
+<p><%= link_to "Create New Note", new_participant_note_path(@participant)%></p>
 <%= link_to 'Edit', edit_participant_path(@participant) %> |
 <%= link_to 'Back', participants_path %>

@@ -25,5 +25,5 @@
   <%= @note.notify_on %>
 </p>
 
-<%= link_to 'Edit', edit_note_path(@note) %> |
-<%= link_to 'Back', notes_path %>
+<%= link_to 'Edit', edit_participant_note_path(@participant,@note) %> |
+<%= link_to 'Back', participant_notes_path(@participant) %>
