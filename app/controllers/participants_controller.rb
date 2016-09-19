@@ -5,6 +5,7 @@ class ParticipantsController < ApplicationController
   # GET /participants.json
   def index
     @participants = Participant.all
+    @recent_notes_with_notifications = Note.recent_notes.limit(3)
   end
 
   # GET /participants/1

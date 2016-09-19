@@ -1,7 +1,9 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Participants</h1>
+<h1>Recently Contacted Participants</h1>
 <%= link_to 'Register New Participant', new_participant_path %>
+<p>Find Participant by Name <input type="text"> <input type ="button" value="Find"></p>
+
 <table>
   <!--
   <thead>
@@ -37,4 +39,12 @@
   </tbody>
 </table>
 
+<h2>Upcoming Notifications (within the week):</h2>
+<ul>
+  <% @recent_notes_with_notifications.each do |note| %>
+<li>
+<%=note.participant.name%> (<%=note.updated_at%>). <%= link_to "See Note.", participant_note_path(note.participant.id,note.id)%>
+</li>
+<% end %>
+</ul>
 <br>
