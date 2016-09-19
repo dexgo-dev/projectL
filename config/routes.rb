@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
+  resources :participants
+  resources :notes
+  resources :users
   resources :studies
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  resources :notes, :participants, :users
 
-  root to: "users#index"
+  root to: "participants#index"
   #users_login to: "users#login"
 
   # this works too but would show "<url>/allparticipants" in the address bar

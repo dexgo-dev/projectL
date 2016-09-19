@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160915121503) do
+ActiveRecord::Schema.define(version: 20160915144240) do
 
   create_table "notes", force: :cascade do |t|
-    t.text     "note_text"
     t.integer  "participant_id"
-    t.integer  "user_id"
+    t.text     "note_text"
     t.boolean  "important"
+    t.integer  "user_id"
     t.datetime "notify_on"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
@@ -25,12 +25,12 @@ ActiveRecord::Schema.define(version: 20160915121503) do
   create_table "participants", force: :cascade do |t|
     t.string   "name"
     t.string   "gender"
-    t.date     "date_of_birth"
     t.string   "contact_number"
     t.text     "home_address"
-    t.string   "email"
     t.boolean  "active"
     t.integer  "study_id"
+    t.date     "date_of_birth"
+    t.string   "email"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end

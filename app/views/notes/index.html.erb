@@ -1,18 +1,35 @@
-<h2 align="right"> Logged in as: d.go </h2>
-<h1>Your Recent Notes:</h1>
-<ul>
-<% @recent20notes.each do |n| %>
-  <li>"<%= n.note_text %>"
-    <br>-<%= link_to n.participant.name, participant_path(n.participant.id) %>
-    <br>Important: <%= n.important %>
-    <br>Notify On: <%= n.notify_on %>
-    <br>Created: <%= n.created_at %>
-    <br>Last Modified: <%= n.updated_at %>
-    <br><%= link_to "Edit"=%> <%= link_to "Delete"%>
-  </li>
-  <br>
-<% end %>
-</ul>
-<p><textarea rows="6" cols="50">Sample note</textarea></p>
-<p>Notify On: <input type="text" value="2016/10/03"> Important <select name="Important"><option value="true">True</option><option value="false">False</option></select></p>
-<p><input type="button" value="Save"> <input type="button" value="Cancel"></p>
+<p id="notice"><%= notice %></p>
+
+<h1>Notes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Participant</th>
+      <th>Note text</th>
+      <th>Important</th>
+      <th>User</th>
+      <th>Notify on</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @recent_notes.each do |note| %>
+      <tr>
+        <td><%= note.participant_id %></td>
+        <td><%= note.note_text %></td>
+        <td><%= note.important %></td>
+        <td><%= note.user_id %></td>
+        <td><%= note.notify_on %></td>
+        <td><%= link_to 'Show', note %></td>
+        <td><%= link_to 'Edit', edit_note_path(note) %></td>
+        <td><%= link_to 'Destroy', note, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Note', new_note_path %>
