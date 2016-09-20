@@ -1,4 +1,5 @@
 class ParticipantsController < ApplicationController
+  before_action :check_for_exisiting_study, except: [:index, :show, :destroy]
   before_action :set_participant, only: [:show, :edit, :update, :destroy]
 
   # GET /participants
@@ -67,6 +68,13 @@ class ParticipantsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_participant
       @participant = Participant.find(params[:id])
+    end
+
+    def check_for_exisiting_study
+      @current_studies = Study.all
+      if @current_studies.empty?
+        redirect_to new_study_path, notice: 'We need at least one active study to start creating participants.'
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

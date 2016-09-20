@@ -39,7 +39,7 @@
 
   <div class="field">
     <%= f.label :study_id %>
-    <%= f.collection_select(:study_id, Study.all, :id, :study_name) %>
+    <%= f.collection_select(:study_id, @current_studies, :id, :study_name) %>
     <!-- <%= f.number_field :study_id %> -->
   </div>
 
