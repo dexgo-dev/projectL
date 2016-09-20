@@ -10,4 +10,10 @@ class Note < ApplicationRecord
   scope :recent_notes, -> {
     order("updated_at desc").limit(10)
   }
+
+  private
+
+  def note_notifier_notification
+    NotifierMailer.note_notifier(self).deliver
+  end
 end

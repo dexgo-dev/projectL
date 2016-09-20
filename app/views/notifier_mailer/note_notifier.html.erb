@@ -1,0 +1,10 @@
+<h1>Notifier#note_notifier</h1>
+
+<p>
+  Hey <%= @user.full_name %>,</br>
+  This is your notification for the following note as set on the notifier date (<%= @note.notify_on %>). The note says:<br/>
+  "<%= @note.note_text %>"
+</p>
+<p align="right">Notifier set at: <%= @note.updated_at %></p>
+
+<p>Cheers!</p>
