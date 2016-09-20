@@ -21,7 +21,7 @@
         <td><%= time_ago_in_words(note.updated_at)%> ago</td>
         <td><%= note.note_text %></td>
         <td><%= note.important %></td>
-        <td><%= note.user_id %></td>
+        <td><%= link_to note.user.full_name, note.user %></td>
         <td><%= note.notify_on %></td>
         <td><%= link_to 'Edit', edit_participant_note_path(note.participant_id,note.id) %></td>
         <td><%= link_to 'Destroy', participant_note_path(note.participant_id,note.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>

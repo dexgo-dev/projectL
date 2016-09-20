@@ -21,7 +21,7 @@
   <%= @participant.active %>
 <br/>
   <strong>Study:</strong>
-  <%= @participant.study_id %>
+  <%= link_to @participant.study.study_name, @participant.study %>
 <br/>
   <strong>Date of Birth:</strong>
   <%= @participant.date_of_birth %>

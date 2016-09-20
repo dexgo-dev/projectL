@@ -2,12 +2,11 @@
 
 <p>
   <strong>Participant:</strong>
-  <%= @note.participant_id %>
+  <%= @note.participant.name %>
 </p>
 
 <p>
-  <strong>Note text:</strong>
-  <%= @note.note_text %>
+  "<%= @note.note_text %>"
 </p>
 
 <p>
@@ -17,7 +16,7 @@
 
 <p>
   <strong>User:</strong>
-  <%= @note.user_id %>
+  <%= link_to @note.user.full_name + ' (' +@note.user.username + ')', @note.user%>
 </p>
 
 <p>
