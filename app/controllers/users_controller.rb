@@ -5,6 +5,11 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @users = User.all
+    if @users.empty?
+      redirect_to new_user_path, notice: 'Create a user to begin using this app. You must be logged in to proceed.'
+    else
+      redirect_to participants_path
+    end
   end
 
   # GET /users/1

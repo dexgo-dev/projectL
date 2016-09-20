@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  root to: "participants#index"
+  root to: "users#index"
   #users_login to: "users#login"
 
   # this works too but would show "<url>/allparticipants" in the address bar
