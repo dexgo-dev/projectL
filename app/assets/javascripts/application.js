@@ -13,4 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require pickadate/lib/legacy
+//= require pickadate/lib/picker
+//= require pickadate/lib/picker.time
+//= require pickadate/lib/picker.date
 //= require_tree .

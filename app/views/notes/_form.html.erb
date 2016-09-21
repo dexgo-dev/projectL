@@ -21,10 +21,13 @@
     <%= f.check_box :important %>
   </div>
 
-  <div class="field">
+  <div class="field" id="notify_on_div">
     <%= f.label :notify_on %>
     <!--<%= f.datetime_select :notify_on, default: 1.week.from_now, start_year: Date.today.year, include_blank: true %> -->
     <%= f.datetime_select :notify_on, default: 1.week.from_now, start_year: Date.today.year %>
+    <!--<div id="notify_on_datetime">
+      <%= f.text_field :notify_on %>&nbsp;<input type="button" value="Pick Date" id="notify_on_datetime_button">
+    </div> -->
   </div>
 
   <div class="actions">
