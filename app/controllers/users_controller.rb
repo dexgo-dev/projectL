@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:home, :show, :edit, :update, :destroy]
 
   # GET /users
   # GET /users.json
@@ -8,13 +8,23 @@ class UsersController < ApplicationController
     if @users.empty?
       redirect_to new_user_path, notice: 'Create a user to begin using this app. You must be logged in to proceed.'
     else
-      redirect_to participants_path
+      # if admin add redirect to users_path?
+      redirect_to user_home_path User.first # This is temporary, we will get the session here.
     end
   end
 
   # GET /users/1
   # GET /users/1.json
   def show
+  end
+
+  # GET /users/1/home
+  def home
+    @recent_notes_from_user = @user.notes.recent_notes
+
+    @recently_contacted_participants = @user.participants.distinct.order(last_contacted_at: :desc).limit(10)
+    # @recently_contacted_participants = @recent_notes_from_user.participant.group(:participant_id)
+    # http://stackoverflow.com/questions/651181/rails-how-do-i-find-all-records-unique-in-certain-fields
   end
 
   # GET /users/new

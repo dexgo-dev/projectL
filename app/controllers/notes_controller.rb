@@ -3,6 +3,8 @@ class NotesController < ApplicationController
   before_action :get_participant
   before_action :set_note, only: [:show, :edit, :update, :destroy]
 
+  after_save :set_participant_last_contact, only: [:create, :update, :destroy]
+
   # GET /notes
   # GET /notes.json
   def index
@@ -31,6 +33,7 @@ class NotesController < ApplicationController
     @note.user_id = @user.id
 
     respond_to do |format|
+      format.js
       if @note.save
         format.html { redirect_to [@participant,@note], notice: 'Note was successfully created.' }
         format.json { render :show, status: :created, location: @note }
@@ -77,6 +80,10 @@ class NotesController < ApplicationController
 
     def set_note
       @note = Note.find(params[:id])
+    end
+
+    def set_participant_last_contact
+      @participant.update(last_contacted_at: Date.new, last_contacted_by: @user.id)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

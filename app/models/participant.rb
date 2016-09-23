@@ -1,5 +1,6 @@
 class Participant < ApplicationRecord
   has_many :notes
+  has_many :users, through: :notes
   belongs_to :study
 
   enum gender: ['Male','Female','Others','Unspecified']

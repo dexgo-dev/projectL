@@ -1,50 +1,36 @@
 <p id="notice"><%= notice %></p>
-<%= link_to 'Add New Study', new_study_path %>&nbsp;&nbsp;&nbsp;<%= link_to 'View Existing Studies', studies_path %>
-<h1>Recently Contacted Participants</h1>
-<br/><%= link_to 'Register New Participant', new_participant_path %></br>
-<p></br>Find Participant by Name <input type="text"> <input type ="button" value="Find"></p>
-
+<br/><br/><%= link_to 'Register New Participant', new_participant_path %><br/><br/>
+<h1>All Participants</h1>
 <table>
-  <!--
   <thead>
     <tr>
       <th>Name</th>
       <th>Gender</th>
       <th>Contact number</th>
       <th>Home address</th>
-      <th>Active</th>
+      <th>Status</th>
       <th>Study</th>
       <th>Date of birth</th>
       <th>Email</th>
       <th colspan="3"></th>
     </tr>
-  </thead> -->
+  </thead>
 
   <tbody>
     <% @participants.each do |participant| %>
       <tr>
         <td><%= link_to participant.name, participant %></td>
-        <!--<td><%= participant.gender %></td>
+        <td><%= participant.gender %></td>
         <td><%= participant.contact_number %></td>
-        <td><%= participant.home_address %></td> -->
-        <td>Active = <%= participant.active %></td>
-        <!-- <td><%= participant.study_id %></td>
+        <td><%= participant.home_address %></td>
+        <td><%= ((participant.active)? ('Active'):('Dropped Out')) %></td>
+        <td><%= participant.study.study_name %></td>
         <td><%= participant.date_of_birth %></td>
         <td><%= participant.email %></td>
-        <td><%= link_to 'Show', participant %></td> -->
+        <td><%= link_to 'Show', participant %></td>
         <td><%= link_to 'Edit', edit_participant_path(participant) %></td>
         <td><%= link_to 'Destroy', participant, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<h2>Upcoming Notifications (within the week):</h2>
-<ul>
-  <% @recent_notes_with_notifications.each do |note| %>
-<li>
-<%=note.participant.name%> (<%=note.updated_at%>). <%= link_to "See Note.", participant_note_path(note.participant.id,note.id)%>
-</li>
-<% end %>
-</ul>
-<br>

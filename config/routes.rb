@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
   # and now, more paths
   get "/users_login", to: "users#login"
+  get 'users/:id/home', to: 'users#home', :as => :user_home
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

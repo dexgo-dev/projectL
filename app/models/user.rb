@@ -1,7 +1,8 @@
 class User < ApplicationRecord
   has_many :members, class_name: "User", foreign_key: "supervisor_id"
-  has_many :participants
   has_many :notes
+
+  has_many :participants, through: :notes
 
   belongs_to :supervisor, class_name: "User", optional: true
 
