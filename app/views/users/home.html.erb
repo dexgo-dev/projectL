@@ -1,27 +1,16 @@
 <p id="notice"><%= notice %></p>
 <%= link_to 'Add New Study', new_study_path %>&nbsp;&nbsp;&nbsp;<%= link_to 'View Existing Studies', studies_path %>
 <h1>Welcome, <%=@user.full_name%> (<%=@user.username%>)!</h1>
+
+<p>
+<br/><strong>Email:</strong><%= @user.email %>
+<br/><strong>Contact number:</strong><%= @user.contact_number %>
+<br/><strong>Team:</strong><%= (@user.team_id.nil?)? ' No Team Assigned' : @user.team_id %>
+<br/><strong>Supervisor:</strong><%= (@user.supervisor_id.nil?)? ' No Supervisor Assigned' : @user.supervisor.full_name  %>
+<br/></p>
 <br/><%= link_to 'Register New Participant', new_participant_path %>
 <br/><%= link_to 'Back to All Participants', participants_path %><br/>
-<p></br>Find Participant by Name <input type="text"> <input type ="button" value="Find"></p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
-<p>
-  <strong>Contact number:</strong>
-  <%= @user.contact_number %>
-</p>
-
-<p>
-  <strong>Team:</strong>
-  <%= @user.team_id %>
-</p>
-
-<p>
-  <strong>Supervisor:</strong>
-  <%= (@user.supervisor_id.nil?)? 'No Supervisor Assigned' : @user.supervisor.full_name  %>
+<p></br>Find Participant by Name <input type="text"> <input type ="button" value="Find">
 </p>
 
 <%= link_to 'Edit My Details', edit_user_path(@user) %> |
