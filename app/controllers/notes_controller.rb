@@ -3,13 +3,12 @@ class NotesController < ApplicationController
   before_action :get_participant
   before_action :set_note, only: [:show, :edit, :update, :destroy]
 
-  after_save :set_participant_last_contact, only: [:create, :update, :destroy]
+  after_action :set_participant_last_contact, only: [:create, :update]
 
   # GET /notes
   # GET /notes.json
   def index
     @all_participant_notes = @participant.notes.order("updated_at desc")
-    #@recent_notes = @notes
   end
 
   # GET /notes/1
@@ -83,12 +82,16 @@ class NotesController < ApplicationController
     end
 
     def set_participant_last_contact
-      @participant.update(last_contacted_at: Date.new, last_contacted_by: @user.id)
+      @participant.update(last_contacted_at: @note.updated_at, last_contacted_by: @user.id)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def note_params
       get_user_from_session()
       params.require(:note).permit(:participant_id, :note_text, :important, :notify_on, :user_id)
+    end
+
+    def participant_params
+      params.require(:participant).permit(:name, :gender, :contact_number, :home_address, :active, :study_id, :date_of_birth, :email, :last_contacted_by, :last_contacted_at)
     end
 end

@@ -20,11 +20,11 @@ class UsersController < ApplicationController
 
   # GET /users/1/home
   def home
-    @recent_notes_from_user = @user.notes.recent_notes
+    @upcoming_notes_notification = @user.notes.upcoming_notifications_this_week
 
-    @recently_contacted_participants = @user.participants.distinct.order(last_contacted_at: :desc).limit(10)
-    # @recently_contacted_participants = @recent_notes_from_user.participant.group(:participant_id)
-    # http://stackoverflow.com/questions/651181/rails-how-do-i-find-all-records-unique-in-certain-fields
+    @recent_notes_from_user = @user.notes.recent_ten
+
+    @recently_contacted_participants = @user.participants.order(last_contacted_at: :desc).distinct.limit(10)
   end
 
   # GET /users/new

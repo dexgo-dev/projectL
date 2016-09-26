@@ -1,4 +1,5 @@
 class ParticipantsController < ApplicationController
+  before_action :check_for_user_session
   before_action :check_for_exisiting_study, except: [:index, :show, :destroy]
   before_action :set_participant, only: [:show, :edit, :update, :destroy]
 
@@ -11,7 +12,7 @@ class ParticipantsController < ApplicationController
   # GET /participants/1
   # GET /participants/1.json
   def show
-    @recent_notes = @participant.notes.recent_notes
+    @participant_recent_notes = @participant.notes.recent_ten
   end
 
   # GET /participants/new
@@ -76,8 +77,17 @@ class ParticipantsController < ApplicationController
       end
     end
 
+    def check_for_user_session
+      @current_users = User.all
+      if @current_users.empty?
+        redirect_to user_home, notice: 'Something went wrong. Session not found. Did you log out?'
+      else
+        @current_user = User.first
+      end
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def participant_params
-      params.require(:participant).permit(:name, :gender, :contact_number, :home_address, :active, :study_id, :date_of_birth, :email)
+      params.require(:participant).permit(:name, :gender, :contact_number, :home_address, :active, :study_id, :date_of_birth, :email, :last_contacted_by, :last_contacted_at)
     end
 end

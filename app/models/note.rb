@@ -7,8 +7,12 @@ class Note < ApplicationRecord
   #validates :participant_id, presence: true
   #validates :user_id, presence: true
 
-  scope :recent_notes, -> {
+  scope :recent_ten, -> {
     order("updated_at desc").limit(10)
+  }
+
+  scope :upcoming_notifications_this_week, -> {
+    where(:notify_on => Date.today.beginning_of_week..Date.today.end_of_week).order(:notify_on)
   }
 
   private

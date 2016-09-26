@@ -1,7 +1,8 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Showing All Notes for Participant (<%=@participant.name%>)</h1>
-<%= link_to 'New Note', new_participant_note_path(@participant) %><br/>
+<%= link_to 'Home', user_home_path(@user) %>&nbsp;|&nbsp;
+<%= link_to 'New Note', new_participant_note_path(@participant) %>&nbsp;|&nbsp;
 <%= link_to 'Back to ' + @participant.name + '\'s page', participant_path(@participant) %></br>
 <table>
   <thead>
