@@ -1,7 +1,12 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Studies</h1>
-
+<p>
+<%= link_to 'Home', user_home_path(@current_user) %>&nbsp;|&nbsp;
+<%= link_to 'Add New Study', new_study_path %>&nbsp;|&nbsp;
+<%= link_to 'See All Paticipants', participants_path %>
+</p>
+<p>
 <table>
   <thead>
     <tr>
@@ -23,8 +28,4 @@
     <% end %>
   </tbody>
 </table>
-
-<br/>
-
-<%= link_to 'Add New Study', new_study_path %>&nbsp;&nbsp;&nbsp;
-<%= link_to 'See All Paticipants', participants_path %>
+</p>
