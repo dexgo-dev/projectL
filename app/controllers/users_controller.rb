@@ -24,7 +24,18 @@ class UsersController < ApplicationController
 
     @recent_notes_from_user = @user.notes.recent_ten
 
-    @recently_contacted_participants = @user.participants.order(last_contacted_at: :desc).distinct.limit(10)
+    if params[:search].nil?
+      @search_participants = @user.participants.recently_contacted
+      @search_or_recent_header = 'Recently Contacted Participants'
+      @if_empty_string = 'No Participants Contacted Yet.'   
+    else
+      @search_participants = Participant.search params[:search]
+      @search_or_recent_header = 'Found ' + @search_participants.count.to_s + ' Participants'
+      @if_empty_string = 'No Participants found in Search.'
+    end
+    if @search_participants.empty?
+      @search_or_recent_header = @if_empty_string
+    end
   end
 
   # GET /users/new

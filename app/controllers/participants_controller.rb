@@ -12,6 +12,7 @@ class ParticipantsController < ApplicationController
   # GET /participants/1
   # GET /participants/1.json
   def show
+    @last_contacted_by_name = User.find(@participant.last_contacted_by).full_name
     @participant_recent_notes = @participant.notes.recent_ten
   end
 
