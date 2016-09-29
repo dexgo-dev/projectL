@@ -8,7 +8,7 @@ class NotesController < ApplicationController
   # GET /notes
   # GET /notes.json
   def index
-    @all_participant_notes = @participant.notes.order("updated_at desc")
+    @all_participant_notes = @participant.notes.order("updated_at desc").paginate(:page => params[:page], :per_page => 2)
   end
 
   # GET /notes/1

@@ -6,14 +6,19 @@ class ParticipantsController < ApplicationController
   # GET /participants
   # GET /participants.json
   def index
-    @participants = Participant.all
+    @participants = Participant.all.paginate(:page => params[:page], :per_page => 10)
   end
 
   # GET /participants/1
   # GET /participants/1.json
   def show
-    @last_contacted_by_name = User.find(@participant.last_contacted_by).full_name
-    @participant_recent_notes = @participant.notes.recent_ten
+    if @participant.last_contacted_by.nil?
+      @last_contacted_by_name = 'No calls logged yet.'
+    else
+      @last_contacted_by_name = User.find(@participant.last_contacted_by).full_name
+    end
+    @participant_recent_notes = @participant.notes.order("updated_at desc").paginate(:page => params[:page])
+
   end
 
   # GET /participants/new

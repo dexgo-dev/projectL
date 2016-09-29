@@ -15,6 +15,9 @@ class Note < ApplicationRecord
     where(:notify_on => Date.today.beginning_of_week..Date.today.end_of_week).order(:notify_on)
   }
 
+  # Maximum notes per page.
+  self.per_page = 10
+
   private
 
   def note_notifier_notification

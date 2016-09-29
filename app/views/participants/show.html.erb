@@ -30,11 +30,15 @@
   <strong>Email Address:</strong>
   <%= @participant.email %>
 <br/>
-  <strong>Last Contacted</strong>
-  by <%= link_to @last_contacted_by_name, user_path(@participant.last_contacted_by) %>
-  &nbsp;
-  <%= time_ago_in_words(@participant.last_contacted_at) %>
-  &nbsp;ago.
+  <strong>Last Contacted by </strong>
+  <% if @participant.last_contacted_by.nil? %>
+    None
+  <% else %>
+    <%= link_to @last_contacted_by_name, user_path(@participant.last_contacted_by) %>
+    &nbsp;
+    <%= time_ago_in_words(@participant.last_contacted_at) %>
+    &nbsp;ago.
+   <% end %>
 </p>
 <p><%= link_to "Create New Note", new_participant_note_path(@participant)%></p>
 <p><%= link_to "Show All Notes", participant_notes_path(@participant)%></p>
@@ -51,3 +55,4 @@
   <br>
   <% end %>
 </ul>
+<%= will_paginate(@participant_recent_notes) %>

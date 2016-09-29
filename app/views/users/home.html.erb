@@ -15,13 +15,14 @@
   <%= label_tag(:search, "Find Participant by Name: ") %>
   <%= text_field_tag(:search) %>
   <%= submit_tag("Find") %>
+  <%= link_to 'Reset', user_home_path(@user) %>
 <% end %>
 </p>
 
 
-<h2><%= @search_or_recent_header %></h2>
+<h2><%=@search_or_recent_header %></h2>
+<% unless @search_participants.empty? %>
 <table>
-   <% unless @search_participants.empty? %>
    <thead>
        <tr>
          <th>Last Contact Date</th>
@@ -33,11 +34,10 @@
          <th colspan="3"></th>
        </tr>
   </thead> 
-  <% end %>
    <tbody>
-     <% @search_participants.each do |participant| %>
+      <% @search_participants.each do |participant| %>
        <tr>
-         <td><%= time_ago_in_words(participant.last_contacted_at) %> ago</td>
+         <td><% unless participant.last_contacted_at.nil? %> <%=time_ago_in_words(participant.last_contacted_at)%> ago <% end %></td>
          <td><%= link_to participant.name, participant %></td>
          <td><%= link_to participant.contact_number %></td>
          <td><%= link_to participant.email %></td>
@@ -47,11 +47,14 @@
          <td><%= link_to 'Edit', edit_participant_path(participant) %></td>
          <td><%= link_to 'Destroy', participant, method: :delete, data: { confirm: 'Are you sure?' } %></td>
        </tr>
-     <% end %>
+      <% end %>
    </tbody>
- </table>
+</table>
+<%=will_paginate(@search_participants) %>
+<% end %>
 
-<h2>Upcoming Notifications (This Week):</h2>
+<h2><%=@upcoming_notes_notification_header %></h2>
+<% unless @upcoming_notes_notification.empty? %>
  <table>
   <thead>
      <tr>
@@ -71,23 +74,28 @@
     <% end %>
   </tbody>
 </table>
+<% end %>
+<%=will_paginate(@upcoming_notes_notification) %>
 
- <h2>Your Recent Notes:</h2>
+ <h2><%=@recent_notes_from_user_header%></h2>
+ <% unless @recent_notes_from_user.empty? %>
  <table>
-  <thead>
-     <tr>
-      <th>&nbsp;</th>
-      <th>Participant</th>
-      <th>Last Modified</th>
-     </tr>
-  </thead> 
-  <tbody>
-    <% @recent_notes_from_user.each do |note| %>
-    <tr>
-      <td><%= link_to "See Note.", participant_note_path(note.participant.id,note.id)%></td>
-      <td><%= link_to note.participant.name, note.participant %>
-      <td><%= time_ago_in_words(note.updated_at)%> ago</td>
-    <% end %>
-    </tr>
-  </tbody>
-</table>
+    <thead>
+       <tr>
+        <th>&nbsp;</th>
+        <th>Participant</th>
+        <th>Last Modified</th>
+       </tr>
+    </thead> 
+    <tbody>
+      <% @recent_notes_from_user.each do |note| %>
+      <tr>
+        <td><%= link_to "See Note.", participant_note_path(note.participant.id,note.id)%></td>
+        <td><%= link_to note.participant.name, note.participant %>
+        <td><%= time_ago_in_words(note.updated_at)%> ago</td>
+      </tr>
+      <% end %>
+    </tbody>
+ </table>
+<%=will_paginate(@recent_notes_from_user) %>
+<% end %>

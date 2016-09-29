@@ -20,13 +20,27 @@ class UsersController < ApplicationController
 
   # GET /users/1/home
   def home
-    @upcoming_notes_notification = @user.notes.upcoming_notifications_this_week
+    # Upcoming Notifications (This Week)
+    @upcoming_notes_notification = @user.notes.upcoming_notifications_this_week.paginate(:page => params[:page], :per_page => 5)
 
-    @recent_notes_from_user = @user.notes.recent_ten
+    if @upcoming_notes_notification.empty?
+      @upcoming_notes_notification_header = "No Notifications This Week! Yay!"
+    else
+      @upcoming_notes_notification_header = "Upcoming Notifications (This Week):"
+    end 
 
+    # Your Recent Notes:
+    @recent_notes_from_user = @user.notes.recent_ten.paginate(:page => params[:page])
+    if @recent_notes_from_user.empty?
+      @recent_notes_from_user_header = "No Notes From User Yet!"
+    else
+      @recent_notes_from_user_header = "Upcoming Notifications (This Week):"
+    end 
+
+    # Recently Contacted Participants:
     if params[:search].nil?
       @search_participants = @user.participants.recently_contacted
-      @search_or_recent_header = 'Recently Contacted Participants'
+      @search_or_recent_header = 'Recently Contacted Participants:'
       @if_empty_string = 'No Participants Contacted Yet.'   
     else
       @search_participants = Participant.search params[:search]
@@ -36,6 +50,9 @@ class UsersController < ApplicationController
     if @search_participants.empty?
       @search_or_recent_header = @if_empty_string
     end
+    
+    @search_participants = @search_participants.paginate(:page => params[:page], :per_page => 5)
+
   end
 
   # GET /users/new
