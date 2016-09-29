@@ -9,5 +9,38 @@
   <%= @study.description %>
 </p>
 
+<h2><%=@participants_in_this_study_header%></h2>
+<% unless @participants_in_this_study.empty? %>
+<table>
+   <thead>
+       <tr>
+         <th>Last Contact Date</th>
+         <th>Participant</th>
+         <th>Contact Number</th>
+         <th>Email Address</th>
+         <th>Study</th>
+         <th>Status</th>
+         <th colspan="3"></th>
+       </tr>
+  </thead> 
+   <tbody>
+      <% @participants_in_this_study.each do |participant| %>
+       <tr>
+         <td><% unless participant.last_contacted_at.nil? %> <%=time_ago_in_words(participant.last_contacted_at)%> ago <% end %></td>
+         <td><%= link_to participant.name, participant %></td>
+         <td><%= link_to participant.contact_number %></td>
+         <td><%= link_to participant.email %></td>
+         <td><%= participant.study.study_name %></td>
+         <td><%= ((participant.active)? ('Active'):('Dropped Out')) %></td>
+         <td><%= link_to 'Show', participant %></td>
+         <td><%= link_to 'Edit', edit_participant_path(participant) %></td>
+         <td><%= link_to 'Destroy', participant, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+       </tr>
+      <% end %>
+   </tbody>
+</table>
+<%=will_paginate(@participants_in_this_study) %>
+<% end %>
+
 <%= link_to 'Edit', edit_study_path(@study) %> |
 <%= link_to 'Back', studies_path %>

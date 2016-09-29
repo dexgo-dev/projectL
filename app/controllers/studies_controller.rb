@@ -11,6 +11,12 @@ class StudiesController < ApplicationController
   # GET /studies/1
   # GET /studies/1.json
   def show
+    @participants_in_this_study = @study.participants.paginate(:page => params[:page], :per_page => 10)
+    if @participants_in_this_study.empty?
+      @participants_in_this_study_header = 'There are no participants in this study. Register a participant to add them here.'
+    else
+      @participants_in_this_study_header = 'Participants for ' + @study.study_name + ':'
+    end
   end
 
   # GET /studies/new
