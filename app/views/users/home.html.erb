@@ -50,7 +50,7 @@
       <% end %>
    </tbody>
 </table>
-<%=will_paginate(@search_participants) %>
+<%=will_paginate(@search_participants, :param_name => 'search_participants_page') %>
 <% end %>
 
 <h2><%=@upcoming_notes_notification_header %></h2>
@@ -75,7 +75,7 @@
   </tbody>
 </table>
 <% end %>
-<%=will_paginate(@upcoming_notes_notification) %>
+<%=will_paginate(@upcoming_notes_notification, :param_name => 'upcoming_notes_notification_page') %>
 
  <h2><%=@recent_notes_from_user_header%></h2>
  <% unless @recent_notes_from_user.empty? %>
@@ -97,5 +97,5 @@
       <% end %>
     </tbody>
  </table>
-<%=will_paginate(@recent_notes_from_user) %>
+<%=will_paginate(@recent_notes_from_user, :param_name => 'recent_notes_from_user_page') %>
 <% end %>

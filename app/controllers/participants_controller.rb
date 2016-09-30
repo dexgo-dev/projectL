@@ -6,7 +6,7 @@ class ParticipantsController < ApplicationController
   # GET /participants
   # GET /participants.json
   def index
-    @participants = Participant.all.paginate(:page => params[:page], :per_page => 10)
+    @participants = Participant.all.paginate(:page => params[:page], :per_page => 5)
   end
 
   # GET /participants/1
