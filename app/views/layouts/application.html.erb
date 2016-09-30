@@ -10,7 +10,7 @@
 
   <body>
     <!-- Remove THIS and replace with sessions -->
-    <% @user = User.first %>
+    <% @user = User.last %>
     <% unless @user.nil? %>
       <h2 align="right"> Logged in as: <%=@user.full_name%> (<%=@user.username%>) </h2>
     <% end %>

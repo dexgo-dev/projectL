@@ -70,7 +70,7 @@ class NotesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def get_user_from_session
-      @user = User.first
+      @user = application_current_user
     end
 
     def get_participant

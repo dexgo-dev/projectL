@@ -88,7 +88,7 @@ class ParticipantsController < ApplicationController
       if @current_users.empty?
         redirect_to user_home, notice: 'Something went wrong. Session not found. Did you log out?'
       else
-        @current_user = User.first
+        @current_user = application_current_user
       end
     end
 

@@ -9,7 +9,7 @@ class UsersController < ApplicationController
       redirect_to new_user_path, notice: 'Create a user to begin using this app. You must be logged in to proceed.'
     else
       # if admin add redirect to users_path?
-      redirect_to user_home_path User.first # This is temporary, we will get the session here.
+      redirect_to user_home_path User.last # This is temporary, we will get the session here.
     end
   end
 
@@ -20,38 +20,14 @@ class UsersController < ApplicationController
 
   # GET /users/1/home
   def home
-    # Upcoming Notifications (This Week)
-    @upcoming_notes_notification = @user.notes.upcoming_notifications_this_week.paginate(:page => params[:upcoming_notes_notification_page], :per_page => 5)
+    # Recently Contacted Participants:
+    get_recently_contacted_participants()
 
-    if @upcoming_notes_notification.empty?
-      @upcoming_notes_notification_header = "No Notifications This Week! Yay!"
-    else
-      @upcoming_notes_notification_header = "Upcoming Notifications (This Week):"
-    end 
+    # Upcoming Notifications (This Week)
+    get_upcoming_notifications() 
 
     # Your Recent Notes:
-    @recent_notes_from_user = @user.notes.recent_ten.paginate(:page => params[:recent_notes_from_user_page])
-    if @recent_notes_from_user.empty?
-      @recent_notes_from_user_header = "No Notes From User Yet!"
-    else
-      @recent_notes_from_user_header = 'Recent Notes From ' + @user.full_name + ':'
-    end 
-
-    # Recently Contacted Participants:
-    if params[:search].nil?
-      @search_participants = @user.participants.recently_contacted
-      @search_or_recent_header = 'Recently Contacted Participants:'
-      @if_empty_string = 'No Participants Contacted Yet.'   
-    else
-      @search_participants = Participant.search params[:search]
-      @search_or_recent_header = 'Found ' + @search_participants.count.to_s + ' Participants'
-      @if_empty_string = 'No Participants found in Search.'
-    end
-    if @search_participants.empty?
-      @search_or_recent_header = @if_empty_string
-    end
-    
-    @search_participants = @search_participants.paginate(:page => params[:search_participants_page], :per_page => 5)
+    get_recent_notes_from_user()
 
   end
 
@@ -107,7 +83,47 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params[:id])
+      @user = application_current_user
+    end
+
+    def get_recently_contacted_participants
+      if params[:search].nil?
+        @search_participants = @user.participants.recently_contacted
+        @search_or_recent_header = 'Recently Contacted Participants:'
+        @if_empty_string = 'No Participants Contacted Yet.'   
+      else
+        if params[:filter_participants][:filter_participants_string] == 'All Participants'
+          @search_participants = Participant.search params[:search]
+        else
+          @search_participants = @user.participants.search params[:search]
+        end
+        @search_or_recent_header = 'Found ' + @search_participants.count.to_s + ' Participants'
+        @if_empty_string = 'No Participants found in Search.'
+      end
+      if @search_participants.empty?
+        @search_or_recent_header = @if_empty_string
+      end
+    
+      @search_participants = @search_participants.paginate(:page => params[:search_participants_page], :per_page => 5)
+    end
+
+    def get_upcoming_notifications
+      @upcoming_notes_notification = @user.notes.upcoming_notifications_this_week.paginate(:page => params[:upcoming_notes_notification_page], :per_page => 5)
+
+      if @upcoming_notes_notification.empty?
+        @upcoming_notes_notification_header = "No Notifications This Week! Yay!"
+      else
+        @upcoming_notes_notification_header = "Upcoming Notifications (This Week):"
+      end
+    end
+
+    def get_recent_notes_from_user
+      @recent_notes_from_user = @user.notes.recent_ten.paginate(:page => params[:recent_notes_from_user_page])
+      if @recent_notes_from_user.empty?
+        @recent_notes_from_user_header = "No Notes From User Yet!"
+      else
+        @recent_notes_from_user_header = 'Recent Notes From ' + @user.full_name + ':'
+      end 
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
