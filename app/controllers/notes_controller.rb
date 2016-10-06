@@ -1,5 +1,5 @@
 class NotesController < ApplicationController
-  before_action :get_user_from_session
+  before_action :get_user_from_session # authorize is done here.
   before_action :get_participant
   before_action :set_note, only: [:show, :edit, :update, :destroy]
 
@@ -70,7 +70,8 @@ class NotesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def get_user_from_session
-      @user = application_current_user
+      authorize()
+      @user = @current_user
     end
 
     def get_participant

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :sessions
   resources :teams
   resources :studies
   resources :participants do
@@ -7,18 +8,13 @@ Rails.application.routes.draw do
   resources :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  root to: "users#index"
-  #users_login to: "users#login"
+  root to: "users#home"
+  
+  # these routes are for showing users a login form, logging them in, and logging them out.
+  get '/login' => 'sessions#new'
+  post '/login' => 'sessions#create'
+  get '/logout' => 'sessions#destroy'
 
-  # this works too but would show "<url>/allparticipants" in the address bar
-  # get "/allparticipants", to: "participants#index"
-
-  # so to avoid that, i will instead (REDIRECTS HERE)
-  get "/allparticipants" => redirect("/participants#index")
-  # and that will show "<url>/#<action>" in the address bar
-
-  # and now, more paths
-  get "/users_login", to: "users#login"
   get 'users/:id/home', to: 'users#home', :as => :user_home
 
   # The priority is based upon order of creation:
@@ -77,4 +73,9 @@ Rails.application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
+
+  # These routes will be for signup. The first renders a form in the browse, the second will 
+  # receive the form and create a user in our database using the data given to us by the user.
+  get '/signup' => 'users#new'
+  post '/users' => 'users#create'
 end

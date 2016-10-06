@@ -1,5 +1,5 @@
 class StudiesController < ApplicationController
-  before_action :check_for_user_session
+  before_action :authorize
   before_action :set_study, only: [:show, :edit, :update, :destroy]
 
   # GET /studies
@@ -72,15 +72,6 @@ class StudiesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_study
       @study = Study.find(params[:id])
-    end
-
-    def check_for_user_session
-      @current_users = User.all
-      if @current_users.empty?
-        redirect_to user_home, notice: 'Something went wrong. Session not found. Did you log out?'
-      else
-        @current_user = application_current_user
-      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

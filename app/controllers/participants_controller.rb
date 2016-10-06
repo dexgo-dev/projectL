@@ -1,5 +1,5 @@
 class ParticipantsController < ApplicationController
-  before_action :check_for_user_session
+  before_action :authorize
   before_action :check_for_exisiting_study, except: [:index, :show, :destroy]
   before_action :set_participant, only: [:show, :edit, :update, :destroy]
 
@@ -80,15 +80,6 @@ class ParticipantsController < ApplicationController
       @current_studies = Study.all
       if @current_studies.empty?
         redirect_to new_study_path, notice: 'We need at least one active study to start creating participants.'
-      end
-    end
-
-    def check_for_user_session
-      @current_users = User.all
-      if @current_users.empty?
-        redirect_to user_home, notice: 'Something went wrong. Session not found. Did you log out?'
-      else
-        @current_user = application_current_user
       end
     end
 

@@ -1,17 +1,16 @@
 <p id="notice"><%= notice %></p>
 <%= link_to 'Add New Study', new_study_path %>&nbsp;&nbsp;&nbsp;<%= link_to 'View Existing Studies', studies_path %>
-<h1>Welcome, <%=@user.full_name%> (<%=@user.username%>)!</h1>
-
 <p>
+<br/><strong>User Type: </strong><%= @user.level %>
 <br/><strong>Email: </strong><%= @user.email %>
 <br/><strong>Contact number: </strong><%= @user.contact_number %>
-<br/><strong>Team: </strong><%= (@user.team_id.nil?)? ' No Team Assigned' : @user.team_id %>
+<br/><strong>Team: </strong><%= (@user.team_id.nil?)? ' No Team Assigned' : @user.team.name %>
 <br/><strong>Supervisor: </strong><%= (@user.supervisor_id.nil?)? ' No Supervisor Assigned' : @user.supervisor.full_name  %>
 <br/></p>
 <br/><%= link_to 'Register New Participant', new_participant_path %>&nbsp;|&nbsp;<%= link_to 'Back to All Participants', participants_path %>
 <br/><%= link_to 'Edit My Details', edit_user_path(@user) %>&nbsp;|&nbsp;<%= link_to 'Back to All Users (Admin)', users_path %>
 <p>
-<%= form_tag(user_home_path, method: "get") do %>
+<%= form_tag(user_home_path(@user.id), method: "get") do %>
   Find Participant by Name: <%= text_field_tag(:search) %>
   <br/><br/>Show: <%= select(:filter_participants, :filter_participants_string, options_for_select(['All Participants','Only Participants I\'ve Contacted'])) %>
   <br/><br/><%= submit_tag("Find") %>&nbsp;

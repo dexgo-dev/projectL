@@ -4,12 +4,12 @@ class User < ApplicationRecord
 
   has_many :participants, through: :notes
 
+  belongs_to :team
   belongs_to :supervisor, class_name: "User", optional: true
 
   validates :contact_number, presence: true
-  validates :username, presence: true
-  validates :email, presence: true
+  validates :email, presence: true, uniqueness: true
   validates :full_name, presence: true
-  validates :password, presence: true
-  #validates :team_id, numericality: true
+  validates :password, presence: true, confirmation: true
+  validates :team_id, numericality: true
 end

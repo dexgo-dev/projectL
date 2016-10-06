@@ -8,12 +8,12 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-    <!-- Remove THIS and replace with sessions -->
-    <% @user = User.last %>
-    <% unless @user.nil? %>
-      <h2 align="right"> Logged in as: <%=@user.full_name%> (<%=@user.username%>) </h2>
+  <h2 align="right">
+    <% if @current_user.nil? %>
+      New User?&nbsp;<%= link_to 'Sign Up!', '/signup' %> | <%= link_to 'Forgot Password?', '/signup' %>
+    <% else %>
+       Loggd in as:&nbsp;<%=@current_user.full_name%> (<%=@current_user.email%>) | <%= link_to "Logout", '/logout' %>
     <% end %>
-    <%= yield %>
-  </body>
+  </h2>
+    <%=yield %>
 </html>

@@ -1,16 +1,18 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:home, :show, :edit, :update, :destroy]
+  before_action :authorize, except: [:new, :create]
+  before_action :set_user, only: [:index, :home, :show, :edit, :update, :destroy]
 
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
-    if @users.empty?
-      redirect_to new_user_path, notice: 'Create a user to begin using this app. You must be logged in to proceed.'
-    else
-      # if admin add redirect to users_path?
-      redirect_to user_home_path User.last # This is temporary, we will get the session here.
-    end
+    #@users = User.all
+    #if @users.empty?
+      #redirect_to new_user_path, notice: 'Create a user to begin using this app. You must be logged in to proceed.'
+    #else
+      # if session exists
+      # else if admin add redirect to users_path?
+      #redirect_to user_home_path @user # This is temporary, we will get the session here.
+    #end
   end
 
   # GET /users/1
@@ -44,13 +46,14 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        format.html { session[:user_id] = @user.id
+                      redirect_to '/', notice: 'User was successfully created.'
+                    }
         format.json { render :show, status: :created, location: @user }
       else
-        format.html { render :new }
+        format.html { render :new, notice: 'Fix the errors.'}
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
@@ -83,7 +86,7 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = application_current_user
+      @user = @current_user
     end
 
     def get_recently_contacted_participants
@@ -128,6 +131,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:username, :password, :full_name, :email, :contact_number, :team_id, :supervisor_id)
+      params.require(:user).permit(:email, :password, :password_confirmation, :full_name, :contact_number, :team_id, :supervisor_id)
     end
 end
