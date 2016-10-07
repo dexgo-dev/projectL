@@ -37,14 +37,45 @@
   </div>
 
   <div class="field">
-    <%= f.label :team_id %>
-    <%= f.number_field :team_id %>
+    <%= f.label "Team" %>
+    <%= f.collection_select(:team_id, @teams, :id, :name, prompt: true) %>
   </div>
 
   <div class="field">
-    <%= f.label :supervisor_id %>
-    <%= f.number_field :supervisor_id %>
+    <%= f.label "Supervisor" %>
+    <%= f.collection_select(:supervisor_id, @supervisors, :id, :full_name, include_blank: true) %>
   </div>
+
+  <div class="field">
+    <%= f.label "Supervisor Name (if not on list)" %>
+    <%= f.text_field :supervisorNameNotAUser %>
+  </div>
+
+  <div class="field">
+    <%= f.label "Add your name to the supervisors list?" %>
+    <%= f.check_box :isSupervisor %>
+  </div>
+
+  <% unless @current_user.nil? %>
+    <% if @current_user.isAdmin %>
+      <div class="field">
+        <%= f.label "Grant this user admin rights?" %>
+        <%= f.check_box :isAdmin %>
+      </div>
+      <div class="field">
+        <%= f.label "Is this user still active?" %>
+        <%= f.check_box :isAdmin %>
+      </div>
+      <div class="field">
+        <%= f.label "Approve user?" %>
+        <%= f.check_box :isApproved %>
+      </div>
+      <div class="field">
+        <%= f.label "Deny user?" %>
+        <%= f.check_box :isDenied %>
+      </div>
+    <% end %>
+  <% end %>
 
   <div class="actions">
     <%= f.submit %>

@@ -1,7 +1,6 @@
 <p id="notice"><%= notice %></p>
 <%= link_to 'Add New Study', new_study_path %>&nbsp;&nbsp;&nbsp;<%= link_to 'View Existing Studies', studies_path %>
 <p>
-<br/><strong>User Type: </strong><%= @user.level %>
 <br/><strong>Email: </strong><%= @user.email %>
 <br/><strong>Contact number: </strong><%= @user.contact_number %>
 <br/><strong>Team: </strong><%= (@user.team_id.nil?)? ' No Team Assigned' : @user.team.name %>

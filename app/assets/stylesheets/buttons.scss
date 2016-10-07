@@ -6,14 +6,14 @@ Sample mixin which creates a button and the following states (based on classes):
 - :hover {}
 */
 
-
+/*
 @mixin buttons($basicBorder:1px, $gradient1:#fff, $gradient2:#d8dee7){
   button{
     border:$basicBorder solid #acbed3;
     //brings in Compass' background-image mixin:  http://compass-style.org/reference/compass/css3/images/
     @include background-image(linear-gradient($gradient1, $gradient2));
     padding:3px 14px;
-    font-size:12px;
+    font-size:16px;
     color:#3b557d;
     //brings in Compass' border-radius mixin: http://compass-style.org/reference/compass/css3/border_radius/
     @include border-radius($border-radius, $border-radius);
@@ -34,4 +34,4 @@ Sample mixin which creates a button and the following states (based on classes):
       @include background-image(linear-gradient($gradient2, $gradient1));
     }
   }
-}
+}*/

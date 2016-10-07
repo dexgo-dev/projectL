@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    #@users = User.all
+    @users = User.all
     #if @users.empty?
       #redirect_to new_user_path, notice: 'Create a user to begin using this app. You must be logged in to proceed.'
     #else
@@ -35,7 +35,11 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
-    @user = User.new
+    
+    set_new_user_defaults()
+    get_all_teams()
+    get_all_supervisors()
+
   end
 
   # GET /users/1/edit
@@ -49,7 +53,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
         format.html { session[:user_id] = @user.id
-                      redirect_to '/', notice: 'User was successfully created.'
+                      redirect_to '/', notice: 'User was successfully created. Please see email for Instructions.'
                     }
         format.json { render :show, status: :created, location: @user }
       else
@@ -88,6 +92,24 @@ class UsersController < ApplicationController
     def set_user
       @user = @current_user
     end
+
+    def set_new_user_defaults
+      @user = User.new
+      @user.isActive = false
+      @user.isSupervisor = false
+      @user.isDenied = false
+      @user.isApproved = false
+      @user.isAdmin = false
+    end
+
+    def get_all_teams
+      @teams = Team.all
+    end
+
+    def get_all_supervisors
+      @supervisors = User.where(isSupervisor: true, isActive: true, isApproved: true, isDenied: false)
+    end
+
 
     def get_recently_contacted_participants
       if params[:search].nil?
@@ -131,6 +153,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :full_name, :contact_number, :team_id, :supervisor_id)
+      params.require(:user).permit(:email, :password, :password_confirmation, :full_name, :contact_number, :team_id, :supervisor_id, :isSupervisor, :supervisorNameNotAUser, :isActive, :isDenied, :isApproved, :isAdmin)
     end
 end

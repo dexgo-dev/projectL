@@ -4,6 +4,7 @@ class Note < ApplicationRecord
 
   validates :note_text, presence: true
   validates :important, inclusion: { in: [true, false] }
+  validates :notify, inclusion: { in: [true, false] }
   #validates :participant_id, presence: true
   #validates :user_id, presence: true
 

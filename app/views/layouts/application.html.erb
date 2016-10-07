@@ -8,6 +8,8 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
+  <h1 align="left">Loggr</h2>
+  <h4 align="left">Track your Participants</h4>
   <h2 align="right">
     <% if @current_user.nil? %>
       New User?&nbsp;<%= link_to 'Sign Up!', '/signup' %> | <%= link_to 'Forgot Password?', '/signup' %>

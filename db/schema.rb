@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161006023701) do
+ActiveRecord::Schema.define(version: 20161007005916) do
 
   create_table "notes", force: :cascade do |t|
     t.integer  "participant_id"
@@ -62,9 +62,14 @@ ActiveRecord::Schema.define(version: 20161006023701) do
     t.string   "contact_number"
     t.integer  "team_id"
     t.integer  "supervisor_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.integer  "level"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.boolean  "isApproved"
+    t.boolean  "isActive"
+    t.boolean  "isAdmin"
+    t.boolean  "isSupervisor"
+    t.string   "supervisorNameNotAUser"
+    t.boolean  "isDenied"
   end
 
 end
