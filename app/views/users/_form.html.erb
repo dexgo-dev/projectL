@@ -18,12 +18,12 @@
 
   <div class="field">
     <%= f.label :password %>
-    <%= f.password_field :password %>
+    <%= f.password_field :password, value: user.password %>
   </div>
 
   <div class="field">
     <%= f.label "Password Confirmation" %>
-    <%= f.password_field :password_confirmation %>
+    <%= f.password_field :password_confirmation, value: user.password %>
   </div>
 
   <div class="field">
@@ -37,13 +37,14 @@
   </div>
 
   <div class="field">
-    <%= f.label "Team" %>
-    <%= f.collection_select(:team_id, @teams, :id, :name, prompt: true) %>
+      <%= f.label "Team" %>
+      <%= f.collection_select(:team_id, Team.all, :id, :name, prompt: true) %> 
+      Team Not There? <%= link_to "Add New Team", new_team_path %>
   </div>
 
   <div class="field">
     <%= f.label "Supervisor" %>
-    <%= f.collection_select(:supervisor_id, @supervisors, :id, :full_name, include_blank: true) %>
+    <%= f.collection_select(:supervisor_id, User.where(isSupervisor: true, isActive: true, isApproved: true, isDenied: false), :id, :full_name, include_blank: true) %>
   </div>
 
   <div class="field">
@@ -53,7 +54,7 @@
 
   <div class="field">
     <%= f.label "Add your name to the supervisors list?" %>
-    <%= f.check_box :isSupervisor %>
+    <%= f.check_box :isSupervisor %> 
   </div>
 
   <% unless @current_user.nil? %>

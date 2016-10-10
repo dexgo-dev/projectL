@@ -1,18 +1,11 @@
 class UsersController < ApplicationController
   before_action :authorize, except: [:new, :create]
-  before_action :set_user, only: [:index, :home, :show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
   # GET /users.json
   def index
     @users = User.all
-    #if @users.empty?
-      #redirect_to new_user_path, notice: 'Create a user to begin using this app. You must be logged in to proceed.'
-    #else
-      # if session exists
-      # else if admin add redirect to users_path?
-      #redirect_to user_home_path @user # This is temporary, we will get the session here.
-    #end
   end
 
   # GET /users/1
@@ -35,11 +28,10 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
-    
-    set_new_user_defaults()
-    get_all_teams()
-    get_all_supervisors()
-
+    if Team.none?
+      redirect_to new_team_path, notice: 'No team exists. You need at least one to begin.'
+    end
+    @user = User.new
   end
 
   # GET /users/1/edit
@@ -52,8 +44,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     respond_to do |format|
       if @user.save
-        format.html { session[:user_id] = @user.id
-                      redirect_to '/', notice: 'User was successfully created. Please see email for Instructions.'
+        format.html { redirect_to '/login', notice: 'User was successfully created. Please see email for Instructions.'
                     }
         format.json { render :show, status: :created, location: @user }
       else
@@ -68,7 +59,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to user_home_path(@current_user), notice: 'User (' + @user.full_name + ') was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
@@ -90,37 +81,19 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = @current_user
+      @user = User.find(params[:id])
     end
-
-    def set_new_user_defaults
-      @user = User.new
-      @user.isActive = false
-      @user.isSupervisor = false
-      @user.isDenied = false
-      @user.isApproved = false
-      @user.isAdmin = false
-    end
-
-    def get_all_teams
-      @teams = Team.all
-    end
-
-    def get_all_supervisors
-      @supervisors = User.where(isSupervisor: true, isActive: true, isApproved: true, isDenied: false)
-    end
-
 
     def get_recently_contacted_participants
       if params[:search].nil?
-        @search_participants = @user.participants.recently_contacted
+        @search_participants = @current_user.participants.recently_contacted
         @search_or_recent_header = 'Recently Contacted Participants:'
         @if_empty_string = 'No Participants Contacted Yet.'   
       else
         if params[:filter_participants][:filter_participants_string] == 'All Participants'
           @search_participants = Participant.search params[:search]
         else
-          @search_participants = @user.participants.search params[:search]
+          @search_participants = @current_user.participants.search params[:search]
         end
         @search_or_recent_header = 'Found ' + @search_participants.count.to_s + ' Participants'
         @if_empty_string = 'No Participants found in Search.'
@@ -133,7 +106,7 @@ class UsersController < ApplicationController
     end
 
     def get_upcoming_notifications
-      @upcoming_notes_notification = @user.notes.upcoming_notifications_this_week.paginate(:page => params[:upcoming_notes_notification_page], :per_page => 5)
+      @upcoming_notes_notification = @current_user.notes.upcoming_notifications_this_week.paginate(:page => params[:upcoming_notes_notification_page], :per_page => 5)
 
       if @upcoming_notes_notification.empty?
         @upcoming_notes_notification_header = "No Notifications This Week! Yay!"
@@ -143,7 +116,7 @@ class UsersController < ApplicationController
     end
 
     def get_recent_notes_from_user
-      @recent_notes_from_user = @user.notes.recent_ten.paginate(:page => params[:recent_notes_from_user_page])
+      @recent_notes_from_user = @current_user.notes.recent_ten.paginate(:page => params[:recent_notes_from_user_page])
       if @recent_notes_from_user.empty?
         @recent_notes_from_user_header = "No Notes From User Yet!"
       else
@@ -153,6 +126,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :full_name, :contact_number, :team_id, :supervisor_id, :isSupervisor, :supervisorNameNotAUser, :isActive, :isDenied, :isApproved, :isAdmin)
+      params.require(:user).permit(:email, :password, :password_confirmation, :full_name, :contact_number, :team_id, :supervisor_id, :isSupervisor, :supervisorNameNotAUser)
     end
 end

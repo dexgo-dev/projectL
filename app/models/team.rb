@@ -1,5 +1,5 @@
 class Team < ApplicationRecord
 	has_many :users
 
-	validates :email, :format => EMAIL_REGEX
+	#validates :group_email, presence: false, :format => EMAIL_REGEX
 end

@@ -7,15 +7,40 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
-  <h1 align="left">Loggr</h2>
-  <h4 align="left">Track your Participants</h4>
-  <h2 align="right">
-    <% if @current_user.nil? %>
-      New User?&nbsp;<%= link_to 'Sign Up!', '/signup' %> | <%= link_to 'Forgot Password?', '/signup' %>
-    <% else %>
-       Loggd in as:&nbsp;<%=@current_user.full_name%> (<%=@current_user.email%>) | <%= link_to "Logout", '/logout' %>
-    <% end %>
-  </h2>
-    <%=yield %>
+  <table width="100%">
+    <tr class="dashboard">
+      <td colspan="3" align="left">
+      <h1>Loggr</h1>
+      <h4>Track your Participants</h4>
+      </td>
+    </tr>
+    <tr class="dashboard">
+      <% if @current_user.nil? %>
+        <td colspan="3" align="right">
+          New User?<br/><%= link_to image_tag('signup.png', class: 'icon-links'), '/signup' %>
+        </td> 
+      <% else %>
+        <td align="right">
+        <%= link_to image_tag('home.png', class: 'icon-links'), user_home_path(@current_user) %>
+        </td>
+        <td class="profile_card" align="right">
+          <table>
+            <tr class="profile_card">
+              <td align="right">
+                <%=@current_user.full_name%><br/>
+                <%=@current_user.email%>
+              </td>
+              <td align="left">
+                <%= link_to image_tag('current_user.png', class: 'icon-links'), @current_user %>
+              </td>
+            </tr>
+          </table>
+        </td>
+        <td align="left">
+          <%= link_to image_tag('logout.png', class: 'icon-links'), '/logout' %>
+        </td>
+      <% end %>
+    </tr>
+  </table>
+  <%=yield %>
 </html>
