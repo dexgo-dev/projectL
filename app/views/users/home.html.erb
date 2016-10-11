@@ -1,16 +1,5 @@
 <p id="notice"><%= notice %></p>
 <%= link_to 'Add New Study', new_study_path %>&nbsp;&nbsp;&nbsp;<%= link_to 'View Existing Studies', studies_path %>
-<p>
-<br/><strong>Email: </strong><%= @current_user.email %>
-<br/><strong>Contact number: </strong><%= @current_user.contact_number %>
-<br/><strong>Team: </strong><%= (@current_user.team_id.nil?)? ' No Team Assigned' : @current_user.team.name %>
-<br/><strong>Supervisor: </strong>  
-  <% if @current_user.supervisor_id.nil? %>
-    <%= @current_user.supervisorNameNotAUser %>
-  <% else %>
-    <%= link_to User.find(@current_user.supervisor_id).full_name, user_path(@current_user.supervisor_id) %>
-  <% end %>
-<br/></p>
 <br/><%= link_to 'Register New Participant', new_participant_path %>&nbsp;|&nbsp;<%= link_to 'Back to All Participants', participants_path %>
 <br/><%= link_to 'Edit My Details', edit_user_path(@current_user) %>&nbsp;|&nbsp;<%= link_to 'Back to All Users (Admin)', users_path %>
 <p>

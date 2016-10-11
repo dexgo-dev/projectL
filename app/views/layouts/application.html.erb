@@ -28,7 +28,9 @@
             <tr class="profile_card">
               <td align="right">
                 <%=@current_user.full_name%><br/>
-                <%=@current_user.email%>
+                <%=@current_user.email%><br/>
+                <%=@current_user.contact_number%><br/>
+                Team: <%= (@current_user.team_id.nil?)? ' No Team Assigned' : @current_user.team.name %>
               </td>
               <td align="left">
                 <%= link_to image_tag('current_user.png', class: 'icon-links'), @current_user %>
