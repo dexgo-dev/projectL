@@ -120,7 +120,7 @@ class UsersController < ApplicationController
       if @recent_notes_from_user.empty?
         @recent_notes_from_user_header = "No Notes From User Yet!"
       else
-        @recent_notes_from_user_header = 'Recent Notes From ' + @user.full_name + ':'
+        @recent_notes_from_user_header = 'Recent Notes From ' + @current_user.full_name + ':'
       end 
     end
 
