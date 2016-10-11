@@ -41,14 +41,14 @@ For testing purposes, I've used a gem called faker to generate all the data.
 # Generate 500 notes from Star Wars quotes
 ```{r, engine='bash', count_lines}
 	>> 500.times do |n|
-	>>    Note.create(participant_id: rand(1..60), note_text: Faker::StarWars::quote, important: [true,false].sample, user_id: rand(1..2), notify_on: Faker::Date.forward(rand(7..25)))
+	>>    Note.create(participant_id: rand(1..60), note_text: Faker::StarWars::quote, important: [true,false].sample, user_id: rand(1..2), notify:[true,false].sample, notify_on: Faker::Date.forward(rand(7..25)))
 	>> end
 ```
 
 # Generate 1200 notes each with 3 latin sentences. :)
 ```{r, engine='bash', count_lines}
 	>> 1200.times do
-	>>    Note.create(participant_id: rand(1..60), note_text: Faker::Lorem.sentence(3), important: [true,false].sample, user_id: rand(1..2), notify_on: Faker::Date.forward(rand(7..25)))
+	>>    Note.create(participant_id: rand(1..60), note_text: Faker::Lorem.sentence(3), important: [true,false].sample, user_id: rand(1..2), notify:[true,false].sample, notify_on: Faker::Date.forward(rand(7..25)))
 	>> end
 	>> 
 ```
