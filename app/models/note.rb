@@ -8,6 +8,8 @@ class Note < ApplicationRecord
   #validates :participant_id, presence: true
   #validates :user_id, presence: true
 
+  before_validation :set_notification
+
   scope :recent_ten, -> {
     order("updated_at desc").limit(10)
   }
@@ -23,5 +25,11 @@ class Note < ApplicationRecord
 
   def note_notifier_notification
     NotifierMailer.note_notifier(self).deliver
+  end
+
+  def set_notification
+    unless self.notify?
+      self.notify_on = nil
+    end
   end
 end

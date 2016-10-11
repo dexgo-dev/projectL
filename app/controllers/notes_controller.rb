@@ -89,7 +89,7 @@ class NotesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def note_params
       get_user_from_session()
-      params.require(:note).permit(:participant_id, :note_text, :important, :notify_on, :user_id)
+      params.require(:note).permit(:participant_id, :note_text, :important, :notify_on, :user_id, :notify)
     end
 
     def participant_params
