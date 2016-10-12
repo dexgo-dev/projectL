@@ -18,6 +18,8 @@ class User < ApplicationRecord
   #validates :isDenied, inclusion: { in: [true, false] }
   validates :isSupervisor, inclusion: { in: [true, false] }
 
+  before_save :encrypt_password
+
   after_initialize :init
 
   private
@@ -35,5 +37,9 @@ class User < ApplicationRecord
         if self.isDenied.nil?
           self.isDenied = false
         end
+    end
+
+    def encrypt_password
+        self.password= Digest::MD5.hexdigest(password)
     end
 end
