@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
   end
 
 	def create
-    user = User.find_by_email(params[:email])
+    user = User.where(isActive:true).where(isApproved:true).where(isDenied:false).find_by_email(params[:email])
     # If the user exists AND the password entered is correct.
     # if @user && @user.authenticate(params[:password])
     if (user && (user.password == Digest::MD5.hexdigest(params[:password])))

@@ -31,7 +31,7 @@
        <tr>
          <td><% unless participant.last_contacted_at.nil? %> <%=time_ago_in_words(participant.last_contacted_at)%> ago <% end %></td>
          <td><%= link_to participant.name, participant %></td>
-         <td><%= link_to participant.contact_number %></td>
+         <td><%= participant.contact_number %></td>
          <td><%= link_to participant.email %></td>
          <td><%= participant.study.study_name %></td>
          <td><%= ((participant.active)? ('Active'):('Dropped Out')) %></td>

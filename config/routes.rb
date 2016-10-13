@@ -78,4 +78,10 @@ Rails.application.routes.draw do
   # receive the form and create a user in our database using the data given to us by the user.
   get '/signup' => 'users#new'
   post '/users' => 'users#create'
+
+  get '/pending_users' => 'users#pending'
+  put '/remove_admin_rights/:id' => 'users#remove_admin_rights', :as => :remove_admin_rights
+  put '/add_admin_rights/:id' => 'users#add_admin_rights', :as => :add_admin_rights
+  put '/approve_user/:id' => 'users#approve_user', :as => :approve_user
+  put '/reject_user/:id' => 'users#reject_user', :as => :reject_user
 end

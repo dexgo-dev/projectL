@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
+      /* Email styles need to be inline */
+    </style>
+  </head>
+
+  <body>
+    <h1><%= @new_user.full_name %> with email address <%= @new_user.email %> has registered.</h1>
+    <p>
+      As admin, you may approve or deny users from joining Loggr.
+    </p>
+    <p>
+      Please visit <%= link_to 'this list', users_url %> for registrations pending your approval.
+    </p>
+  </body>
+</html>

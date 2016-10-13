@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :authorize, except: [:new, :create]
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :add_admin_rights, :remove_admin_rights, :approve_user, :reject_user]
 
   # GET /users
   # GET /users.json
@@ -38,12 +38,19 @@ class UsersController < ApplicationController
   def edit
   end
 
+  # GET /users/1/pending
+  def pending
+    @pending_users = User.where(isApproved:false).where(isActive:false).where(isDenied:false)
+  end
+
+
   # POST /users
   # POST /users.json
   def create
     @user = User.new(user_params)
     respond_to do |format|
       if @user.save
+        @user.new_user_registration_email
         format.html { redirect_to '/login', notice: 'User was successfully created. Please see email for Instructions.'
                     }
         format.json { render :show, status: :created, location: @user }
@@ -78,10 +85,73 @@ class UsersController < ApplicationController
     end
   end
 
+  # PATCH/PUT /users/1
+  def add_admin_rights
+    set_admin_rights(true)
+  end
+
+  # PATCH/PUT /users/1
+  def remove_admin_rights
+    set_admin_rights(false)
+  end
+
+  # PATCH/PUT /users/1
+  def approve_user
+    @errors = []
+    if @user
+      @user.isActive = true
+      @user.isApproved = true
+      @user.isDenied = false  
+      if @user.save
+        # UserMailer.approve_account(@user).deliver
+        redirect_to pending_users_path, notice: 'User Account request has been approved.'
+      else
+        redirect_to pending_users_path, notice: 'Something went wrong.'
+      end
+    else
+      redirect_to pending_users_path, notice:"Invalid Email."
+    end
+  end
+
+  # PATCH/PUT /users/1
+  def reject_user
+    @errors = []
+    if @user
+      @user.isActive = true
+      @user.isApproved = false
+      @user.isDenied = true 
+      if @user.save
+        # UserMailer.reject_account(@user).deliver
+        redirect_to pending_users_path, notice: 'User Account request has been rejected.'
+      else
+        redirect_to pending_users_path, notice: 'Something went wrong.'
+      end
+    else
+      redirect_to pending_users_path, notice:"Invalid Email."
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
+    end
+
+    def set_admin_rights(isAdmin)
+      @errors = []
+      if @user
+        @user.isAdmin = isAdmin 
+        toggle_notice = (@user.isAdmin)? ("User is now admin.") : ("Admin rights revoked.")
+        if @user.save
+          # UserMailer.approve_account(@user).deliver
+          # Send email to notify user that he is now admin.
+          redirect_to pending_users_path, notice: toggle_notice
+        else
+          redirect_to pending_users_path, notice: 'Something went wrong. Email not sent'
+        end
+      else
+        redirect_to pending_users_path, notice:"Invalid Email."
+      end
     end
 
     def get_recently_contacted_participants
