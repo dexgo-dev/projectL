@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
+      /* Email styles need to be inline */
+    </style>
+  </head>
+
+  <body>
+    <h1>Hi, <%= @new_user.full_name %>!</h1>
+    <p>
+      Your access request for Loggr has been denied. If you think this was done in error, please email <%= admin_email %>. Otherwise, disregard this email.
+    </p>
+    <p>
+      Ta,
+      Loggr Team
+    </p>
+  </body>
+</html>

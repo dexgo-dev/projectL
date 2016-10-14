@@ -80,6 +80,11 @@ Rails.application.routes.draw do
   post '/users' => 'users#create'
 
   get '/pending_users' => 'users#pending'
+  get '/inactive_users' => 'users#inactive'
+  get '/approved_users' => 'users#approved'
+  get '/denied_users' => 'users#denied'
+  get '/admin_users' => 'users#admin'
+
   put '/remove_admin_rights/:id' => 'users#remove_admin_rights', :as => :remove_admin_rights
   put '/add_admin_rights/:id' => 'users#add_admin_rights', :as => :add_admin_rights
   put '/approve_user/:id' => 'users#approve_user', :as => :approve_user

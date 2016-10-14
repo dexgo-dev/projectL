@@ -1,8 +1,8 @@
 <p id="notice"><%= notice %></p>
-<% if @pending_users.empty? %>
-  <h2>Hooray! No users pending approval.</h2>
+<% if @admin_users.empty? %>
+  <h2>You have no admins. Maybe you should be president.</h2>
 <% else %>
-  <h1>Users Pending Approval</h1>
+  <h1>Admin Users</h1>
   <table>
     <thead>
       <tr>
@@ -17,7 +17,7 @@
     </thead>
 
     <tbody>
-      <% @pending_users.each do |user| %>
+      <% @admin_users.each do |user| %>
         <tr>
           <td><%= link_to user.full_name, user %></td>
           <td><%= user.email %></td>

@@ -1,11 +1,42 @@
 class UsersController < ApplicationController
   before_action :authorize, except: [:new, :create]
   before_action :set_user, only: [:show, :edit, :update, :destroy, :add_admin_rights, :remove_admin_rights, :approve_user, :reject_user]
+  before_action :require_admin, only: [:index, :pending, :approved, :denied, :inactive, :admin]
 
   # GET /users
   # GET /users.json
   def index
     @users = User.all
+  end
+
+  # GET /users/pending
+  # Pending means not approved or denied
+  def pending 
+    @pending_users = User.where(isApproved:false).where(isDenied:false)
+  end
+
+  # GET /users/approved
+  # Already approved but might need to promote to admin/deactivate
+  def approved
+    @approved_users = User.where(isApproved:true).where(isDenied:false)
+  end
+
+  # GET /users/denied
+  # Already denied but might need to approve
+  def denied
+    @denied_users = User.where(isDenied:true).where(isApproved:false)
+  end
+
+  # GET /users/inactive
+  # Already inactive but might need to activate
+  def inactive
+    @denied_users = User.where(isActive:false)
+  end
+
+  # GET /users/admin
+  # Manage all admin users/remove admin rights
+  def admin
+    @admin_users = User.where(isAdmin:true).where(isApproved:true)
   end
 
   # GET /users/1
@@ -37,12 +68,6 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
   end
-
-  # GET /users/1/pending
-  def pending
-    @pending_users = User.where(isApproved:false).where(isActive:false).where(isDenied:false)
-  end
-
 
   # POST /users
   # POST /users.json
@@ -103,13 +128,12 @@ class UsersController < ApplicationController
       @user.isApproved = true
       @user.isDenied = false  
       if @user.save
-        # UserMailer.approve_account(@user).deliver
-        redirect_to pending_users_path, notice: 'User Account request has been approved.'
+        UserMailer.registration_approved(@user,@current_user.email).deliver
       else
         redirect_to pending_users_path, notice: 'Something went wrong.'
       end
     else
-      redirect_to pending_users_path, notice:"Invalid Email."
+      redirect_to pending_users_path, notice: 'Invalid Email.'
     end
   end
 
@@ -121,13 +145,12 @@ class UsersController < ApplicationController
       @user.isApproved = false
       @user.isDenied = true 
       if @user.save
-        # UserMailer.reject_account(@user).deliver
-        redirect_to pending_users_path, notice: 'User Account request has been rejected.'
+        UserMailer.registration_denied(@user,@current_user.email).deliver
       else
         redirect_to pending_users_path, notice: 'Something went wrong.'
       end
     else
-      redirect_to pending_users_path, notice:"Invalid Email."
+      redirect_to pending_users_path, notice: 'Invalid Email.'
     end
   end
 
@@ -150,7 +173,7 @@ class UsersController < ApplicationController
           redirect_to pending_users_path, notice: 'Something went wrong. Email not sent'
         end
       else
-        redirect_to pending_users_path, notice:"Invalid Email."
+        redirect_to pending_users_path, notice: 'Invalid Email.'
       end
     end
 
@@ -194,8 +217,15 @@ class UsersController < ApplicationController
       end 
     end
 
+    def require_admin
+      unless @current_user.isAdmin?
+        redirect_to user_home_path(@current_user), notice: 'Admin only: You are not authorized to view that page.'
+      end
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:email, :password, :password_confirmation, :full_name, :contact_number, :team_id, :supervisor_id, :isSupervisor, :supervisorNameNotAUser)
     end
+
 end

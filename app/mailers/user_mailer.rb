@@ -10,13 +10,16 @@ class UserMailer < ApplicationMailer
   def registration_denied(new_user,admin_email)
   	@new_user = new_user
     mail to: @new_user.email, subject: '[Loggr] Your access request has been denied.', reply_to: admin_email
+    redirect_to pending_users_path, notice: 'User rejected. Email dispatched.'
   end
   def registration_approved(new_user,admin_email)
   	@new_user = new_user
     mail to: @new_user.email, subject: '[Loggr] Your access request has been granted.', reply_to: admin_email
+    redirect_to pending_users_path, notice: 'User approved. Email dispatched.'
   end
   def password_reset(forgetful_user)
   	@forgetful_user = forgetful_user
     mail to: @forgetful_user.email, subject: '[Loggr] Request to reset password'
+    redirect_to login_path, notice: 'Password Reset. Log In with your new password.'
   end
 end
