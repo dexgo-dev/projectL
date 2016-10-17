@@ -70,6 +70,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    redirect_to user_path(@user.id), notice: 'You are not authorized to make modifications to this user.' unless (@current_user.isAdmin?) || (@current_user.id == @user.id)
   end
 
   # POST /users

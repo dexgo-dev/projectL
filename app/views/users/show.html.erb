@@ -17,7 +17,11 @@
 
 <p>
   <strong>Team:</strong>
-  <%= @user.team.name %>
+  <% if @current_user.isAdmin? %>
+    <%= link_to @user.team.name, team_path(@user.team_id) %>
+  <% else %>
+    <%= @user.team.name %>
+  <% end %>
 </p>
 
 <p>
@@ -28,6 +32,7 @@
     <%= link_to User.find(@user.supervisor_id).full_name, user_path(@user.supervisor_id) %>
   <% end %>
 </p>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
+<% if (@current_user.isAdmin?) || (@current_user.id == @user.id) %>
+  <%= link_to 'Edit', edit_user_path(@user) %> |
+<% end %>
 <%= link_to 'Back', users_path %>
