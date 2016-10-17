@@ -46,6 +46,9 @@ class UsersController < ApplicationController
 
   # GET /users/1/home
   def home
+    # Get all active studies (for filter)
+    get_active_studies()
+
     # Recently Contacted Participants:
     get_recently_contacted_participants()
 
@@ -178,15 +181,24 @@ class UsersController < ApplicationController
     end
 
     def get_recently_contacted_participants
+      if params[:filter_participants_by_study].blank? # All Studies
+        study_filter = 0
+      else
+        study_filter = params[:filter_participants_by_study_val]
+      end
       if params[:search].nil?
-        @search_participants = @current_user.participants.recently_contacted
+        if study_filter == 0 # All Studies
+          @search_participants = @current_user.participants.recently_contacted
+        else
+          @search_participants = @current_user.participants.recently_contacted.where(study_id: study_filter)
+        end
         @search_or_recent_header = 'Recently Contacted Participants:'
         @if_empty_string = 'No Participants Contacted Yet.'   
       else
         if params[:filter_participants][:filter_participants_string] == 'All Participants'
-          @search_participants = Participant.search params[:search]
+          @search_participants = Participant.search params[:search], study_filter, @current_user.id
         else
-          @search_participants = @current_user.participants.search params[:search]
+          @search_participants = @current_user.participants.search params[:search], study_filter, @current_user.id
         end
         @search_or_recent_header = 'Found ' + @search_participants.count.to_s + ' Participants'
         @if_empty_string = 'No Participants found in Search.'
@@ -215,6 +227,10 @@ class UsersController < ApplicationController
       else
         @recent_notes_from_user_header = 'Recent Notes From ' + @current_user.full_name + ':'
       end 
+    end
+
+    def get_active_studies
+      @active_studies = Study.where(status: 1) # active: status = 1
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

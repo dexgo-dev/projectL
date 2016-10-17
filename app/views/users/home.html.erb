@@ -2,7 +2,9 @@
 <p>
 <%= form_tag(user_home_path(@current_user.id), method: "get") do %>
   Find Participant by Name: <%= text_field_tag(:search) %>
-  <br/><br/>Show: <%= select(:filter_participants, :filter_participants_string, options_for_select(['All Participants','Only Participants I\'ve Contacted'])) %>
+  <br/><br/>Show:&nbsp;
+  <%= select(:filter_participants, :filter_participants_string, options_for_select(['All Participants','Only Participants I\'ve Contacted'])) %>&nbsp;
+  <%= select(:filter_participants_by_study, :filter_participants_by_study_val, options_from_collection_for_select(@active_studies, 'id', 'study_name'), include_blank: 'All Studies') %>
   <br/><br/><%= submit_tag("Find") %>&nbsp;
   <%= link_to 'Reset', user_home_path(@current_user) %>
 <% end %>

@@ -14,12 +14,22 @@ class Participant < ApplicationRecord
   validates :active, exclusion: { in: [nil] }
   #validates :gender, presence: true
 
-  def self.search search
+  def self.search search, study, user
 	  if search
-	      where('name LIKE ?', "%#{search}%").distinct
+      if study != 0
+        where('name LIKE ?', "%#{search}%").where(study_id: study).distinct
+      else
+        where('name LIKE ?', "%#{search}%").distinct
+      end
 	  else
 	      #where('last_contacted_by = user.id')
-	      joins(:users).where('last_contacted_by = user.id').recently_contacted
+        if study != 0
+	       joins(:users).where(last_contacted_by: user).recently_contacted.where(study_id: study)
+        else
+         joins(:users).where(last_contacted_by: user).recently_contacted
+        end
 	  end
+    
+
   end
 end

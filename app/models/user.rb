@@ -37,7 +37,7 @@ class User < ApplicationRecord
   private
     def init
     # Set initial values - they are always false since the admins will change their values via the approval.
-        if self.isActive .nil?
+        if self.isActive.nil?
           self.isActive = false
         end
         if self.isApproved.nil?
