@@ -44,5 +44,12 @@
       <% end %>
     </tr>
   </table>
+  <%= link_to 'Add New Study', new_study_path %>&nbsp;|&nbsp;<%= link_to 'View Existing Studies', studies_path %><br/>
+  <%= link_to 'Register New Team', new_team_path %>
+  <% if @current_user.isAdmin? %>&nbsp;|&nbsp;<%= link_to 'View Existing Teams', teams_path %><% end %>
+  <br/><%= link_to 'Register New Participant', new_participant_path %>
+  <% if @current_user.isAdmin? %>&nbsp;|&nbsp;<%= link_to 'Back to All Participants', participants_path %><% end %>
+  <br/><%= link_to 'Edit My Details', edit_user_path(@current_user) %>
+  <% if @current_user.isAdmin? %>&nbsp;|&nbsp;<%= link_to 'Back to All Users (Admin)', users_path %><% end %>
   <%=yield %>
 </html>
