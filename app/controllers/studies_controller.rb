@@ -1,6 +1,7 @@
 class StudiesController < ApplicationController
   before_action :authorize
   before_action :set_study, only: [:show, :edit, :update, :destroy]
+  before_action :require_admin, only: [:destroy]
 
   # GET /studies
   # GET /studies.json
