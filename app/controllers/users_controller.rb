@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :authorize, except: [:new, :create]
   before_action :set_user, only: [:show, :edit, :update, :destroy, :add_admin_rights, :remove_admin_rights, :approve_user, :reject_user]
-  before_action :require_admin, only: [:index, :pending, :approved, :denied, :inactive, :admin]
+  before_action :require_admin, only: [:index, :pending, :approved, :denied, :inactive, :admin, :destroy]
 
   # GET /users
   # GET /users.json
@@ -215,12 +215,6 @@ class UsersController < ApplicationController
       else
         @recent_notes_from_user_header = 'Recent Notes From ' + @current_user.full_name + ':'
       end 
-    end
-
-    def require_admin
-      unless @current_user.isAdmin?
-        redirect_to user_home_path(@current_user), notice: 'Admin only: You are not authorized to view that page.'
-      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

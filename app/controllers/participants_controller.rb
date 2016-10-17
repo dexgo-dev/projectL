@@ -2,6 +2,7 @@ class ParticipantsController < ApplicationController
   before_action :authorize
   before_action :check_for_exisiting_study, except: [:index, :show, :destroy]
   before_action :set_participant, only: [:show, :edit, :update, :destroy]
+  before_action :require_admin, only: [:index, :destroy]
 
   # GET /participants
   # GET /participants.json

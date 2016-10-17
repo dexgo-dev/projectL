@@ -11,4 +11,8 @@ class ApplicationController < ActionController::Base
   def authorize
     redirect_to '/login' unless current_user && session[:user_id]
   end
+
+  def require_admin
+  	redirect_to user_home_path(@current_user), notice: 'Admin only: You are not authorized to view that page.' unless @current_user.isAdmin?
+  end
 end
