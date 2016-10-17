@@ -185,9 +185,9 @@ class UsersController < ApplicationController
       if params[:filter_participants_by_study].blank? # All Studies
         study_filter = 0
       else
-        study_filter = params[:filter_participants_by_study_val]
+        study_filter = params[:filter_participants_by_study][:filter_participants_by_study_val]
       end
-      if params[:search].nil?
+      if params[:search].nil? || params[:search].blank?
         if study_filter == 0 # All Studies
           @search_participants = @current_user.participants.recently_contacted
         else
@@ -196,11 +196,7 @@ class UsersController < ApplicationController
         @search_or_recent_header = 'Recently Contacted Participants:'
         @if_empty_string = 'No Participants Contacted Yet.'   
       else
-        if params[:filter_participants][:filter_participants_string] == 'All Participants'
-          @search_participants = Participant.search params[:search], study_filter, @current_user.id
-        else
-          @search_participants = @current_user.participants.search params[:search], study_filter, @current_user.id
-        end
+        @search_participants = Participant.where("name LIKE '%#{params[:search]}%'").where(study_id: study_filter).distinct
         @search_or_recent_header = 'Found ' + @search_participants.count.to_s + ' Participants'
         @if_empty_string = 'No Participants found in Search.'
       end
