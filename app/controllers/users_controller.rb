@@ -183,6 +183,7 @@ class UsersController < ApplicationController
       @user.isDenied = false  
       if @user.save
         UserMailer.registration_approved(@user,@current_user.email).deliver
+        redirect_to pending_users_path, notice: 'User has been approved.'
       else
         redirect_to pending_users_path, notice: 'Something went wrong.'
       end
@@ -200,6 +201,7 @@ class UsersController < ApplicationController
       @user.isDenied = true 
       if @user.save
         UserMailer.registration_denied(@user,@current_user.email).deliver
+        redirect_to pending_users_path, notice: 'User has been denied access.'
       else
         redirect_to pending_users_path, notice: 'Something went wrong.'
       end

@@ -10,7 +10,7 @@
   <body>
     <h1>Welcome to Loggr, <%= @new_user.full_name %>!</h1>
     <p>
-      Your account has been approved. Sign in to Loggr <%= link_to 'here', login_url + '?' + new_user.email %>.
+      Your account has been approved. Sign in to Loggr <%= link_to 'here', @url %>.
     </p>
     <p>
       Ta.
