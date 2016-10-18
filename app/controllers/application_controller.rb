@@ -22,4 +22,13 @@ class ApplicationController < ActionController::Base
   	end
   end
 
+  private
+
+    def get_admin_stats
+      #if current_user.isAdmin?
+        # Get count for users pending approval
+        #@pending_users_count = User.where(isApproved:false).where(isDenied:false).count
+      #end
+    end
+
 end

@@ -10,11 +10,12 @@
   <body>
     <h1>Hi, <%= @new_user.full_name %>!</h1>
     <p>
-      Your access request for Loggr has been denied. If you think this was done in error, please email <%= admin_email %>. Otherwise, disregard this email.
+      Your access request for Loggr has been denied. If you think this was done in error, please email <%= @admin_email %>. Otherwise, disregard this email.
     </p>
     <p>
-      Ta,
-      Loggr Team
+      Ta.
     </p>
+      Sincerely,<br/>
+      Neura Loggr Team
   </body>
 </html>

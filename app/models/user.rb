@@ -18,7 +18,7 @@ class User < ApplicationRecord
   #validates :isDenied, inclusion: { in: [true, false] }
   validates :isSupervisor, inclusion: { in: [true, false] }
 
-  before_save :encrypt_password
+  before_save :encrypt_password, if: :password_changed?
 
   after_initialize :init
 
