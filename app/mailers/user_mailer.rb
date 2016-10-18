@@ -19,7 +19,8 @@ class UserMailer < ApplicationMailer
   end
   def password_reset(forgetful_user)
   	@forgetful_user = forgetful_user
+    @url  = reset_password_url +  "?token=" + Digest::MD5.hexdigest(forgetful_user.email) + "&email=" + forgetful_user.email
     mail to: @forgetful_user.email, subject: '[Loggr] Request to reset password'
-    redirect_to login_path, notice: 'Password Reset. Log In with your new password.'
+    #redirect_to login_path, notice: 'Password Reset. Log In with your new password.'
   end
 end

@@ -12,8 +12,11 @@
   <td align="right">Password:&nbsp;</td>
   <td align="left"><%= password_field_tag :password %></td>
 </tr>
-<tr >
+<tr>
 <td colspan="2" align="center"><%= submit_tag "Alohomora!" %></td>
+</tr>
+<tr>
+<td colspan="2" align="center"><%= link_to "Forgot Password?", "/forgot_password" %></td>
 </tr>
 </table>
 <% end %>

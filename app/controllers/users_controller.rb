@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-  before_action :authorize, except: [:new, :create]
+  before_action :authorize, except: [:new, :create, :forgot_password, :request_password, :change_password, :reset_password]
   before_action :set_user, only: [:show, :edit, :update, :destroy, :add_admin_rights, :remove_admin_rights, :approve_user, :reject_user]
+  before_action :set_user_by_email, only: [:request_password, :change_password]
   before_action :require_admin, only: [:index, :pending, :approved, :denied, :inactive, :admin, :destroy]
 
   # GET /users
@@ -66,6 +67,55 @@ class UsersController < ApplicationController
       redirect_to new_team_path, notice: 'No team exists. You need at least one to begin.'
     end
     @user = User.new
+  end
+
+  def forgot_password
+    @errors = []
+  end
+
+  def request_password
+    @errors = []
+    if @user
+      UserMailer.password_reset(@user).deliver
+      redirect_to forgot_password_path, notice: 'Instructions sent by email'
+    else
+      @errors << "Invalid Email"
+      render :forgot_password
+    end
+
+  end
+
+  def reset_password
+    @errors = []
+  end
+
+  def change_password
+    @errors = []
+
+    if @user
+      if params[:password] == params[:password_confirmation]
+        @user.password = params[:password]
+        if  Digest::MD5.hexdigest(@user.email) == params[:token] 
+          if @user.save
+            @current_user = @user
+            session[:user_id] = @user.id
+            redirect_to root_path, notice: 'Password successfully updated.'
+          else
+            @errors << "Something went wrong"
+            render :reset_password
+          end
+        else
+          @errors << "Invalid Recovery Token"
+          render :reset_password
+        end
+      else
+        @errors << "Passwords don't match"
+        render :reset_password
+      end
+    else
+      @errors << "Invalid Email"
+      render :reset_password
+    end
   end
 
   # GET /users/1/edit
@@ -162,6 +212,13 @@ class UsersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
+    end
+
+    def set_user_by_email
+      @user = User.where(email: params[:email]).where(isActive: true).first
+      if @user.nil?
+        redirect_to root_path, notice: "That email is either invalid or deactivated. Contact your admins."
+      end
     end
 
     def set_admin_rights(isAdmin)

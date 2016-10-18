@@ -89,4 +89,11 @@ Rails.application.routes.draw do
   put '/add_admin_rights/:id' => 'users#add_admin_rights', :as => :add_admin_rights
   put '/approve_user/:id' => 'users#approve_user', :as => :approve_user
   put '/reject_user/:id' => 'users#reject_user', :as => :reject_user
+
+  get '/reset_password' => 'users#reset_password'
+  post '/reset_password' => 'users#change_password'
+
+  get '/forgot_password' => 'users#forgot_password'
+  post '/forgot_password' => 'users#request_password'
+
 end
