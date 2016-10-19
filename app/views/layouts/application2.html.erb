@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Loggr</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <table width="100%">
+    <tr class="dashboard">
+      <td colspan="3" align="left">
+      <h1>Loggr</h1>
+      <h4>Track your Participants</h4>
+      </td>
+    </tr>
+    <tr class="dashboard">
+      <% if @current_user.nil? %>
+        <td colspan="3" align="right">
+          New User?<br/><%= link_to image_tag('signup.png', class: 'icon-links'), '/signup' %>
+        </td> 
+      <% else %>
+        <td align="right">
+        <%= link_to image_tag('home.png', class: 'icon-links'), user_home_path(@current_user) %>
+        </td>
+        <td class="profile_card" align="right">
+          <table>
+            <tr class="profile_card">
+              <td align="right">
+                <%=@current_user.full_name%><br/>
+                <%=@current_user.email%><br/>
+                <%=@current_user.contact_number%><br/>
+                Team: <%= (@current_user.team_id.nil?)? ' No Team Assigned' : (link_to @current_user.team.name, team_path(@current_user.team_id)) %>
+              </td>
+              <td align="left">
+                <%= link_to image_tag('current_user.png', class: 'icon-links'), @current_user %>
+              </td>
+            </tr>
+          </table>
+        </td>
+        <td align="left">
+          <%= link_to image_tag('logout.png', class: 'icon-links'), '/logout' %>
+        </td>
+      <% end %>
+    </tr>
+  </table>
+  <% unless @current_user.nil? %>
+    <% if @current_user.isAdmin? %><%= link_to 'View Pending Approvals', pending_users_path %><br/><% end %>
+    <%= link_to 'Register New Team', new_team_path %><br/>
+    <%= link_to 'Add New Study', new_study_path %>&nbsp;|&nbsp;<%= link_to 'View Existing Studies', studies_path %><br/>
+    <% if @current_user.isAdmin? %><%= link_to 'View Existing Teams', teams_path %><br/><% end %>
+    <%= link_to 'Register New Participant', new_participant_path %>
+    <% if @current_user.isAdmin? %>&nbsp;|&nbsp;<%= link_to 'Back to All Participants', participants_path %><% end %>
+    <br/><%= link_to 'Edit My Details', edit_user_path(@current_user) %>
+    <% if @current_user.isAdmin? %>&nbsp;|&nbsp;<%= link_to 'Back to All Users (Admin)', users_path %><% end %>
+  <% end %>
+  <%=yield %>
+</html>
