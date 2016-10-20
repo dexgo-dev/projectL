@@ -4,7 +4,7 @@
 <%= link_to 'Home', user_home_path(@user) %>&nbsp;|&nbsp;
 <%= link_to 'New Note', new_participant_note_path(@participant) %>&nbsp;|&nbsp;
 <%= link_to 'Back to ' + @participant.name + '\'s page', participant_path(@participant) %></br>
-<table>
+<table class='table table-striped'>
   <thead>
     <tr>
       <th>Last Modified</th>

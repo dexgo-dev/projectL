@@ -16,7 +16,7 @@
 
 <h2><%=@search_or_recent_header %></h2>
 <% unless @search_participants.empty? %>
-<table>
+<table class='table table-striped'>
    <thead>
        <tr>
          <th>Last Contact Date</th>
@@ -55,7 +55,7 @@
 
 <h2><%=@upcoming_notes_notification_header %></h2>
 <% unless @upcoming_notes_notification.empty? %>
- <table>
+ <table class='table table-striped'>
   <thead>
      <tr>
       <th>&nbsp;</th>
@@ -79,7 +79,7 @@
 
  <h2><%=@recent_notes_from_user_header%></h2>
  <% unless @recent_notes_from_user.empty? %>
- <table>
+ <table class='table table-striped'>
     <thead>
        <tr>
         <th>&nbsp;</th>
