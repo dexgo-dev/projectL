@@ -13,7 +13,11 @@ class ApplicationController < ActionController::Base
   end
 
   def require_admin
-  	redirect_to user_home_path(current_user), notice: 'Admin only: You are not authorized to view that page.' unless current_user.isAdmin?
+    if current_user.nil?
+      authorize
+    else
+      redirect_to user_home_path(current_user), notice: 'Admin only: You are not authorized to view that page.' unless current_user.isAdmin?
+    end
   end
 
   def is_admin_or_member_of_team
