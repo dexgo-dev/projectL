@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
 
   def index
-    redirect_to '/', notice: 'You have been logged out.' 
+    redirect_to root_path, notice: 'You have been logged out.' 
   end
 
   def new
@@ -16,15 +16,15 @@ class SessionsController < ApplicationController
       # Save the user id inside the browser cookie. This is how we keep the user 
       # logged in when they navigate around our website.
       session[:user_id] = user.id
-      redirect_to '/'
+      redirect_to user_home_path(user.id)
     else
     # If user's login doesn't work, send them back to the login form.
-      redirect_to '/login', notice: 'Your username or password was incorrect.' 
+      redirect_to login_path, notice: 'Your username or password was incorrect.' 
     end
   end
 
   def destroy
     session[:user_id] = nil
-    redirect_to '/login', notice: 'You have loggd out.' 
+    redirect_to login_path, notice: 'You have loggd out.' 
   end
 end

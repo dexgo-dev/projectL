@@ -130,7 +130,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
         @user.new_user_registration_email
-        format.html { redirect_to '/login', notice: 'User was successfully created. Please see email for Instructions.'
+        format.html { redirect_to login_path, notice: 'User was successfully created. Please see email for Instructions.'
                     }
         format.json { render :show, status: :created, location: @user }
       else

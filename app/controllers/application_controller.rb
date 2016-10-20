@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def authorize
-    redirect_to '/login' unless current_user && session[:user_id]
+    redirect_to login_path unless current_user && session[:user_id]
   end
 
   def require_admin
