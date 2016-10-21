@@ -1,7 +1,7 @@
 class TeamsController < ApplicationController
   before_action :set_team, only: [:show, :edit, :update, :destroy]
   before_action :require_admin, only: [:index, :destroy]
-  before_action :is_admin_or_member_of_team, only: [:show]
+  # before_action :is_admin_or_member_of_team, only: [:show]
 
   # GET /teams
   # GET /teams.json
@@ -12,6 +12,7 @@ class TeamsController < ApplicationController
   # GET /teams/1
   # GET /teams/1.json
   def show
+    @team_contact_user_name = User.find(@team.contact_user).full_name
     @all_members = @team.users
   end
 

@@ -27,6 +27,11 @@
   </div>
 
   <div class="field">
+    <%= f.label "Contact Person" %>
+    <%= f.collection_select(:contact_user, User.where(isActive: true, isApproved: true, isDenied: false), :id, :full_name, include_blank: true) %>
+  </div>
+
+  <div class="field">
     <%= f.label :group_email %>
     <%= f.text_field :group_email %>
   </div>

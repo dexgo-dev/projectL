@@ -21,9 +21,11 @@ class ApplicationController < ActionController::Base
   end
 
   def is_admin_or_member_of_team
-  	unless current_user.isAdmin?
-  		redirect_to user_home_path(current_user), notice: 'Admin only: You are not authorized to view team information for teams you\'re not a member of.' unless (current_user.team_id == @team.id)
-  	end
+    unless current_user.nil?
+    	unless current_user.isAdmin?
+    		redirect_to user_home_path(current_user), notice: 'Admin only: You are not authorized to view team information for teams you\'re not a member of.' unless (current_user.team_id == @team.id)
+    	end
+    end
   end
 
   private
