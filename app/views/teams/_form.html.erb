@@ -24,7 +24,7 @@
   <% unless @all_existing_active_and_approved_users.empty? %>
     <div class="field">
       <%= f.label "Contact Person" %>
-      <%= f.collection_select(:contact_user, options_from_collection_for_select(@all_existing_active_and_approved_users, :id, :full_name, include_blank: true)) %>
+      <%= f.collection_select(:contact_user, User.where(isActive: true, isApproved: true, isDenied: false), :id, :full_name, include_blank: true) %>
     </div>
   <% end %>
 
