@@ -2,7 +2,7 @@
 lock '3.6.1'
 
 set :application, 'loggr'
-set :repo_url, 'git@gitlab.neura.edu.au:d.go/neura-loggr.git'
+set :repo_url, 'git@gitlab.neura.edu.au:delbaere-lab/neura-loggr.git'
 
 set :rvm_type, :system
 set :rvm_ruby_version, File.read("#{File.dirname(__FILE__)}/../.ruby-version").chomp
