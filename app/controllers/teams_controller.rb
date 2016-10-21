@@ -12,7 +12,11 @@ class TeamsController < ApplicationController
   # GET /teams/1
   # GET /teams/1.json
   def show
-    @team_contact_user_name = User.find(@team.contact_user).full_name
+    if @team.contact_user.nil?
+      @team_contact_user_name = ''
+    else
+      @team_contact_user_name = User.find(@team.contact_user).full_name
+    end
     @all_members = @team.users
   end
 
