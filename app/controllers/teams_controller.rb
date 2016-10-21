@@ -24,7 +24,7 @@ class TeamsController < ApplicationController
   def new
     @team = Team.new
 
-    @all_existing_active_and_approved_users = User.where(isActive: true, isApproved: true, isDenied: false), :id, :full_name, include_blank: true)
+    @all_existing_active_and_approved_users = User.where(isActive: true, isApproved: true, isDenied: false)
   end
 
   # GET /teams/1/edit
