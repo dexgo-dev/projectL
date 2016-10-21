@@ -21,15 +21,12 @@
     <%= f.text_area :description %>
   </div>
 
-  <div class="field">
-    <%= f.label :contact_user %>
-    <%= f.number_field :contact_user %>
-  </div>
-
-  <div class="field">
-    <%= f.label "Contact Person" %>
-    <%= f.collection_select(:contact_user, User.where(isActive: true, isApproved: true, isDenied: false), :id, :full_name, include_blank: true) %>
-  </div>
+  <% unless @all_existing_active_and_approved_users.empty? %>
+    <div class="field">
+      <%= f.label "Contact Person" %>
+      <%= f.collection_select(:contact_user, @all_existing_active_and_approved_users, :id, :full_name, include_blank: true) %>
+    </div>
+  <% end %>
 
   <div class="field">
     <%= f.label :group_email %>
