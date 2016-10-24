@@ -1,13 +1,14 @@
 <p id="notice"><%= notice %></p>
 <p>
 <%= form_tag(user_home_path(@current_user.id), method: "get") do %>
-  Find Participant by Name: <%= text_field_tag(:search) %>
-  <br/><br/>Show:&nbsp;
+  Find Participant by <%= select_tag(:field_to_search, options_for_select(([['Name', 'name'], ['E-mail Address', 'email'], ['Contact Number', 'contact_number']]))) %>
+  &nbsp;and Show from this study:&nbsp;
   <% if params[:filter_participants_by_study].nil? %>
     <%= select(:filter_participants_by_study, :filter_participants_by_study_val, options_from_collection_for_select(@active_studies, 'id', 'study_name'), include_blank: 'All Studies') %>
   <% else %>
     <%= select(:filter_participants_by_study, :filter_participants_by_study_val, options_from_collection_for_select(@active_studies, 'id', 'study_name', :selected => params[:filter_participants_by_study][:filter_participants_by_study_val]), include_blank: 'All Studies') %>
-  <% end %>
+  <% end %><br/><br/>
+  <%= text_field_tag(:search) %>
   <br/><br/><%= submit_tag("Find") %>&nbsp;
   <%= link_to 'Reset', user_home_path(@current_user) %>
 <% end %>
