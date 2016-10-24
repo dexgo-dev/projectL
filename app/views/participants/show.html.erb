@@ -4,9 +4,10 @@
   <%= @participant.name %>
 </h2>
 <p>
-<%= link_to 'Home', user_home_path(@current_user) %>&nbsp;|&nbsp;
-<%= link_to 'Edit Profile', edit_participant_path(@participant) %>&nbsp;|&nbsp;
-<%= link_to 'Back to All Participants', participants_path %>
+<%= link_to 'Edit Participant Profile', edit_participant_path(@participant) %>
+<% if @current_user.isAdmin %>
+  &nbsp;|&nbsp;<%= link_to 'Back to All Participants', participants_path %>
+<% end %>
 </p>
 <p>
   <strong>Gender:</strong>
@@ -50,7 +51,7 @@
     <br>Notify On: <%= note.notify_on %>
     <br>Created: <%= note.created_at.inspect %>
     <br>Last Modified: <%= time_ago_in_words(note.updated_at.inspect) %> ago
-    <br><%= link_to "Edit", edit_participant_note_path(note.participant_id,note.id)%> <<% if @current_user.isAdmin %><%= link_to "Delete", participant_note_path(note.participant_id,note.id), method: :delete, data: { confirm: 'Are you sure?' } %><% end %>
+    <br><%= link_to "Edit", edit_participant_note_path(note.participant_id,note.id)%> <% if @current_user.isAdmin %><%= link_to "Delete", participant_note_path(note.participant_id,note.id), method: :delete, data: { confirm: 'Are you sure?' } %><% end %>
   </li>
   <br>
   <% end %>
