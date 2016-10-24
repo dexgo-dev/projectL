@@ -23,7 +23,11 @@
         <td><%= note.note_text %></td>
         <td><%= note.important %></td>
         <td><%= link_to note.user.full_name, note.user %></td>
-        <td><%= note.notify_on %></td>
+        <% if note.notify? %>
+          <td><%= note.notify_on %></td>
+        <% else %>
+          <td>Notification Off</td>
+        <% end %>
         <td><%= link_to 'Edit', edit_participant_note_path(note.participant_id,note.id) %></td>
         <td><%= link_to 'Destroy', participant_note_path(note.participant_id,note.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>

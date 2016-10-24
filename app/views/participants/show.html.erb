@@ -48,7 +48,9 @@
   <% @participant_recent_notes.each do |note| %>
   <li>"<%= note.note_text %>"
     <br>Important: <%= note.important %>
-    <br>Notify On: <%= note.notify_on %>
+    <% if note.notify? %>
+      <br>Notify On: <%= note.notify_on %>
+    <% end %>
     <br>Created: <%= note.created_at.inspect %>
     <br>Last Modified: <%= time_ago_in_words(note.updated_at.inspect) %> ago
     <br><%= link_to "Edit", edit_participant_note_path(note.participant_id,note.id)%> <% if @current_user.isAdmin %><%= link_to "Delete", participant_note_path(note.participant_id,note.id), method: :delete, data: { confirm: 'Are you sure?' } %><% end %>

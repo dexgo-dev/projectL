@@ -60,7 +60,7 @@
      <tr>
       <th>&nbsp;</th>
       <th>Participant</th>
-      <th colspan="2">Notification Date</th>
+      <th colspan="2">Notification</th>
      </tr>
   </thead> 
   <tbody>
@@ -68,8 +68,13 @@
     <tr>
       <td><%= link_to "See Note.", participant_note_path(note.participant.id,note.id)%></td>
       <td><%= link_to note.participant.name, note.participant %>
-      <td><%= link_to "Snooze", edit_participant_note_path(note.participant.id,note.id) %></td>
-      <td><%=note.notify_on.inspect%></td>
+      <% if note.notify? %>
+        <td><%=note.notify_on.inspect%></td>
+        <td><%= link_to "Snooze", edit_participant_note_path(note.participant.id,note.id) %></td>
+      <% else %>
+        <td>Notification Off - These should not show up in here.</td>
+        <td><%= link_to "Edit Notification", edit_participant_note_path(note.participant.id,note.id) %></td>
+      <% end %>
     </tr>
     <% end %>
   </tbody>

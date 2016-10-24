@@ -19,10 +19,13 @@
   <%= link_to @note.user.full_name + ' (' +@note.user.email + ')', @note.user%>
 </p>
 
-<p>
-  <strong>Notify on:</strong>
-  <%= @note.notify_on %>
-</p>
+<% if @note.notify? %>
+	<p>
+	  <strong>Notify on:</strong>
+	  <%= @note.notify_on %>
+	</p>
+<% end %>
+
 
 <%= link_to 'Edit', edit_participant_note_path(@participant,@note) %> |
 <%= link_to 'Back', participant_notes_path(@participant) %>
