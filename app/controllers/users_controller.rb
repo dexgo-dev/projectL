@@ -31,7 +31,7 @@ class UsersController < ApplicationController
   # GET /users/inactive
   # Already inactive but might need to activate
   def inactive
-    @denied_users = User.where(isActive:false).paginate(:page => params[:inactive_users_page], :per_page => 10)
+    @inactive_users = User.where(isActive:false).paginate(:page => params[:inactive_users_page], :per_page => 10)
   end
 
   # GET /users/admin
@@ -165,6 +165,16 @@ class UsersController < ApplicationController
   end
 
   # PATCH/PUT /users/1
+  def activate
+    set_user_isActive(true)
+  end
+
+  # PATCH/PUT /users/1
+  def deactivate
+    set_user_isActive(false)
+  end
+
+  # PATCH/PUT /users/1
   def add_admin_rights
     set_admin_rights(true)
   end
@@ -206,7 +216,7 @@ class UsersController < ApplicationController
         redirect_to pending_users_path, notice: 'Something went wrong.'
       end
     else
-      redirect_to pending_users_path, notice: 'Invalid Email.'
+      redirect_to pending_users_path, notice: 'Invalid Email/User.'
     end
   end
 
@@ -223,6 +233,23 @@ class UsersController < ApplicationController
       end
     end
 
+    def set_user_isActive(isActive)
+      @errors = []
+      if @user
+        @user.isActive = isActive
+        toggle_notice = (@user.isActive)? ("User is now active.") : ("User deactivated.")
+        if @user.save
+          # UserMailer.approve_account(@user).deliver
+          # Send email to notify user that he is now active or not.
+          redirect_to inactive_users_path, notice: toggle_notice
+        else
+          redirect_to inactive_users_path, notice: 'Something went wrong. Email not sent'
+        end
+      else
+        redirect_to inactive_users_path, notice: 'Invalid Email/User.'
+      end
+    end
+
     def set_admin_rights(isAdmin)
       @errors = []
       if @user
@@ -236,7 +263,7 @@ class UsersController < ApplicationController
           redirect_to pending_users_path, notice: 'Something went wrong. Email not sent'
         end
       else
-        redirect_to pending_users_path, notice: 'Invalid Email.'
+        redirect_to pending_users_path, notice: 'Invalid Email/User.'
       end
     end
 

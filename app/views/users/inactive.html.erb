@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Users Pending Approval</h1>
+<h1>Inactive Users</h1>
 <table class='table table-striped'>
   <thead>
     <tr>
@@ -9,13 +9,12 @@
       <th>Contact number</th>
       <th>Team</th>
       <th>Supervisor</th>
-      <th>Admin?</th>
-      <th colspan="3"></th>
+      <th>Activate?</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @pending_users.each do |user| %>
+    <% @inactive_users.each do |user| %>
       <tr>
         <td><%= user.full_name %></td>
         <td><%= user.email %></td>
@@ -29,19 +28,11 @@
               <%= link_to User.find(user.supervisor_id).name, user_path(user.supervisor_id) %>
             <% end %>
         </td>
-        <td>  <% if user.isAdmin? %>
-                <%=link_to 'Remove Admin Rights', remove_admin_rights_path(user.id), method: :put%>
-              <% else %>
-                <%=link_to 'Set as Admin', add_admin_rights_path(user.id), method: :put%>
-              <% end %>
+          <td><%=link_to 'Activate User', activate(user.id), method: :put%>
         </td>
-        <td><%= link_to 'Approve', approve_user_path(user.id), method: :put %></td>
-        <td><%= link_to 'Reject' , reject_user_path(user.id), method: :put %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New User', new_user_path %>

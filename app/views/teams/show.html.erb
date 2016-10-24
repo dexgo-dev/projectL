@@ -37,7 +37,7 @@
         <th></th>
       <% else %>
         <% if @current_user.isAdmin? %>
-          <th colspan="3"></th>
+          <th colspan="2"></th>
         <% else %>
           <th></th>
         <% end %>
@@ -48,7 +48,7 @@
   <tbody>
     <% @all_members.each do |user| %>
       <tr>
-        <td><%= user.full_name %></td>
+        <td><%= link_to user.full_name, user %></td>
         <td><%= user.email %></td>
         <td><%= user.contact_number %></td>
         <td><% unless user.team_id.nil? %> <%= link_to Team.find(user.team_id).name, Team.find(user.team_id) %><%end%></td>
@@ -61,7 +61,6 @@
           <%= link_to User.find(user.supervisor_id).full_name, user_path(user.supervisor_id) %>
         <% end %>
         </td>
-        <td><%= link_to 'Show', user %></td>
         <% unless @current_user.nil? %>
           <% if @current_user.isAdmin? %>
             <td><%= link_to 'Edit', edit_user_path(user) %></td>

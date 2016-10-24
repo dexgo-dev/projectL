@@ -8,18 +8,17 @@
       <th>About This Team</th>
       <th>Contact Person</th>
       <th>Group Email</th>
-      <th colspan="3"></th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @teams.each do |team| %>
       <tr>
-        <td><%= team.name %></td>
+        <td><%= link_to team.name, team %></td>
         <td><%= team.description %></td>
         <td><%= team.contact_user %></td>
         <td><%= team.group_email %></td>
-        <td><%= link_to 'Show', team %></td>
         <td><%= link_to 'Edit', edit_team_path(team) %></td>
         <td><%= link_to 'Destroy', team, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
