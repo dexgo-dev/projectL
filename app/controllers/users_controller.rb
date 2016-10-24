@@ -13,31 +13,31 @@ class UsersController < ApplicationController
   # GET /users/pending
   # Pending means not approved or denied
   def pending 
-    @pending_users = User.where(isApproved:false).where(isDenied:false)
+    @pending_users = User.where(isApproved:false).where(isDenied:false).paginate(:page => params[:pending_users_page], :per_page => 10)
   end
 
   # GET /users/approved
   # Already approved but might need to promote to admin/deactivate
   def approved
-    @approved_users = User.where(isApproved:true).where(isDenied:false)
+    @approved_users = User.where(isApproved:true).where(isDenied:false).paginate(:page => params[:uapproved_users_page], :per_page => 10)
   end
 
   # GET /users/denied
   # Already denied but might need to approve
   def denied
-    @denied_users = User.where(isDenied:true).where(isApproved:false)
+    @denied_users = User.where(isDenied:true).where(isApproved:false).paginate(:page => params[:denied_users_page], :per_page => 10)
   end
 
   # GET /users/inactive
   # Already inactive but might need to activate
   def inactive
-    @denied_users = User.where(isActive:false)
+    @denied_users = User.where(isActive:false).paginate(:page => params[:inactive_users_page], :per_page => 10)
   end
 
   # GET /users/admin
   # Manage all admin users/remove admin rights
   def admin
-    @admin_users = User.where(isAdmin:true).where(isApproved:true)
+    @admin_users = User.where(isAdmin:true).where(isApproved:true).paginate(:page => params[:admin_users_page], :per_page => 10)
   end
 
   # GET /users/1
@@ -263,11 +263,11 @@ class UsersController < ApplicationController
         @search_or_recent_header = @if_empty_string
       end
     
-      @search_participants = @search_participants.paginate(:page => params[:search_participants_page], :per_page => 5)
+      @search_participants = @search_participants.paginate(:page => params[:search_participants_page], :per_page => 10)
     end
 
     def get_upcoming_notifications
-      @upcoming_notes_notification = @current_user.notes.upcoming_notifications_this_week.paginate(:page => params[:upcoming_notes_notification_page], :per_page => 5)
+      @upcoming_notes_notification = @current_user.notes.upcoming_notifications_this_week.paginate(:page => params[:upcoming_notes_notification_page], :per_page => 10)
 
       if @upcoming_notes_notification.empty?
         @upcoming_notes_notification_header = "No Notifications This Week! Yay!"
