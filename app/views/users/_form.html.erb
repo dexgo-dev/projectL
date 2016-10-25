@@ -12,6 +12,12 @@
   <% end %>
 <p id="notice"><%= notice %></p>
   <div class="field">
+      <%= f.label "Team" %>
+      <%= f.collection_select(:team_id, Team.all, :id, :name, prompt: true) %> 
+      &nbsp;Team Not There? <%= link_to "Add New Team", new_team_path %>
+  </div>
+
+  <div class="field">
     <%= f.label :email %>
     <%= f.text_field :email %>
   </div>
@@ -34,12 +40,6 @@
   <div class="field">
     <%= f.label :contact_number %>
     <%= f.text_field :contact_number %>
-  </div>
-
-  <div class="field">
-      <%= f.label "Team" %>
-      <%= f.collection_select(:team_id, Team.all, :id, :name, prompt: true) %> 
-      Team Not There? <%= link_to "Add New Team", new_team_path %>
   </div>
 
   <div class="field">
