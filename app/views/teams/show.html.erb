@@ -1,24 +1,18 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @team.name %>
-</p>
+<h1><%= @team.name %></h1>
 
-<p>
-  <strong>Description:</strong>
-  <%= @team.description %>
-</p>
+<% if @team.description.present? %>
+<p><%= @team.description %></p>
+<% end %>
 
-<p>
-  <strong>Contact user:</strong>
-  <%=   %>
-</p>
+<% if @team.contact_user.present? %>
+<p>Contact <%= User.find(@team.contact_user).full_name %> at <%= User.find(@team.contact_user).email %> <%= ' or (' + User.find(@team.contact_user).contact + ')' %>.</p>
+<% end %>
 
-<p>
-  <strong>Group email:</strong>
-  <%= @team.group_email %>
-</p>
+<% if @team.group_email.present? %>
+<p><strong>Team E-mail Address:</strong><%= @team.group_email %></p>
+<% end %>
 
 <%= link_to 'Edit', edit_team_path(@team) %> |
 <%= link_to 'Back', teams_path %>

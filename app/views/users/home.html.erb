@@ -67,17 +67,18 @@
   <tbody>
     <% @upcoming_notes_notification.each do |note| %>
       <tr class="<%="important_note" if note.important %>">
+      <div class="btn-grp">
       <% if note.notify? %>
         <td><%=note.notify_on.strftime('%D')%></td>
         <td><%=note.notify_on.strftime('%r')%></td>
-        <td><%= link_to "Snooze", edit_participant_note_path(note.participant.id,note.id) %></td>
       <% else %>
         <td colspan="2">Notification Off - These should not show up in here.</td>
-        <td><%= link_to "Edit Notification", edit_participant_note_path(note.participant.id,note.id) %></td>
       <% end %>
+      <td><%= link_to "Edit", edit_participant_note_path(note.participant.id,note.id), :html => {class: "btn"} if (@current_user.id = note.user_id || @current_user.isAdmin) %></td>
       <td><%= link_to note.participant.name, note.participant %></td>
       <td><%= link_to note.user.full_name, note.user %></td>
-      <td><%= truncate(note.note_text)  { link_to "See Note...", participant_note_path(note.participant.id,note.id)} %></td>
+      <td><%= truncate(note.note_text)  { link_to "See Note", participant_note_path(note.participant.id,note.id), class: "btn"} %></td>
+      </div>
     </tr>
     <% end %>
   </tbody>

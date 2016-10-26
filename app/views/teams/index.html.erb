@@ -19,8 +19,10 @@
         <td><%= team.description %></td>
         <td><%= team.contact_user %></td>
         <td><%= team.group_email %></td>
-        <td><%= link_to 'Edit', edit_team_path(team) %></td>
-        <td><%= link_to 'Destroy', team, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Edit', edit_team_path(team) if (@current_user && (@current_user.isAdmin? || (@current_user.team_id == team.id))) %></td>
+        <% if false && @current_user && @current_user.isAdmin? %>
+          <td><%= link_to 'Destroy', team, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

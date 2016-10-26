@@ -1,5 +1,6 @@
 class TeamsController < ApplicationController
   before_action :set_team, only: [:show, :edit, :update, :destroy]
+  before_action :get_all_existing_active_and_approved_users, only: [:new, :edit]
   before_action :require_admin, only: [:index, :destroy]
   # before_action :is_admin_or_member_of_team, only: [:show]
 
@@ -12,19 +13,12 @@ class TeamsController < ApplicationController
   # GET /teams/1
   # GET /teams/1.json
   def show
-    if @team.contact_user.nil?
-      @team_contact_user_name = ''
-    else
-      @team_contact_user_name = User.find(@team.contact_user).full_name
-    end
     @all_members = @team.users
   end
 
   # GET /teams/new
   def new
     @team = Team.new
-
-    @all_existing_active_and_approved_users = User.where(isActive: true, isApproved: true, isDenied: false)
   end
 
   # GET /teams/1/edit
@@ -64,17 +58,21 @@ class TeamsController < ApplicationController
   # DELETE /teams/1
   # DELETE /teams/1.json
   def destroy
-    @team.destroy
-    respond_to do |format|
-      format.html { redirect_to teams_url, notice: 'Team was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    # @team.destroy
+    # respond_to do |format|
+    #   format.html { redirect_to teams_url, notice: 'Team was successfully destroyed.' }
+    #   format.json { head :no_content }
+    # end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_team
       @team = Team.find(params[:id])
+    end
+
+    def get_all_existing_active_and_approved_users
+      @all_existing_active_and_approved_users = User.where(isActive: true, isApproved: true, isDenied: false)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
