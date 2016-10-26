@@ -21,7 +21,7 @@
     <%= f.text_area :description %>
   </div>
 
-  <% unless @all_existing_active_and_approved_users.empty? %>
+  <% unless @all_existing_active_and_approved_users.nil? || @all_existing_active_and_approved_users.empty? %>
     <div class="field">
       <%= f.label "Contact Person" %>
       <%= f.collection_select(:contact_user, @all_existing_active_and_approved_users, :id, :full_name, include_blank: true) %>
