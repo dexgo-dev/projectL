@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   before_action :authorize, except: [:new, :create, :forgot_password, :request_password, :change_password, :reset_password]
   before_action :set_user, only: [:show, :edit, :update, :destroy, :add_admin_rights, :remove_admin_rights, :approve_user, :reject_user]
+  # before_action :set_user_by_email, only: [:request_password, :reset_password, :change_password]
+  # might be unsafe to include get function reset_password
   before_action :set_user_by_email, only: [:request_password, :change_password]
   before_action :require_admin, only: [:index, :pending, :approved, :denied, :inactive, :admin, :destroy]
 
@@ -223,13 +225,18 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params[:id])
+      if params[:id].present?
+        @user = User.find(params[:id])
+      end
     end
 
     def set_user_by_email
       @user = User.where(email: params[:email]).where(isActive: true).first
       if @user.nil?
         redirect_to root_path, notice: "That email is either invalid or deactivated. Contact your admins."
+      else
+        # this is for the instance of get_password where a user is signed in but changing passwords.
+        @current_user = @user
       end
     end
 

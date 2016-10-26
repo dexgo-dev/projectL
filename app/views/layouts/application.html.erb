@@ -78,12 +78,13 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <% unless @current_user.nil? %>
-            <% if @current_user.isAdmin? %>
-              <ul class="nav nav-sidebar">
+            <ul class="nav nav-sidebar">
+              <% if @current_user.isAdmin? %>
                 <li><%= link_to 'View Pending Approvals', pending_users_path %></li>
                 <li><%= link_to 'List All Users', users_path %></li>
-              </ul>
-            <% end %>
+              <% end %>
+              <li><%= link_to "Change Password", reset_password_path +  "?token=" + Digest::MD5.hexdigest(@current_user.email) + "&email=" + @current_user.email %></li>
+            </ul>
             <ul class="nav nav-sidebar">
               <li><%= link_to 'Register New Participant', new_participant_path %></li>
               <li><%= link_to 'List All Participants', participants_path %></li>
