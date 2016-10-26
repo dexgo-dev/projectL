@@ -31,7 +31,7 @@ Rails.application.configure do
   # config.action_controller.asset_host = 'http://assets.example.com'
   config.action_controller.relative_url_root = '/loggr'
 
-  config.action_mailer.default_url_options = { :host => 'http://staging-fbirc.neura.edu.au/loggr' }
+  config.action_mailer.default_url_options = { :host => 'http://staging-fbirc.neura.edu.au' }
 
   # Specifies the header that your server uses for sending files.
   # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
@@ -87,7 +87,7 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.action_mailer.default_url_options = { :host => 'http://staging-fbirc.neura.edu.au/' }
+  config.action_mailer.default_url_options = { :host => 'http://staging-fbirc.neura.edu.au' }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
