@@ -15,7 +15,19 @@ class Note < ApplicationRecord
   }
 
   scope :upcoming_notifications_this_week, -> {
-    where(:notify_on => Date.today.beginning_of_week..Date.today.end_of_week).order(:notify_on)
+    where(notify: true).where(:notify_on => Date.today.beginning_of_week..Date.today.end_of_week).order(:notify_on)
+  }
+
+  scope :upcoming_notifications_this_fortnight, -> {
+    where(notify: true).where(:notify_on => Date.today.beginning_of_week..Date.today.end_of_week + 7).order(:notify_on)
+  }
+
+  scope :upcoming_notifications_this_month, -> {
+    where(notify: true).where(:notify_on => Date.today.beginning_of_month..Date.today.end_of_month).order(:notify_on)
+  }
+
+  scope :major, -> {
+    where(important: true)
   }
 
   # Maximum notes per page.

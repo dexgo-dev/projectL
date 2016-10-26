@@ -58,23 +58,26 @@
  <table class='table table-striped'>
   <thead>
      <tr>
-      <th>&nbsp;</th>
+      <th colspan="3">Notification</th>
       <th>Participant</th>
-      <th colspan="2">Notification</th>
+      <th>Logged by</th>
+      <th>&nbsp;</th>
      </tr>
   </thead> 
   <tbody>
     <% @upcoming_notes_notification.each do |note| %>
-    <tr>
-      <td><%= link_to "See Note.", participant_note_path(note.participant.id,note.id)%></td>
-      <td><%= link_to note.participant.name, note.participant %>
+      <tr class="<%="important_note" if note.important %>">
       <% if note.notify? %>
-        <td><%=note.notify_on.inspect%></td>
+        <td><%=note.notify_on.strftime('%D')%></td>
+        <td><%=note.notify_on.strftime('%r')%></td>
         <td><%= link_to "Snooze", edit_participant_note_path(note.participant.id,note.id) %></td>
       <% else %>
-        <td>Notification Off - These should not show up in here.</td>
+        <td colspan="2">Notification Off - These should not show up in here.</td>
         <td><%= link_to "Edit Notification", edit_participant_note_path(note.participant.id,note.id) %></td>
       <% end %>
+      <td><%= link_to note.participant.name, note.participant %></td>
+      <td><%= link_to note.user.full_name, note.user %></td>
+      <td><%= truncate(note.note_text)  { link_to "See Note...", participant_note_path(note.participant.id,note.id)} %></td>
     </tr>
     <% end %>
   </tbody>
@@ -87,17 +90,17 @@
  <table class='table table-striped'>
     <thead>
        <tr>
+        <th>Last Modified</th>
         <th>&nbsp;</th>
         <th>Participant</th>
-        <th>Last Modified</th>
        </tr>
     </thead> 
     <tbody>
       <% @recent_notes_from_user.each do |note| %>
-      <tr>
-        <td><%= link_to "See Note.", participant_note_path(note.participant.id,note.id)%></td>
-        <td><%= link_to note.participant.name, note.participant %>
+      <tr class="<%="important_note" if note.important %>">
         <td><%= time_ago_in_words(note.updated_at)%> ago</td>
+        <td><%= truncate(note.note_text, length: 60)  { link_to "See Note...", participant_note_path(note.participant.id,note.id)} %></td>
+        <td><%= link_to note.participant.name, note.participant %></td>
       </tr>
       <% end %>
     </tbody>
