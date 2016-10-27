@@ -1,122 +1,130 @@
 <p id="notice"><%= notice %></p>
 <p>
-<%= form_tag(user_home_path(@current_user.id), method: "get") do %>
-  Find Participant by <%= select_tag(:field_to_search, options_for_select(([['Name', 'name'], ['E-mail Address', 'email'], ['Contact Number', 'contact_number']]))) %>
-  &nbsp;and Show from this study:&nbsp;
-  <% if params[:filter_participants_by_study].nil? %>
-    <%= select(:filter_participants_by_study, :filter_participants_by_study_val, options_from_collection_for_select(@active_studies, 'id', 'study_name'), include_blank: 'All Studies') %>
-  <% else %>
-    <%= select(:filter_participants_by_study, :filter_participants_by_study_val, options_from_collection_for_select(@active_studies, 'id', 'study_name', :selected => params[:filter_participants_by_study][:filter_participants_by_study_val]), include_blank: 'All Studies') %>
-  <% end %><br/><br/>
-  <%= text_field_tag(:search) %>
-  <br/><br/><%= submit_tag("Find") %>&nbsp;
-  <%= link_to 'Reset', user_home_path(@current_user) %>
-<% end %>
-</p>
-
-
-<h2><%=@search_or_recent_header %></h2>
-<% unless @search_participants.empty? %>
-<table class='table table-striped'>
-   <thead>
-       <tr>
-         <th>Last Contact Date</th>
-         <th>Participant</th>
-         <th>Contact Number</th>
-         <th>Email Address</th>
-         <th>Study</th>
-         <th>Status</th>
-         <% if @current_user.isAdmin? %>
-          <th colspan="2"></th>
-         <% else %>
-          <th></th>
-         <% end %>
-       </tr>
-  </thead> 
-   <tbody>
-      <% @search_participants.each do |participant| %>
-       <tr>
-         <td><% unless participant.last_contacted_at.nil? %> <%=time_ago_in_words(participant.last_contacted_at)%> ago <% end %></td>
-         <td><%= link_to participant.name, participant %></td>
-         <td><%= participant.contact_number %></td>
-         <td><%= link_to participant.email %></td>
-         <td><%= participant.study.study_name %></td>
-         <td><%= ((participant.active)? ('Active'):('Dropped Out')) %></td>
-         <td><%= link_to 'Edit', edit_participant_path(participant) %></td>
-         <% if @current_user.isAdmin? %>
-          <td><%= link_to 'Destroy', participant, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
-       </tr>
+<table class='table'>
+  <tr>
+    <td colspan="2">
+      <h2><%=@upcoming_notes_notification_header %></h2>
+      <% unless @upcoming_notes_notification.empty? %>
+       <table class='table table-striped'>
+        <thead>
+           <tr>
+            <th colspan="3">Notification</th>
+            <th>Participant</th>
+            <th>Logged by</th>
+            <th>&nbsp;</th>
+           </tr>
+        </thead> 
+        <tbody>
+          <% @upcoming_notes_notification.each do |note| %>
+            <tr class="<%="important_note" if note.important %>">
+            <div class="btn-grp">
+            <% if note.notify? %>
+              <td><%=note.notify_on.strftime('%D')%></td>
+              <td><%=note.notify_on.strftime('%r')%></td>
+            <% else %>
+              <td colspan="2">Notification Off - These should not show up in here.</td>
+            <% end %>
+            <% if note.participant.nil? %>
+              <td colspan="3">Error - the participant to which this note is attached to no longer exists. This is why we avoid deletion of participant records.</td>
+            <% else %>
+              <td><%= truncate(note.note_text)  { link_to "See Note", participant_note_path(note.participant.id,note.id), class: "btn"} %></td>
+              <td><%= link_to "Edit", edit_participant_note_path(note.participant.id,note.id), :html => {class: "btn"} if (@current_user.id = note.user_id || @current_user.isAdmin) %></td>
+              <td><%= link_to note.participant.name, note.participant %></td>
+            <% end %>
+            <% if note.user.nil? %>
+              <td>Error - the user to which this note is attached to no longer exists. This is why we avoid deletion of user records.</td>
+            <% else %>
+              <td><%= link_to note.user.full_name, note.user unless note.user.nil? %></td>
+            <% end %>
+            </div>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
       <% end %>
-   </tbody>
-</table>
-<%=will_paginate(@search_participants, :param_name => 'search_participants_page') %>
-<% end %>
-
-<h2><%=@upcoming_notes_notification_header %></h2>
-<% unless @upcoming_notes_notification.empty? %>
- <table class='table table-striped'>
-  <thead>
-     <tr>
-      <th colspan="3">Notification</th>
-      <th>Participant</th>
-      <th>Logged by</th>
-      <th>&nbsp;</th>
-     </tr>
-  </thead> 
-  <tbody>
-    <% @upcoming_notes_notification.each do |note| %>
-      <tr class="<%="important_note" if note.important %>">
-      <div class="btn-grp">
-      <% if note.notify? %>
-        <td><%=note.notify_on.strftime('%D')%></td>
-        <td><%=note.notify_on.strftime('%r')%></td>
-      <% else %>
-        <td colspan="2">Notification Off - These should not show up in here.</td>
+      <%=will_paginate(@upcoming_notes_notification, :param_name => 'upcoming_notes_notification_page') %>
+    </td>
+    <td>
+      <h2><%=@recent_notes_from_user_header%></h2>
+      <% unless @recent_notes_from_user.empty? %>
+        <table class='table table-striped'>
+          <thead>
+             <tr>
+              <th>Last Modified</th>
+              <th>&nbsp;</th>
+              <th>Participant</th>
+             </tr>
+          </thead> 
+          <tbody>
+            <% @recent_notes_from_user.each do |note| %>
+            <tr class="<%="important_note" if note.important %>">
+              <td><%= time_ago_in_words(note.updated_at)%> ago</td>
+              <% if note.participant.nil? %>
+                <td colspan="2">Error - the participant to which this note is attached to no longer exists. This is why we avoid deletion of participant records.</td>
+              <% else %>
+                <td><%= truncate(note.note_text, length: 30)  { link_to "See Note...", participant_note_path(note.participant.id,note.id)} %></td>
+                <td><%= link_to note.participant.name, note.participant %></td>
+              <% end %>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <%=will_paginate(@recent_notes_from_user, :param_name => 'recent_notes_from_user_page') %>
       <% end %>
-      <% if note.participant.nil? %>
-        <td colspan="3">Error - the participant to which this note is attached to no longer exists. This is why we avoid deletion of participant records.</td>
-      <% else %>
-        <td><%= truncate(note.note_text)  { link_to "See Note", participant_note_path(note.participant.id,note.id), class: "btn"} %></td>
-        <td><%= link_to "Edit", edit_participant_note_path(note.participant.id,note.id), :html => {class: "btn"} if (@current_user.id = note.user_id || @current_user.isAdmin) %></td>
-        <td><%= link_to note.participant.name, note.participant %></td>
-      <% end %>
-      <% if note.user.nil? %>
-        <td>Error - the user to which this note is attached to no longer exists. This is why we avoid deletion of user records.</td>
-      <% else %>
-        <td><%= link_to note.user.full_name, note.user unless note.user.nil? %></td>
-      <% end %>
-      </div>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
-<% end %>
-<%=will_paginate(@upcoming_notes_notification, :param_name => 'upcoming_notes_notification_page') %>
-
- <h2><%=@recent_notes_from_user_header%></h2>
- <% unless @recent_notes_from_user.empty? %>
- <table class='table table-striped'>
-    <thead>
-       <tr>
-        <th>Last Modified</th>
-        <th>&nbsp;</th>
-        <th>Participant</th>
-       </tr>
-    </thead> 
-    <tbody>
-      <% @recent_notes_from_user.each do |note| %>
-      <tr class="<%="important_note" if note.important %>">
-        <td><%= time_ago_in_words(note.updated_at)%> ago</td>
-        <% if note.participant.nil? %>
-          <td colspan="2">Error - the participant to which this note is attached to no longer exists. This is why we avoid deletion of participant records.</td>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="3" align="center">
+      <h2><%=@search_or_recent_header %></h2>
+      <%= form_tag(user_home_path(@current_user.id), method: "get") do %>
+        Find Participant by <%= select_tag(:field_to_search, options_for_select(([['Name', 'name'], ['E-mail Address', 'email'], ['Contact Number', 'contact_number']]))) %>
+        &nbsp;and Show from this study:&nbsp;
+        <% if params[:filter_participants_by_study].nil? %>
+          <%= select(:filter_participants_by_study, :filter_participants_by_study_val, options_from_collection_for_select(@active_studies, 'id', 'study_name'), include_blank: 'All Studies') %>
         <% else %>
-          <td><%= truncate(note.note_text, length: 60)  { link_to "See Note...", participant_note_path(note.participant.id,note.id)} %></td>
-          <td><%= link_to note.participant.name, note.participant %></td>
-        <% end %>
-      </tr>
+          <%= select(:filter_participants_by_study, :filter_participants_by_study_val, options_from_collection_for_select(@active_studies, 'id', 'study_name', :selected => params[:filter_participants_by_study][:filter_participants_by_study_val]), include_blank: 'All Studies') %>
+        <% end %><br/><br/>
+        <%= text_field_tag(:search) %>
+        <br/><br/><%= submit_tag("Find") %>&nbsp;
+        <%= link_to 'Reset', user_home_path(@current_user) %>
       <% end %>
-    </tbody>
- </table>
-<%=will_paginate(@recent_notes_from_user, :param_name => 'recent_notes_from_user_page') %>
-<% end %>
+      <% unless @search_participants.empty? %>
+      <table class='table table-striped'>
+         <thead>
+             <tr>
+               <th>Last Contact Date</th>
+               <th>Participant</th>
+               <th>Contact Number</th>
+               <th>Email Address</th>
+               <th>Study</th>
+               <th>Status</th>
+               <% if @current_user.isAdmin? %>
+                <th colspan="2"></th>
+               <% else %>
+                <th></th>
+               <% end %>
+             </tr>
+        </thead> 
+         <tbody>
+            <% @search_participants.each do |participant| %>
+             <tr>
+               <td><% unless participant.last_contacted_at.nil? %> <%=time_ago_in_words(participant.last_contacted_at)%> ago <% end %></td>
+               <td><%= link_to participant.name, participant %></td>
+               <td><%= participant.contact_number %></td>
+               <td><%= link_to participant.email %></td>
+               <td><%= participant.study.study_name %></td>
+               <td><%= ((participant.active)? ('Active'):('Dropped Out')) %></td>
+               <td><%= link_to 'Edit', edit_participant_path(participant) %></td>
+               <% if @current_user.isAdmin? %>
+                <td><%= link_to 'Destroy', participant, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <% end %>
+             </tr>
+            <% end %>
+         </tbody>
+      </table>
+      <%=will_paginate(@search_participants, :param_name => 'search_participants_page') %>
+      <% end %>
+    </td>
+  </tr>
+</table>
+</p>
