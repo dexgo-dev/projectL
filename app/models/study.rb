@@ -1,6 +1,8 @@
 class Study < ApplicationRecord
   has_many :participants
 
+  after_initialize :init
+
   def init
   # Set initial values
   	if self.status.nil?
