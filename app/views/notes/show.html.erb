@@ -1,12 +1,13 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Participant:</strong>
-  <%= @note.participant.name %>
-</p>
+<h2>Note for <%= @note.participant.name %></h2>
 
 <p>
   "<%= @note.note_text %>"
+</p>
+
+<p>by: 
+  <%= link_to @note.user.full_name + ' (' +@note.user.email + ')', @note.user%>
 </p>
 
 <p>
@@ -14,16 +15,12 @@
   <%= @note.important %>
 </p>
 
-<p>
-  <strong>User:</strong>
-  <%= link_to @note.user.full_name + ' (' +@note.user.email + ')', @note.user%>
-</p>
-
 <% if @note.notify? %>
-	<p>
-	  <strong>Notify on:</strong>
-	  <%= @note.notify_on %>
-	</p>
+	<p>Notification: <%= @note.notify_on %></p>
+<% end %>
+
+<% if @note.isDone? %>
+  <p>Ticked off on: <%= @note.doneOn %> by [add_done_by_here]</p>
 <% end %>
 
 
