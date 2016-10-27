@@ -57,23 +57,34 @@
     <%= f.check_box :isSupervisor %> 
   </div>
 
-  <% unless @current_user.nil? %>
-    <% if @current_user.isAdmin %>
+  <% if @current_user.nil? # New user only %>
+    <% if user.isBlinded.nil? # If field is still nil assumed to be new and not edit %>
+      <div class="field">
+        <%= f.label "Blinded User?" %>
+        <%= f.check_box :isBlinded %> 
+      </div>
+    <% end %>
+  <% else %>
+    <% if @current_user.isAdmin? # Otherwise toggle only if admin is currently logged in. %>
+      <div class="field">
+        <%= f.label "Blinded User?" %>
+        <%= f.check_box :isBlinded, value: user.isBlinded %> 
+      </div>
       <div class="field">
         <%= f.label "Grant this user admin rights?" %>
-        <%= f.check_box :isAdmin %>
+        <%= f.check_box :isAdmin, value: user.isAdmin %>
       </div>
       <div class="field">
         <%= f.label "Is this user still active?" %>
-        <%= f.check_box :isActive %>
+        <%= f.check_box :isActive, value: user.isActive  %>
       </div>
       <div class="field">
         <%= f.label "Approve user?" %>
-        <%= f.check_box :isApproved %>
+        <%= f.check_box :isApproved, value: user.isApproved  %>
       </div>
       <div class="field">
         <%= f.label "Deny user?" %>
-        <%= f.check_box :isDenied %>
+        <%= f.check_box :isDenied, value: user.isDenied %>
       </div>
     <% end %>
   <% end %>

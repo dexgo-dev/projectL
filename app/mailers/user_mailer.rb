@@ -5,6 +5,7 @@ class UserMailer < ApplicationMailer
   end
   def new_registration_email_for_admins(new_user,admin_email)
   	@new_user = new_user
+    @pending_approval_url = pending_users_url  +  "?token=" + Digest::MD5.hexdigest(admin_email) + "&email=" + admin_email
     mail to: admin_email, subject: '[Loggr] ' + @new_user.full_name + ' has signed up.', reply_to: @new_user.email
   end
   def registration_denied(new_user,admin_email)

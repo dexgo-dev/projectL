@@ -74,10 +74,18 @@
       <% else %>
         <td colspan="2">Notification Off - These should not show up in here.</td>
       <% end %>
-      <td><%= link_to "Edit", edit_participant_note_path(note.participant.id,note.id), :html => {class: "btn"} if (@current_user.id = note.user_id || @current_user.isAdmin) %></td>
-      <td><%= link_to note.participant.name, note.participant %></td>
-      <td><%= link_to note.user.full_name, note.user %></td>
-      <td><%= truncate(note.note_text)  { link_to "See Note", participant_note_path(note.participant.id,note.id), class: "btn"} %></td>
+      <% if note.participant.nil? %>
+        <td colspan="3">Error - the participant to which this note is attached to no longer exists. This is why we avoid deletion of participant records.</td>
+      <% else %>
+        <td><%= truncate(note.note_text)  { link_to "See Note", participant_note_path(note.participant.id,note.id), class: "btn"} %></td>
+        <td><%= link_to "Edit", edit_participant_note_path(note.participant.id,note.id), :html => {class: "btn"} if (@current_user.id = note.user_id || @current_user.isAdmin) %></td>
+        <td><%= link_to note.participant.name, note.participant %></td>
+      <% end %>
+      <% if note.user.nil? %>
+        <td>Error - the user to which this note is attached to no longer exists. This is why we avoid deletion of user records.</td>
+      <% else %>
+        <td><%= link_to note.user.full_name, note.user unless note.user.nil? %></td>
+      <% end %>
       </div>
     </tr>
     <% end %>
@@ -100,8 +108,12 @@
       <% @recent_notes_from_user.each do |note| %>
       <tr class="<%="important_note" if note.important %>">
         <td><%= time_ago_in_words(note.updated_at)%> ago</td>
-        <td><%= truncate(note.note_text, length: 60)  { link_to "See Note...", participant_note_path(note.participant.id,note.id)} %></td>
-        <td><%= link_to note.participant.name, note.participant %></td>
+        <% if note.participant.nil? %>
+          <td colspan="2">Error - the participant to which this note is attached to no longer exists. This is why we avoid deletion of participant records.</td>
+        <% else %>
+          <td><%= truncate(note.note_text, length: 60)  { link_to "See Note...", participant_note_path(note.participant.id,note.id)} %></td>
+          <td><%= link_to note.participant.name, note.participant %></td>
+        <% end %>
       </tr>
       <% end %>
     </tbody>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161018012543) do
+ActiveRecord::Schema.define(version: 20161026004538) do
 
   create_table "notes", force: :cascade do |t|
     t.integer  "participant_id"
@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(version: 20161018012543) do
     t.boolean  "isSupervisor"
     t.string   "supervisorNameNotAUser"
     t.boolean  "isDenied"
+    t.boolean  "isBlinded"
   end
 
 end
