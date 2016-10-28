@@ -4,6 +4,7 @@ $brand-primary: #719600 !default;
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+
 /*
  * Base structure
  */
@@ -136,4 +137,54 @@ td.profile_card_details {
 
 td.profile_card_details > a {
     color: #ffcc99;
+}
+
+/*
+ * Beautify checkbox
+ */
+
+.input-group-addon.beautiful input[type="checkbox"],
+.input-group-addon.beautiful input[type="radio"] {
+    display: none;
+    background: transparent;
+}
+
+/*
+ * Post It Effect
+ */
+
+*{
+  margin:0;
+  padding:0;
+}
+body.post_it_note{
+  font-family:arial,sans-serif;
+  font-size:100%;
+  margin:3em;
+  background:#666;
+  color:#fff;
+}
+h2.post_it_note, p.post_it_note{
+  font-size:100%;
+  font-weight:normal;
+}
+ul.post_it_note,li.post_it_note{
+  list-style:none;
+}
+ul.post_it_note{
+  overflow:hidden;
+  padding:3em;
+}
+ul.post_it_note li.post_it_note a.post_it_note{
+  text-decoration:none;
+  color:#000;
+  background:#ffc;
+  display:block;
+  height:15em;
+  width:15em;
+  padding:1em;
+}
+ul.post_it_note li.post_it_note{
+  margin:1em;
+  float:left;
 }
