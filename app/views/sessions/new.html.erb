@@ -1,24 +1,12 @@
-<!-- app/views/sessions/new.html.erb -->
-
 <h1 align="center">Logg'n Here</h1>
 <body class="centered-wrapper">
-<%= form_tag login_path do %>
-<table class="centered-content">
-<tr>
-  <td align="right">Email:&nbsp;</td>
-  <td align="left"><%= text_field_tag :email, params[:email] %></td>
-</tr>
-<tr >
-  <td align="right">Password:&nbsp;</td>
-  <td align="left"><%= password_field_tag :password %></td>
-</tr>
-<tr>
-<td colspan="2" align="center"><%= submit_tag "Alohomora!" %></td>
-</tr>
-<tr>
-<td colspan="2" align="center"><%= link_to "Forgot Password?", forgot_password_path %></td>
-</tr>
-</table>
-<% end %>
+	<%= bootstrap_form_tag url: login_path do |f| %>
+		<div class="form-group">
+			<%= f.text_field :email, value: params[:email], label: "E-mail Address" %>
+	    	<%= f.password_field :password, value: params[:password] %>
+	  	</div>
+		<%= submit_tag "Logg Me In!", class: "btn btn-success" %>
+		<%= link_to "Forgot Password?", forgot_password_path, class: "btn btn-danger" %>
+	<% end %>
 <p id="notice"><%= notice %></p>
 </body>
