@@ -5,19 +5,32 @@
 <%= link_to 'New Note', new_participant_note_path(@participant) %>&nbsp;|&nbsp;
 <%= link_to 'Back to ' + @participant.name + '\'s page', participant_path(@participant) %></br>
 <ul class="post_it_note">
+  <p class="post_it_note_legend">
+    Legend:<br/>
+      Important Note: <%= image_tag('misc/pin_important.png', size: '50') %>&nbsp;
+      Regular Note: <%= image_tag('misc/pin_not_important.png', size: '50') %>
+  </p>
   <% @all_participant_notes.each do |note| %>
-  <li class="post_it_note">
-    <a href="<%= edit_participant_note_path(note.participant_id,note.id)%>" class="post_it_note" %>
-      <h2 class="post_it_note"><%= note.updated_at.strftime('%D %r')%></h2>
-      <p class="post_it_note">
-        "<%= truncate(note.note_text) %>"
-        <br>Important: <%= note.important %>
+  <% if note.important? %>
+    <li class="post_it_note post_it_note_important">
+  <% else %>
+    <li class="post_it_note post_it_note_unimportant">
+  <% end %>
+      <a href="<%= edit_participant_note_path(note.participant_id,note.id)%>" class="post_it_note" %>
         <% if note.notify? %>
-          <br/>Notify On: <%= note.notify_on.strftime('%D %r') %>
+          <h2 class="post_it_note">
+            <%= image_tag('misc/notify.png', size: '25') %> <%= note.notify_on.strftime('%D %r') %>
+          </h2>
         <% end %>
-        <br/>
-      </p>
-    </a>
+        <p class="post_it_note">
+          "<%= truncate(note.note_text) %>"
+        </p>
+        <p class="post_it_note_footer">
+          <%= image_tag('icons2/png/pencil.png', size: '25') %> <%= note.updated_at.strftime('%D %r')%><br/>
+          <%= note.user.full_name unless (note.user.id == @current_user.id) %><br/>
+          <%= note.user.team.name unless (note.user.id == @current_user.id) %>
+        </p>
+      </a>
   </li>
   <% end %>
 </ul>

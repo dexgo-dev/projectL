@@ -139,46 +139,62 @@ td.profile_card_details > a {
 }
 
 /*
- * Beautify checkbox
- */
-
-.input-group-addon.beautiful input[type="checkbox"],
-.input-group-addon.beautiful input[type="radio"] {
-    display: none;
-    background: transparent;
-}
-
-/*
- * Post It Effect
+ * Sticky Notes w/ Corkboard
  */
 
 *{
   margin:0;
   padding:0;
 }
-body.post_it_note{
-  font-family:arial,sans-serif;
-  font-size:100%;
+
+body.post_it_note {
   margin:3em;
   background:#666;
   color:#fff;
 }
-h2.post_it_note, p.post_it_note{
-  font-size:100%;
+
+h2.post_it_note, p.post_it_note_footer {
+  font-size:70%;
+}
+
+p.post_it_note {
+  font-size:80%;
+}
+
+p.post_it_note_legend {
+  font-size:200%;
+  align:center;
+}
+
+h2.post_it_note, p.post_it_note, p.post_it_note_legend {
   font-weight:normal;
 }
-ul.post_it_note,li.post_it_note{
-  list-style:none;
+
+ul.post_it_note_important, li.post_it_note_important {
+  list-style-image: url('misc/pin_important_s.png');
 }
-ul.post_it_note{
+
+ul.post_it_note_unimportant, li.post_it_note_unimportant {
+  list-style-image: url('misc/pin_not_important_s.png');
+}
+
+ul.post_it_note, li.post_it_note {
+  list-style-position: inside;
+  background-image: url('background/corkboard.jpg');
+
+}
+
+ul.post_it_note {
   overflow:hidden;
   padding:3em;
 }
-ul.post_it_note li.post_it_note{
+
+ul.post_it_note li.post_it_note {
   margin:1em;
   float:left;
 }
-ul.post_it_note li.post_it_note a.post_it_note{
+
+ul.post_it_note li.post_it_note a.post_it_note {
   font-family: 'Atma';
   font-size:180%;
   text-decoration:none;
@@ -202,8 +218,8 @@ ul.post_it_note li.post_it_note a.post_it_note{
   -webkit-transition:-webkit-transform .15s linear;
 }
 
-/* Tilting Effects */
-ul.post_it_note li.post_it_note:nth-child(even) a.post_it_note{
+/* Sticky Notes: Tilting Effects */
+ul.post_it_note li.post_it_note:nth-child(even) a.post_it_note {
   -o-transform:rotate(4deg);
   -webkit-transform:rotate(4deg);
   -moz-transform:rotate(4deg);
@@ -211,14 +227,16 @@ ul.post_it_note li.post_it_note:nth-child(even) a.post_it_note{
   top:5px;
   background:#cfc;
 }
-ul.post_it_note li.post_it_note:nth-child(3n) a.post_it_note{
+
+ul.post_it_note li.post_it_note:nth-child(3n) a.post_it_note {
   -o-transform:rotate(-3deg);
   -webkit-transform:rotate(-3deg);
   -moz-transform:rotate(-3deg);
   position:relative;
   top:-5px;
 }
-ul.post_it_note li.post_it_note:nth-child(5n) a.post_it_note{
+
+ul.post_it_note li.post_it_note:nth-child(5n) a.post_it_note {
   -o-transform:rotate(5deg);
   -webkit-transform:rotate(5deg);
   -moz-transform:rotate(5deg);
