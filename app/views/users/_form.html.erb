@@ -1,35 +1,44 @@
 <%= bootstrap_form_for(user, label_errors: true) do |f| %>
+  <% if @user.errors.any? %>
+    <div class="alert alert-danger">
+      <% @user.errors.full_messages.each do |message| %>
+        <li class="error"><%= message %></li>
+      <% end %>
+    </div>  
+  <% end %>
   <p id="notice"><%= notice %></p>
   <div class="row">
-    <div class="form-group col-xs-8">
+    <div class="form-group col-xs-6">
       <%= f.collection_select(:team_id, Team.all, :id, :name, prompt: "Select Team...", label: "Team") %> 
       <span class="help-block">Team not on the list? <%= link_to "Add New Team!", new_team_path %></span>
     </div>
   </div>
   <div class="row">
-    <div class="form-group col-xs-4">
+    <div class="form-group col-xs-3">
       <%= f.text_field :full_name, label: "Name" %>
     </div>
-    <div class="form-group col-xs-4">
+    <div class="form-group col-xs-3">
       <%= f.text_field :contact_number %>
     </div>
   </div>
 
   <div class="row">
-    <div class="form-group col-xs-8">
+    <div class="form-group col-xs-6">
       <%= f.text_field :email, label: "E-mail Address", placeholder: "user@neura.edu.au", icon: "email" %>
       <span class="help-block">This will also be your Loggr ID. It is advisable to use your NeuRA E-mail address if you are from NeuRA </span>
     </div>
   </div>
 
-  <div class="row">
-    <div class="form-group col-xs-4">
-      <%= f.password_field :password %>
+  <% if @current_user.nil? # New user only %>
+    <div class="row">
+      <div class="form-group col-xs-3">
+        <%= f.password_field :password %>
+      </div>
+      <div class="form-group col-xs-3">
+        <%= f.password_field :password_confirmation %>
+      </div>
     </div>
-    <div class="form-group col-xs-4">
-      <%= f.password_field :password_confirmation %>
-    </div>
-  </div>
+  <% end %>
 
   <div class="row">
     <div class="form-group col-xs-6">
@@ -42,71 +51,50 @@
   <div class="row">
     <% if @current_user.nil? # New user only %>
       <% if user.isBlinded.nil? # If field is still nil assumed to be new and not edit %>
-
         <!-- Set Blinded User at signup -->
         <div class="form-group col-xs-6">
-          <label>Blinded User?</label>
-          <%= f.check_box :isBlinded, html: {data-toggle: "toggle"}, 'Blinded', 'Not Blinded' %>
-          <div class="checkbox checkbox-slider--a checkbox-slider-info">
-            <!-- <%#= f.check_box :isBlinded, :data => { :toggle => 'toggle'}, 'Blinded', 'Not Blinded' %> -->
-            <input id="isBlinded" type="checkbox" data-toggle="toggle" data-on="Blinded" data-off="Not Blinded" <%= "checked" if user.isBlinded? %>>
-          </div>
+          <%= f.label 'Blinded User?' %>
+          <%= f.check_box :isBlinded, data: { toggle: 'toggle', on: 'Blinded', onstyle: 'info', off: 'Nope', offstyle: 'default', width: '100'}, label: '' %>
         </div>
-
       <% end %>
     <% else %>
       <% if @current_user.isAdmin? # Otherwise toggle only if admin is currently logged in. %>
-        <!-- Admin User? -->
-        <div class="field form-group col-xs-6">
-          <label>Admin User?</label>
-          <div class="checkbox checkbox-slider--a checkbox-slider-danger">
-            <!-- <%#= f.check_box :isAdmin, :data => { :toggle => 'toggle'}, 'Admin User', 'Regular User' %> -->
-            <input id="isAdmin" type="checkbox" data-toggle="toggle" data-on="Admin User" data-off="Regular User" <%= "checked" if user.isAdmin? %>>
-          </div>
-        </div>
-
-        <!-- Active User? -->
         <div class="form-group col-xs-6">
-          <label>Active User?</label>
-          <div class="checkbox checkbox-slider--a checkbox-slider-danger">
-            <!-- <%#= f.check_box :isActive, :data => { :toggle => 'toggle'}, 'Admin User', 'Regular User' %> -->
-            <input id="isActive" type="checkbox" data-toggle="toggle" data-on="Active User" data-off="Deactivated" <%= "checked" if user.isActive? %>>
-          </div>
-        </div>
-        
+          <table>
+            <tr>
+              <!-- Admin User? -->
+              <td align="center">User Type: Admin or Regular User?<br/>
+              <%= f.check_box :isAdmin, data: { toggle: 'toggle', on: 'Admin', onstyle: 'primary', off: 'Peasant', offstyle: 'default', width: '80'}, label: '' %></td>
 
-        <!-- Approved User? -->
-        <div class="form-group col-xs-6">
-          <label>Approved User?</label>
-          <div class="checkbox checkbox-slider--a checkbox-slider-warning">
-            <!-- <%#= f.check_box :isApproved, :data => { :toggle => 'toggle'}, 'Approved User', 'Pending Approval' %> -->
-            <input id="isApproved" type="checkbox" data-toggle="toggle" data-on="Approved User" data-off="Pending Approval" <%= "checked" if user.isApproved? %>>
-          </div>
-        </div>
+              <!-- Active User? -->
+              <td align="center">Is This User Active?<br/>
+              <%= f.check_box :isActive, data: { toggle: 'toggle', on: 'Active', onstyle: 'success', off: 'Disabled', offstyle: 'warning', width: '80'}, label: '' %></td>
+            </tr>
 
-        <!-- Denied User? -->
-        <div class="form-group col-xs-6">
-          <label>Denied User?</label>
-          <div class="checkbox checkbox-slider--a checkbox-slider-warning">
-            <!-- <%#= f.check_box :isDenied, :data => { :toggle => 'toggle'}, 'Denied User', 'Not Denied' %> -->
-            <input id="isDenied" type="checkbox" data-toggle="toggle" data-on="Is Denied" data-off="Not Denied" <%= "checked" if user.isDenied? %>>
-          </div>
-        </div>
+            <tr>
+              <!-- Approved User? -->
+              <td align="center">Approve Access?<br/>
+              <%= f.check_box :isApproved, data: { toggle: 'toggle', on: 'Access Granted', onstyle: 'success', off: 'Access Revoked', offstyle: 'warning', width: '150'}, label: '' %></td>
 
-        <!-- Blinded User? -->
-        <div class="form-group col-xs-6">
-          <label>Blinded User?</label>
-          <div class="checkbox checkbox-slider--a checkbox-slider-info">
-            <!-- <%#= f.check_box :isBlinded, :data => { :toggle => 'toggle'}, 'Blinded', 'Not Blinded' %> -->
-            <input id="isBlinded" type="checkbox" data-toggle="toggle" data-on="Blinded" data-off="Not Blinded" >
-          </div>
+              <!-- Denied User? -->
+              <td align="center">Reject Access?<br/>
+              <%= f.check_box :isDenied, data: { toggle: 'toggle', on: 'Access Rejected', onstyle: 'danger', off: 'Access Granted', offstyle: 'default', width: '150'}, label: '' %></td>
+            </tr>
+
+            <tr>
+              <!-- Blinded User? -->
+              <td align="center" colspan="2">Blinded User?<br/>
+              <%= f.check_box :isBlinded, data: { toggle: 'toggle', on: 'Blinded', onstyle: 'info', off: 'Nope', offstyle: 'default', width: '100'}, label: '' %></td>
+            </tr>
+          </table>
         </div>
       <% end %>
     <% end %>
   </div>
 
-  <div class="actions">
-    <%= f.submit class: "btn btn-success" %> <%= link_to 'Back', root_path, class: "btn btn-warning"  %>
+  <div class="actions form-group col-xs-4">
+    <%= f.submit "Save Changes",  class: "btn btn-success" %> 
+    <%= link_to 'Back', :back, class: "btn btn-warning"  %>
   </div>
 
 <% end %>

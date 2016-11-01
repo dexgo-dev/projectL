@@ -15,7 +15,8 @@ gem 'puma', '~> 3.0'
 gem 'bootstrap-sass'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
-# Use toggle button from bootstrap
+# Use bootstrap switch/bootstrap toggle
+# gem 'bootstrap-switch-rails', '~> 3.0.0' 
 gem 'bootstrap-toggle-rails'
 # Use bootstrap_form
 gem 'bootstrap_form'
@@ -29,8 +30,11 @@ gem 'coffee-rails', '~> 4.2'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+
+# Dex Go <d.go@neura.edu.au> Disabled because this does several things to rile up JQuery Bootstrap features.
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5'
+# gem 'turbolinks', '~> 5'
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production

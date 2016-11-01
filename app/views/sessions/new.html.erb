@@ -1,12 +1,15 @@
-<h1 align="center">Logg'n Here</h1>
 <body class="centered-wrapper">
-	<%= bootstrap_form_tag url: login_path do |f| %>
-		<div class="form-group">
+	<div class="form-group col-xs-6" align="center">
+		<h1>Logg'n Here</h1>
+		<p>
+		<%= bootstrap_form_tag url: login_path do |f| %>
 			<%= f.text_field :email, value: params[:email], label: "E-mail Address" %>
-	    	<%= f.password_field :password, value: params[:password] %>
-	  	</div>
-		<%= submit_tag "Logg Me In!", class: "btn btn-success" %>
-		<%= link_to "Forgot Password?", forgot_password_path, class: "btn btn-danger" %>
-	<% end %>
+		    <%= f.password_field :password, value: params[:password] %>
+
+			<%= submit_tag "Logg In!", class: "btn btn-success" %>
+			<%= link_to "Forgot Password?", forgot_password_path, class: "btn btn-danger" %>
+		<% end %>
+		</p>
+	</div>
 <p id="notice"><%= notice %></p>
 </body>

@@ -1,7 +1,6 @@
 $font-family-sans-serif: 'Metrophobic', 'Cabin', sans-serif;
 $brand-primary: #719600 !default;
 
-@import "bootstrap-sprockets";
 @import "bootstrap";
 
 
@@ -175,16 +174,55 @@ ul.post_it_note{
   overflow:hidden;
   padding:3em;
 }
+ul.post_it_note li.post_it_note{
+  margin:1em;
+  float:left;
+}
 ul.post_it_note li.post_it_note a.post_it_note{
+  font-family: 'Atma';
+  font-size:180%;
   text-decoration:none;
   color:#000;
   background:#ffc;
   display:block;
-  height:15em;
-  width:15em;
-  padding:1em;
+  height:10em;
+  width:10em;
+
+  /* Shadows */
+  /* Firefox */
+  -moz-box-shadow:5px 5px 7px rgba(33,33,33,1);
+  /* Safari+Chrome */
+  -webkit-box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+  /* Opera */
+  box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+
+  /* Transitions */
+  -moz-transition:-moz-transform .15s linear;
+  -o-transition:-o-transform .15s linear;
+  -webkit-transition:-webkit-transform .15s linear;
 }
-ul.post_it_note li.post_it_note{
-  margin:1em;
-  float:left;
+
+/* Tilting Effects */
+ul.post_it_note li.post_it_note:nth-child(even) a.post_it_note{
+  -o-transform:rotate(4deg);
+  -webkit-transform:rotate(4deg);
+  -moz-transform:rotate(4deg);
+  position:relative;
+  top:5px;
+  background:#cfc;
+}
+ul.post_it_note li.post_it_note:nth-child(3n) a.post_it_note{
+  -o-transform:rotate(-3deg);
+  -webkit-transform:rotate(-3deg);
+  -moz-transform:rotate(-3deg);
+  position:relative;
+  top:-5px;
+}
+ul.post_it_note li.post_it_note:nth-child(5n) a.post_it_note{
+  -o-transform:rotate(5deg);
+  -webkit-transform:rotate(5deg);
+  -moz-transform:rotate(5deg);
+  position:relative;
+  top:-10px;
+  background:#ccf;
 }

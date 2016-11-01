@@ -4,7 +4,26 @@
 <%= link_to 'Home', user_home_path(@user) %>&nbsp;|&nbsp;
 <%= link_to 'New Note', new_participant_note_path(@participant) %>&nbsp;|&nbsp;
 <%= link_to 'Back to ' + @participant.name + '\'s page', participant_path(@participant) %></br>
-<table class='table table-striped'>
+<ul class="post_it_note">
+  <% @all_participant_notes.each do |note| %>
+  <li class="post_it_note">
+    <a href="<%= edit_participant_note_path(note.participant_id,note.id)%>" class="post_it_note" %>
+      <h2 class="post_it_note"><%= note.updated_at.strftime('%D %r')%></h2>
+      <p class="post_it_note">
+        "<%= truncate(note.note_text) %>"
+        <br>Important: <%= note.important %>
+        <% if note.notify? %>
+          <br/>Notify On: <%= note.notify_on.strftime('%D %r') %>
+        <% end %>
+        <br/>
+      </p>
+    </a>
+  </li>
+  <% end %>
+</ul>
+<%= will_paginate(@all_participant_notes) %>
+
+<!-- <table class='table table-striped'>
   <thead>
     <tr>
       <th>Last Modified</th>
@@ -37,5 +56,5 @@
     <% end %>
   </tbody>
 </table>
-<%= will_paginate(@all_participant_notes) %>
+<%= will_paginate(@all_participant_notes) %> -->
 <br>

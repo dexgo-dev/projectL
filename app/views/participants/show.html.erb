@@ -47,20 +47,18 @@
 <ul class="post_it_note">
   <% @participant_recent_notes.each do |note| %>
   <li class="post_it_note">
-    <a href="#" class="post_it_note">
+    <a href="<%= edit_participant_note_path(note.participant_id,note.id)%>" class="post_it_note" %>
+      <h2 class="post_it_note"><%= note.updated_at.strftime('%D %r')%></h2>
       <p class="post_it_note">
-      <%= note.updated_at.strftime('%D %r')%>
-      
-        "<%= note.note_text %>"
+        "<%= truncate(note.note_text) %>"
         <br>Important: <%= note.important %>
         <% if note.notify? %>
-          <br>Notify On: <%= note.notify_on %>
+          <br/>Notify On: <%= note.notify_on.strftime('%D %r') %>
         <% end %>
-        <br><%= link_to "Edit", edit_participant_note_path(note.participant_id,note.id)%> <% if @current_user.isAdmin %><%= link_to "Delete", participant_note_path(note.participant_id,note.id), method: :delete, data: { confirm: 'Are you sure?' } %><% end %>
+        <br/>
       </p>
     </a>
   </li>
-  <br>
   <% end %>
 </ul>
 <%= will_paginate(@participant_recent_notes) %>
