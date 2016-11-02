@@ -6,9 +6,8 @@
 <%= link_to 'Back to ' + @participant.name + '\'s page', participant_path(@participant) %></br>
 <ul class="post_it_note">
   <p class="post_it_note_legend">
-    Legend:<br/>
-      Important Note: <%= image_tag('misc/pin_important.png', size: '50') %>&nbsp;
-      Regular Note: <%= image_tag('misc/pin_not_important.png', size: '50') %>
+    <br/><%= image_tag('misc/pin_important.png', size: '50') %> Important &nbsp;&nbsp;&nbsp;&nbsp;
+         <%= image_tag('misc/pin_not_important.png', size: '50') %>
   </p>
   <% @all_participant_notes.each do |note| %>
   <% if note.important? %>
@@ -27,8 +26,8 @@
         </p>
         <p class="post_it_note_footer">
           <%= image_tag('icons2/png/pencil.png', size: '25') %> <%= note.updated_at.strftime('%D %r')%><br/>
-          <%= note.user.full_name unless (note.user.id == @current_user.id) %><br/>
-          <%= note.user.team.name unless (note.user.id == @current_user.id) %>
+          <%= note.user.full_name unless (note.user.nil? || (note.user.id == @current_user.id)) %><br/>
+          <%= note.user.team.name unless (note.user.nil? || (note.user.id == @current_user.id)) %>
         </p>
       </a>
   </li>
