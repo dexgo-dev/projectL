@@ -21,7 +21,7 @@ development:
   pool: 5
   socket: /tmp/mysql.sock
   username: root
-  password: Lannister85
+  password: merrychristmasbirch
   database: loggr_development
   
 test:
@@ -31,7 +31,7 @@ test:
   pool: 5
   socket: /tmp/mysql.sock
   username: root
-  password: Lannister85
+  password: merrychristmasbirch
   database: loggr_test
 
 staging:
@@ -41,7 +41,7 @@ staging:
   pool: 5
   socket: /tmp/mysql.sock
   username: root
-  password: Lannister85
+  password: merrychristmasbirch
   database: loggr_staging
 
 production:
@@ -51,6 +51,6 @@ production:
   pool: 5
   socket: /tmp/mysql.sock
   username: root
-  password: Lannister85 # Don't forget to remove this here
+  password: merrychristmasbirch # Don't forget to remove this here
   database: loggr_production
 
