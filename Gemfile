@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 # Use mysql2 as the database for Active Record
-gem 'sqlite3'
+gem 'sqlite3' #leave this interim
 #gem 'mysql2', '~> 0.3.11'
 # Support database dump.
 gem 'yaml_db'
@@ -70,3 +70,6 @@ gem 'awesome_print', require:'ap'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# MySQL
+gem 'mysql2'
