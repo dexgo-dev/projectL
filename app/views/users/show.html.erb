@@ -1,38 +1,71 @@
 <p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
+<p align="center">
+<div class="toppad container-fluid">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        <%= @user.full_name %>
+        <%= image_tag("icon/png/key.png", size:"20x20", title:"Admin") if @user.isAdmin? %>&nbsp;&nbsp;&nbsp;
+        <%= image_tag("active.png", size:"20x20", title:"Active") if @user.isActive? %>&nbsp;&nbsp;&nbsp;
+        <%= image_tag("icon/png/users.png", size:"20x20", title:"Supervisor") if @user.isSupervisor? %>&nbsp;&nbsp;&nbsp;
+        <%= image_tag("icon/png/checked.png", size:"20x20", title:"Approved") if (@user.isApproved? && !@user.isDenied?) %>&nbsp;&nbsp;&nbsp;
+        <%= image_tag("icon/png/multiply-1.png", size:"20x20", title:"Rejected") if (@user.isDenied? && !@user.isApproved?) %>&nbsp;&nbsp;&nbsp;
+        <%= image_tag("icon/png/eyeglasses.png", size:"20x20", title:"Blinded") if @user.isBlinded? %>&nbsp;&nbsp;&nbsp;
+      </h3>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-3 col-lg-3" align="center">
+          <%= image_tag("https://www.barfoot.co.nz/images/noprofile-big.png", class:"img-circle img-responsive", title:"You look so cute on this one.", size:"150x150") %><br/>
+          <%= link_to 'Update User', edit_user_path(@user), class:"btn btn-danger" if (@current_user.isAdmin?) || (@current_user.id == @user.id) %>
+        </div>
+        <div class=" col-md-9 col-lg-9 "> 
+          <table class="table table-user-information table-striped">
+            <tbody>
+              <% if @user.email.present? %>
+                <tr>
+                  <td class="attribute_data">Loggr ID</td>
+                  <td><%= @user.email %></td>
+                </tr>
+              <% end %>
+              <% if @user.contact_number.present? %>
+                <tr>
+                  <td class="attribute_data">Contact Number</td>
+                  <td><%= @user.contact_number %></td>
+                </tr>
+              <% end %>
+              <% if @user.team_id.present? %>
+                <tr>
+                  <td class="attribute_data">Team</td>
+                  <td>
+                    <% if (@current_user.isAdmin? || (@current_user.team_id == @user.team_id)) %>
+                      <%= link_to @user.team.name, team_path(@user.team_id) %>
+                    <% else %>
+                      <%= @user.team.name %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+              <% if @user.supervisor_id.present? || @user.supervisorNameNotAUser.present? %>
+                <tr>
+                  <td class="attribute_data">Supervisor</td>
+                  <td>
+                    <% if @user.supervisor_id.nil? %>
+                      <%= @user.supervisorNameNotAUser %>
+                    <% else %>
+                      <%= link_to User.find(@user.supervisor_id).full_name, user_path(@user.supervisor_id) %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </p>
-
-<p>
-  <strong>Full name:</strong>
-  <%= @user.full_name %>
+<p align="center">
+  <%= link_to 'All Users', users_path, class:"btn btn-info" if @current_user.isAdmin? %>
 </p>
-
-<p>
-  <strong>Contact number:</strong>
-  <%= @user.contact_number %>
-</p>
-
-<p>
-  <strong>Team:</strong>
-  <% if @current_user.isAdmin? %>
-    <%= link_to @user.team.name, team_path(@user.team_id) %>
-  <% else %>
-    <%= @user.team.name %>
-  <% end %>
-</p>
-
-<p>
-  <strong>Supervisor:</strong>
-  <% if @user.supervisor_id.nil? %>
-    <%= @user.supervisorNameNotAUser %>
-  <% else %>
-    <%= link_to User.find(@user.supervisor_id).full_name, user_path(@user.supervisor_id) %>
-  <% end %>
-</p>
-<% if (@current_user.isAdmin?) || (@current_user.id == @user.id) %>
-  <%= link_to 'Edit', edit_user_path(@user) %> |
-<% end %>
-<%= link_to 'Back', users_path %>

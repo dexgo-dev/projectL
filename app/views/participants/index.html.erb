@@ -1,45 +1,51 @@
-<p id="notice"><%= notice %></p>
-<br/><br/>
-<%= link_to 'Home', user_home_path(@current_user) %>&nbsp;|&nbsp;
-<%= link_to 'Register New Participant', new_participant_path %>
-<br/><br/>
 <h1>All Participants</h1>
-<table class='table table-striped'>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Gender</th>
-      <th>Contact number</th>
-      <th>Home address</th>
-      <th>Status</th>
-      <th>Study</th>
-      <th>Date of birth</th>
-      <th>Email</th>
-      <% if @current_user.isAdmin? %>
-        <th colspan="2"></th>
-      <% else %>
-        <th></th>
-      <% end %>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @participants.each do |participant| %>
+<p id="notice"><%= notice %></p>
+<% unless @participants.nil? || @participants.empty? %>
+  <p>
+    <%= link_to 'Register New Participant', new_participant_path, class:"btn btn-warning" %> 
+    <%= link_to "Export to CSV", participants_path(format: "csv"), class: 'btn btn-info' %>
+  </p>
+  <table class='table table-striped'>
+    <thead>
       <tr>
-        <td><%= link_to participant.name, participant %></td>
-        <td><%= participant.gender %></td>
-        <td><%= participant.contact_number %></td>
-        <td><%= participant.home_address %></td>
-        <td><%= ((participant.active)? ('Active'):('Dropped Out')) %></td>
-        <td><%= participant.study.study_name %></td>
-        <td><%= participant.date_of_birth %></td>
-        <td><%= participant.email %></td>
-        <td><%= link_to 'Edit', edit_participant_path(participant) %></td>
-        <% if @current_user.isAdmin %>
-          <td><%= link_to 'Destroy', participant, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Name</th>
+        <th>Gender</th>
+        <th>Contact Details</th>
+        <th>Home Address</th>
+        <th>Status</th>
+        <th>Study</th>
+        <th>Birthdate</th>
+        <th>E-mail Address</th>
+        <% if @current_user.isAdmin? %>
+          <th colspan="2"></th>
+        <% else %>
+          <th></th>
         <% end %>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-<%= will_paginate(@participants) %>
+    </thead>
+
+    <tbody>
+      <% @participants.each do |participant| %>
+        <tr>
+          <td><%= link_to participant.name, participant %></td>
+          <td><%= participant.gender %></td>
+          <td><%= participant.contact_number %></td>
+          <td><%= participant.home_address %></td>
+          <td><%= ((participant.active)? ('Active'):('Dropped Out')) %></td>
+          <td><%= participant.study.study_name %></td>
+          <td><%= participant.date_of_birth %></td>
+          <td><%= participant.email %></td>
+          <td><%= link_to 'Edit', edit_participant_path(participant) %></td>
+          <% if @current_user.isAdmin %>
+            <td><%= link_to 'Destroy', participant, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= will_paginate(@participants) %>
+<% end %>
+<p>
+  <%= link_to 'Register New Participant', new_participant_path, class:"btn btn-warning" %> 
+  <%= link_to "Export to CSV", participants_path(format: "csv"), class: 'btn btn-info' %>
+</p>

@@ -13,4 +13,13 @@ class Participant < ApplicationRecord
   validates :email, presence: true, uniqueness: true, :format => EMAIL_REGEX
   validates :active, exclusion: { in: [nil] }
   #validates :gender, presence: true
+
+  def self.to_csv(options = {})
+    CSV.generate(options) do |csv|
+      csv << column_names
+      all.each do |participant|
+        csv << participant.attributes.values_at(*column_names)
+      end
+    end
+  end
 end

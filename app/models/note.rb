@@ -33,6 +33,15 @@ class Note < ApplicationRecord
   # Maximum notes per page.
   self.per_page = 10
 
+  def self.to_csv(options = {})
+    CSV.generate(options) do |csv|
+      csv << column_names
+      all.each do |note|
+        csv << note.attributes.values_at(*column_names)
+      end
+    end
+  end
+
   private
 
   def note_notifier_notification

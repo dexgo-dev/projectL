@@ -9,6 +9,11 @@ class NotesController < ApplicationController
   # GET /notes.json
   def index
     @all_participant_notes = @participant.notes.order("updated_at desc").paginate(:page => params[:page], :per_page => 16)
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data @all_participant_notes.to_csv }
+    end
   end
 
   # GET /notes/1

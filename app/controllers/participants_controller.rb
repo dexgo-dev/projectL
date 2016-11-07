@@ -6,8 +6,14 @@ class ParticipantsController < ApplicationController
 
   # GET /participants
   # GET /participants.json
+  # GET /participants.csv
   def index
     @participants = Participant.all.paginate(:page => params[:page], :per_page => 10)
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data @participants.to_csv }
+    end
   end
 
   # GET /participants/1

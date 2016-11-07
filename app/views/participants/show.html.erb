@@ -1,64 +1,107 @@
 <p id="notice"><%= notice %></p>
-
-<h2>
-  <%= @participant.name %>
-</h2>
-<p>
-<%= link_to 'Edit Participant Profile', edit_participant_path(@participant) %>
-<% if @current_user.isAdmin %>
-  &nbsp;|&nbsp;<%= link_to 'Back to All Participants', participants_path %>
+<p align="center">
+  <div class="toppad container-fluid ">
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= @participant.name %><%="[Inactive Participant]" unless @participant.active? %></h3>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-3 col-lg-3" align="center">
+            <%= image_tag("https://www.barfoot.co.nz/images/noprofile-big.png", class:"img-circle img-responsive", title:"You look so cute on this one.", size:"150x150") %><br/>
+            <%= link_to "Edit Profile", edit_participant_path(@participant), class:"btn btn-danger" %>
+          </div>
+          <div class="col-md-9 col-lg-9"> 
+            <table class="table table-user-information table-striped">
+              <tbody>
+                <% if @participant.study.present? %>
+                  <tr>
+                    <td class="attribute_data">Study</td>
+                    <td><%= link_to @participant.study.study_name, @participant.study %></td>
+                  </tr>
+                <% end %>
+                <% if @participant.date_of_birth.present? %>
+                  <tr>
+                    <td class="attribute_data">Age</td>
+                    <td><%=(Date.today.year - @participant.date_of_birth.year).to_s %></td>
+                  </tr>
+                <% end %>
+                <% if @participant.contact_number.present? %>
+                  <tr>
+                    <td class="attribute_data">Contact Number</td>
+                    <td><%= @participant.contact_number %></td>
+                  </tr>
+                <% end %>
+                <% if @participant.home_address.present? %>
+                  <tr>
+                    <td class="attribute_data">Address</td>
+                    <td><%= @participant.home_address %></td>
+                  </tr>
+                <% end %>
+                <% if @participant.gender.present? %>
+                  <tr>
+                    <td class="attribute_data">Gender</td>
+                    <td><%= @participant.gender %></td>
+                  </tr>
+                <% end %>
+                <% if @participant.email.present? %>
+                  <tr >
+                    <td class="attribute_data">Email</td>
+                    <td><%= @participant.email %></td>
+                  </tr>
+                <% end %>
+                <% if @participant.last_contacted_by.present? %>
+                  <tr >
+                    <td class="attribute_data">Last Contact</td>
+                    <td>
+                      <%= link_to @last_contacted_by_name, user_path(@participant.last_contacted_by) %> 
+                      <%= time_ago_in_words(@participant.last_contacted_at) %> ago.
+                    </td>
+                  </tr>
+                <% end %>
+                <tr class="container-fluid">
+                  <td class="attribute_data">Joined</td>
+                  <td><%= @participant.registeredOn if @participant.registeredOn.present? %><%= " by user " + User.find(@participant.registeredBy) if @participant.registeredBy.present? %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</p>
+<p align="center">
+  <%= link_to 'Back to All Participants', participants_path, class:"btn btn-success" if @current_user.isAdmin? %> 
+  <%= link_to 'Logg New Note for ' +  + @participant.name, new_participant_note_path(@participant), class:"btn btn-warning" %> 
+  <%= link_to "Show all of " + @participant.name + "'s Notes", participant_notes_path(@participant), class:"btn btn-primary" %>
+  <%= link_to "Export Notes to CSV", participant_notes_path(@participant, format: "csv"), class:"btn btn-info" %> 
+</p>
+<% unless (@participant_recent_notes.nil? || @participant_recent_notes.empty?) %>
+  <p>
+  <ul class="post_it_note">
+    <% @participant_recent_notes.each do |note| %>
+    <li class="post_it_note">
+      <a href="<%= edit_participant_note_path(note.participant_id,note.id)%>" class="post_it_note" %>
+        <h2 class="post_it_note"><%= note.updated_at.strftime('%D %r')%></h2>
+        <p class="post_it_note">
+          "<%= truncate(note.note_text) %>"
+          <br>Important: <%= note.important %>
+          <% if note.notify? %>
+            <br/>Notify On: <%= note.notify_on.strftime('%D %r') %>
+          <% end %>
+          <br/>
+        </p>
+      </a>
+    </li>
+    <% end %>
+  </ul>
+  <%= will_paginate(@participant_recent_notes) %>
+  </p>
+  <p align="center">
+    <%= link_to 'Back to All Participants', participants_path, class:"btn btn-success" if @current_user.isAdmin? %> 
+    <%= link_to 'Logg New Note for ' +  + @participant.name, new_participant_note_path(@participant), class:"btn btn-warning" %> 
+    <%= link_to "Show all of " + @participant.name + "'s Notes", participant_notes_path(@participant), class:"btn btn-primary" %>
+    <%= link_to "Export Notes to CSV", participant_notes_path(@participant, format: "csv"), class:"btn btn-info" %> 
+  </p>
 <% end %>
-</p>
-<p>
-  <strong>Gender:</strong>
-  <%= @participant.gender %>
-<br/>
-  <strong>Contact Number:</strong>
-  <%= @participant.contact_number %>
-<br/>
-  <strong>Home Address:</strong>
-  <%= @participant.home_address %>
-<br/>
-  <strong>Active:</strong>
-  <%= @participant.active %>
-<br/>
-  <strong>Study:</strong>
-  <%= link_to @participant.study.study_name, @participant.study %>
-<br/>
-  <strong>Date of Birth:</strong>
-  <%= @participant.date_of_birth %>
-<br/>
-  <strong>Email Address:</strong>
-  <%= @participant.email %>
-<br/>
-  <strong>Last Contacted by </strong>
-  <% if @participant.last_contacted_by.nil? %>
-    None
-  <% else %>
-    <%= link_to @last_contacted_by_name, user_path(@participant.last_contacted_by) %>
-    &nbsp;
-    <%= time_ago_in_words(@participant.last_contacted_at) %>
-    &nbsp;ago.
-   <% end %>
-</p>
-<p><%= link_to "Create New Note", new_participant_note_path(@participant)%></p>
-<p><%= link_to "Show All Notes", participant_notes_path(@participant)%></p>
-<p>
-<ul class="post_it_note">
-  <% @participant_recent_notes.each do |note| %>
-  <li class="post_it_note">
-    <a href="<%= edit_participant_note_path(note.participant_id,note.id)%>" class="post_it_note" %>
-      <h2 class="post_it_note"><%= note.updated_at.strftime('%D %r')%></h2>
-      <p class="post_it_note">
-        "<%= truncate(note.note_text) %>"
-        <br>Important: <%= note.important %>
-        <% if note.notify? %>
-          <br/>Notify On: <%= note.notify_on.strftime('%D %r') %>
-        <% end %>
-        <br/>
-      </p>
-    </a>
-  </li>
-  <% end %>
-</ul>
-<%= will_paginate(@participant_recent_notes) %>
