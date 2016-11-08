@@ -1,7 +1,9 @@
 $font-family-sans-serif: 'Cabin', 'Metrophobic', sans-serif;
 $brand-primary: #719600 !default;
 
-@import "bootstrap";
+@import 'bootstrap-sprockets';
+@import 'bootstrap';
+@import 'bootstrap-datetimepicker';
 
 
 /*

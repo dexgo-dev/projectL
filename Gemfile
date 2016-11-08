@@ -75,5 +75,21 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'momentjs-rails'
 gem 'rails_bootstrap_sortable'
 
+# Get latest datepicker bootstrap
+# gem 'bootstrap-datepicker-rails'
+gem 'bootstrap-datepicker-rails', :require => 'bootstrap-datepicker-rails',
+                              :git => 'git://github.com/Nerian/bootstrap-datepicker-rails.git'
+# Datepicker with time
+# gem 'bootstrap3-datetimepicker-rails', '~> 4.17.42'
+
+# DateTimePicker (zpaulovics)
+gem 'datetimepicker-rails', github: 'zpaulovics/datetimepicker-rails', branch: 'master', submodules: true
+# Don't forget to run these:
+# rails generate datetimepicker_rails:install
+# rails generate datetimepicker_rails:install Font-Awesome
+
+# The datetimepicker requires simple_form
+gem 'simple_form'
+
 # MySQL
 gem 'mysql2'

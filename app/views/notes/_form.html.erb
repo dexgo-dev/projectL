@@ -1,4 +1,4 @@
-<%= bootstrap_form_for([@participant,@note]) do |f| %>
+<%= simple_form_for([@participant,@note]) do |f| %>
   <% if note.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(note.errors.count, "error") %> prohibited this note from being saved:</h2>
@@ -19,8 +19,8 @@
 
   <div class="row">
     <div class="form-group col-xs-4">
-      <%= f.check_box :notify, data: { toggle: 'toggle', on: 'Notify On', onstyle: 'primary', off: 'Notify Off', offstyle: 'default', width: '100'}, label: '' %> &nbsp;
-      <%= f.datetime_select :notify_on, default: 1.week.from_now, start_year: Date.today.year, hide_label: true %>
+      <%= f.check_box :notify, data: { toggle: 'toggle', on: 'Notify On', onstyle: 'primary', off: 'Notify Off', offstyle: 'default', width: '100'}, label: '' %><br />
+      <%= f.input :notify_on, as:"datetime_picker", label:''  %>
     </div>
 
     <div class="form-group col-xs-2">

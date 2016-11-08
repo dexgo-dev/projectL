@@ -27,7 +27,7 @@
       <%= f.select :gender, Participant.genders.keys.to_a, label: "Gender" %>
     </div>
     <div class="form-group col-xs-2">
-      <%= f.date_select :date_of_birth, start_year: Date.today.year-100, end_year: Date.today.year, default: 21.years.ago, label: "Birth Date" %>
+      <%= f.text_field :date_of_birth, label: "Birth Date", data: { provide: 'datepicker'} %>
     </div>
     <div class="form-group col-xs-4">
       <%= f.text_field :contact_number, label: "Contact Number" %>

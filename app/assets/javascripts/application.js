@@ -16,4 +16,8 @@
 //= require jquery
 //= require bootstrap-toggle
 //= require moment
+//= require bootstrap-datetimepicker
+//= require pickers
 //= require bootstrap-sortable
+//= require bootstrap-datepicker
+
