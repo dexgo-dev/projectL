@@ -5,12 +5,12 @@
     <td colspan="2">
       <h2><%=@upcoming_notes_notification_header %></h2>
       <% unless @upcoming_notes_notification.empty? %>
-       <table class='table table-striped'>
+       <table class='table table-striped sortable'>
         <thead>
            <tr>
-            <th colspan="2">Notification</th>
+            <th colspan="3">Notification</th>
             <th>&nbsp;</th>
-            <th colspan="2">Participant</th>
+            <th>Participant</th>
             <th>Logged by</th>
            </tr>
         </thead> 
@@ -47,11 +47,11 @@
     <td>
       <h2><%=@recent_notes_from_user_header%></h2>
       <% unless @recent_notes_from_user.empty? %>
-        <table class='table table-striped'>
+        <table class='table table-striped sortable'>
           <thead>
              <tr>
               <th>Last Modified</th>
-              <th>&nbsp;</th>
+              <th data-defaultsort='disabled'>&nbsp;</th>
               <th>Participant</th>
              </tr>
           </thead> 
@@ -89,7 +89,7 @@
         <%= link_to 'Reset', user_home_path(@current_user) %>
       <% end %>
       <% unless @search_participants.empty? %>
-      <table class='table table-striped'>
+      <table class='table table-striped sortable'>
          <thead>
              <tr>
                <th>Last Contact Date</th>
@@ -99,9 +99,9 @@
                <th>Study</th>
                <th>Status</th>
                <% if @current_user.isAdmin? %>
-                <th colspan="2"></th>
+                <th colspan="2" data-defaultsort='disabled'></th>
                <% else %>
-                <th></th>
+                <th data-defaultsort='disabled'></th>
                <% end %>
              </tr>
         </thead> 

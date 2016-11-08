@@ -71,5 +71,9 @@ gem 'awesome_print', require:'ap'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
+# Sortable for sorting table using headers
+gem 'momentjs-rails'
+gem 'rails_bootstrap_sortable'
+
 # MySQL
 gem 'mysql2'

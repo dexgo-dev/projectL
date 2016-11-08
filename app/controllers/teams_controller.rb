@@ -1,4 +1,5 @@
 class TeamsController < ApplicationController
+  before_action :authorize
   before_action :set_team, only: [:show, :edit, :update, :destroy]
   before_action :get_all_existing_active_and_approved_users, only: [:new, :edit]
   before_action :require_admin, only: [:index, :destroy]

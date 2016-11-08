@@ -15,3 +15,5 @@
 //= require_tree .
 //= require jquery
 //= require bootstrap-toggle
+//= require moment
+//= require bootstrap-sortable
