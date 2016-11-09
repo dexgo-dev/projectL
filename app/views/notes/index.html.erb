@@ -1,6 +1,6 @@
 <h1>Showing All Notes for Participant (<%=@participant.name%>)</h1>
 <p id="notice"><%= notice %></p>
-<% unless all_participant_notes.nil? || all_participant_notes.empty? %>
+<% unless @all_participant_notes.nil? || @all_participant_notes.empty? %>
   <p>
     <%= link_to 'Logg New Note', new_participant_note_path(@participant), class:"btn btn-primary" %> 
     <%= link_to "Export Notes to CSV", participant_notes_path(format: "csv"), class:"btn btn-info" %> 

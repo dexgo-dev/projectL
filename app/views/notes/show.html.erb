@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h2>Note for <%= @note.participant.name %></h2>
+<h2>Note for <%= link_to @note.participant.name, participant_path(@note.participant) %></h2>
 
 <p>
   "<%= @note.note_text %>"
@@ -20,9 +20,9 @@
 <% end %>
 
 <% if @note.isDone? %>
-  <p>Ticked off on: <%= @note.doneOn %> by [add_done_by_here]</p>
+  <p>Ticked off on: <%= @note.doneOn %> by <%= @note.doneBy %></p>
 <% end %>
 
 
-<%= link_to 'Edit', edit_participant_note_path(@participant,@note) %> |
-<%= link_to 'Back', participant_notes_path(@participant) %>
+<%= link_to 'Edit', edit_participant_note_path(@participant,@note), class:"btn btn-danger" %> |
+<%= link_to 'Back', participant_notes_path(@participant), class:"btn btn-danger"  %>
