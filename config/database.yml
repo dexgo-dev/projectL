@@ -40,8 +40,8 @@ staging:
   reconnect: false
   pool: 5
   socket: /tmp/mysql.sock
-  username: root
-  password: merrychristmasbirch
+  username: fbirc-deploy
+  password: 
   database: loggr_staging
 
 production:

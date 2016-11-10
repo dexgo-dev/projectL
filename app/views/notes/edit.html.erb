@@ -1,5 +1,3 @@
-<h1>Editing Note</h1>
-
+<h1>Editing Note for <%= link_to @note.participant.name, participant_path(@note.participant) %></h1>
+<p id="notice"><%= notice %></p>
 <%= render 'form', note: @note %>
-
-<%= link_to 'Back', participant_notes_path %>

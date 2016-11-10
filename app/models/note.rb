@@ -8,6 +8,7 @@ class Note < ApplicationRecord
   #validates :participant_id, presence: true
   #validates :user_id, presence: true
 
+  before_save :set_doneOn, if: :isDone_changed?
   before_validation :set_notification
 
   scope :recent_ten, -> {
@@ -51,6 +52,15 @@ class Note < ApplicationRecord
   def set_notification
     unless self.notify?
       self.notify_on = nil
+    end
+  end
+
+  def set_doneOn
+    if self.isDone?
+      self.doneOn = DateTime.now
+    else
+      self.doneOn = nil
+      self.doneBy = nil
     end
   end
 end
