@@ -16,7 +16,7 @@ class User < ApplicationRecord
   #validates :isApproved, inclusion: { in: [true, false] }
   #validates :isAdmin, inclusion: { in: [true, false] }
   #validates :isDenied, inclusion: { in: [true, false] }
-  validates :isSupervisor, inclusion: { in: [true, false] }
+  #validates :isSupervisor, inclusion: { in: [true, false] }
 
   before_save :encrypt_password, if: :password_changed?
 
@@ -56,6 +56,9 @@ class User < ApplicationRecord
           self.isAdmin = false
         end
         if self.isDenied.nil?
+          self.isDenied = false
+        end
+        if self.isSupervisor.nil?
           self.isDenied = false
         end
     end

@@ -55,6 +55,8 @@
         <div class="form-group col-xs-6">
           <%= f.label 'Blinded User?' %>
           <%= f.check_box :isBlinded, data: { toggle: 'toggle', on: 'Blinded', onstyle: 'info', off: 'Nope', offstyle: 'default', width: '100'}, label: '' %>
+          <%= f.label 'Do you want to add yourself to the supervisor list?' %>
+          <%= f.check_box :isSupervisor, data: { toggle: 'toggle', on: 'Supervisor', onstyle: 'info', off: 'Peasant', offstyle: 'default', width: '100'}, label: '' %>
         </div>
       <% end %>
     <% else %>
@@ -88,6 +90,8 @@
             </tr>
           </table>
         </div>
+      <% else %>
+        <%= f.hidden_field :isSupervisor, default: false %>
       <% end %>
     <% end %>
   </div>

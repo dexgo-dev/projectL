@@ -1,26 +1,21 @@
-<h2>Note for <%= link_to @note.participant.name, participant_path(@note.participant) %></h2>
+<h2><%= image_tag("icon/png/flag-4.png", size:"40x40", title:"Important!!!") if @note.important? %> Note for <%= link_to @note.participant.name, participant_path(@note.participant) %></h2>
 <p id="notice"><%= notice %></p>
 <p class="post_it_note_show">
-  <%= @note.note_text %>
+  "<%= @note.note_text %>"
 </p>
 
-<p>by: 
-  <%= link_to @note.user.full_name + ' (' +@note.user.email + ')', @note.user%>
-</p>
-
-<p>
-  <strong>Important:</strong>
-  <%= @note.important %>
-</p>
+<p><%= image_tag("icon/png/note.png", size:"40x40", title:"Created by") %>  <%= link_to @note.user.full_name + ' (' +@note.user.email + ')', @note.user %> <%= @note.created_at.strftime('%A %y-%b-%e at %I:%M%p') %></p>
+<% if @note.user_id != @note.updated_by %>
+	<p><%= image_tag("icon/png/edit.png", size:"40x40", title:"Edited by") %>  <%= link_to User.find(@note.updated_by).full_name + ' (' + User.find(@note.updated_by).email + ')', user_path(@note.updated_by) %> <%= @note.updated_at.strftime('%A %y-%b-%e at %I:%M%p') %></p>
+<% end %>
 
 <% if @note.notify? %>
-	<p>Notification: <%= @note.notify_on %></p>
+	<p><%= image_tag("icon/png/alarm-clock.png", size:"40x40", title:"Notification") %>  <%= @note.notify_on.strftime('%A %y-%b-%e at %I:%M%p') %></p>
 <% end %>
 
 <% if @note.isDone? %>
-  <p>Ticked off on: [<%= @note.doneOn %>] by [<%= link_to(User.find(@note.doneBy).full_name, User.find(@note.doneBy)) if @note.doneBy.present? %>]</p>
+	<p><%= image_tag("icon/png/checked-1.png", size:"40x40", title:"Done") %>  <%= @note.doneOn.strftime('%A %y-%b-%e at %I:%M%p') %> by <%= link_to(User.find(@note.doneBy).full_name, User.find(@note.doneBy)) if @note.doneBy.present? %></p>
 <% end %>
-
 
 <%= link_to 'Edit', edit_participant_note_path(@participant,@note), class:"btn btn-danger" %>
 <%= link_to 'Back', participant_notes_path(@participant), class:"btn btn-warning"  %>

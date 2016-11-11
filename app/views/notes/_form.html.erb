@@ -12,25 +12,18 @@
   <% end %>
 
   <div class="row">
-    <div class="form-group">
-      <%= f.input :note_text, as:"text", label: false, input_html: { class: 'sticky_editor'} %><br/>
-      <%= f.check_box :isDone, data: { toggle: 'toggle', on: 'Done', onstyle: 'primary', off: 'Not Done', offstyle: 'default', width: '90'} %>
+    <div class="form-group  col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <%= f.input :note_text, as:"text", label: false, input_html: {class: "sticky_editor form-control"} %><br/>
     </div>
-  </div>
+    <div class="actions form-inline col-xs-6 col-sm-6 col-md-6 col-lg-6" align="center">
+      <%= f.check_box :notify, data: { toggle: 'toggle', on: 'Notify On', onstyle: 'primary', off: 'Notify Off', offstyle: 'default', width: '100'}, label: '' %> <br/>
+      <%= f.input :notify_on, as:"datetime_picker", label: false, input_html: { data: {date_options: {defaultDate: DateTime.now.next_week.at_beginning_of_minute, format:"LLLL", sideBySide: true}}, class: "form-control"}   %><br/>
 
-  <div class="row">
-    <div class="form-group col-xs-6">
-      <%= f.check_box :notify, data: { toggle: 'toggle', on: 'Notify On', onstyle: 'primary', off: 'Notify Off', offstyle: 'default', width: '100'}, label: '' %><br />
-      <%= f.input :notify_on, as:"datetime_picker", label: false, class: "input-large"  %>
-    </div>
-
-    <div class="form-group col-xs-6">
-      <%= f.check_box :important, data: { toggle: 'toggle', on: 'Important', onstyle: 'danger', off: 'Not Important', offstyle: 'default', width: '120'}, label: '' %>&nbsp;
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="actions col-xs-6" align="center">
+      <%= f.check_box :isDone, data: { toggle: 'toggle', on: 'Done', onstyle: 'primary', off: 'Not Done', offstyle: 'default', width: '85'} %>
+      <%= f.check_box :important, data: { toggle: 'toggle', on: 'Important', onstyle: 'danger', off: 'Not Important', offstyle: 'default', width: '120'}, label: '' %><br />
+      
+      <%= f.input :isPinned, as:"hidden", input_html: { value: false } %><br />
+      <%= f.input :updated_by, as:"hidden", input_html: { value: @current_user.id } %><br/>
       <%= f.submit "Save Note", class:"btn btn-primary" %>
       <%= link_to 'Back', :back, class:"btn btn-warning" %>
     </div>

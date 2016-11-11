@@ -4,11 +4,21 @@ class Note < ApplicationRecord
 
   validates :note_text, presence: true
   validates :important, inclusion: { in: [true, false] }
-  validates :notify, inclusion: { in: [true, false] }
-  #validates :participant_id, presence: true
-  #validates :user_id, presence: true
 
-  before_save :set_doneOn, if: :isDone_changed?
+  validates :notify, inclusion: { in: [true, false] }
+  validates :notify_on, presence: true, if: :notify?
+
+  validates :isDone, inclusion: { in: [true, false] }
+  validates :doneBy, presence: true, if: :isDone?
+  validates :doneOn, presence: true, if: :isDone?
+
+  validates :isPinned, inclusion: { in: [true, false] }
+
+  validates :participant_id, presence: true
+  validates :user_id, presence: true
+  validates :updated_by, presence: true
+
+  before_validation :set_doneOn, if: :isDone_changed?
   before_validation :set_notification
 
   scope :recent_ten, -> {
@@ -58,6 +68,7 @@ class Note < ApplicationRecord
   def set_doneOn
     if self.isDone?
       self.doneOn = DateTime.now
+      self.doneBy = self.updated_by
     else
       self.doneOn = nil
       self.doneBy = nil

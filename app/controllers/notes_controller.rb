@@ -2,7 +2,6 @@ class NotesController < ApplicationController
   before_action :get_user_from_session # authorize is done here.
   before_action :get_participant
   before_action :set_note, only: [:show, :edit, :update, :destroy]
-  after_action :set_done_by_on_toggle, only: [:update]
   after_action :set_participant_last_contact, only: [:create, :update]
 
 
@@ -36,6 +35,7 @@ class NotesController < ApplicationController
   def create
     @note = @participant.notes.new(note_params)
     @note.user_id = @user.id
+    @note.updated_by = @user.id
     
     respond_to do |format|
       format.js
@@ -92,16 +92,10 @@ class NotesController < ApplicationController
       @participant.update(last_contacted_at: @note.updated_at, last_contacted_by: @current_user.id)
     end
 
-    def set_done_by_on_toggle
-      if @note.isDone_changed?
-        @note.update(doneBy: @current_user.id)
-      end
-    end
-
     # Never trust parameters from the scary internet, only allow the white list through.
     def note_params
       get_user_from_session()
-      params.require(:note).permit(:participant_id, :note_text, :important, :notify_on, :user_id, :notify, :isDone)
+      params.require(:note).permit(:participant_id, :note_text, :important, :notify_on, :updated_by, :notify, :isDone, :isPinned)
     end
 
     def participant_params

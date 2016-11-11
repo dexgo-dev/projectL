@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161103052414) do
+ActiveRecord::Schema.define(version: 20161111013100) do
 
   create_table "notes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "participant_id"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20161103052414) do
     t.datetime "doneOn"
     t.integer  "doneBy"
     t.boolean  "isPinned"
+    t.integer  "updated_by"
   end
 
   create_table "participants", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
