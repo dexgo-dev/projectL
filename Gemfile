@@ -91,5 +91,11 @@ gem 'datetimepicker-rails', github: 'zpaulovics/datetimepicker-rails', branch: '
 # The datetimepicker requires simple_form
 gem 'simple_form'
 
+# Calendar view
+gem 'simple_calendar'
+
+# Tabs in the home page
+gem 'tabulous'
+
 # MySQL
 gem 'mysql2'

@@ -84,6 +84,7 @@ Rails.application.routes.draw do
   get '/approved_users' => 'users#approved'
   get '/denied_users' => 'users#denied'
   get '/admin_users' => 'users#admin'
+  get '/notification_calendar' => 'users#notification_calendar'
 
   put '/remove_admin_rights/:id' => 'users#remove_admin_rights', :as => :remove_admin_rights
   put '/add_admin_rights/:id' => 'users#add_admin_rights', :as => :add_admin_rights

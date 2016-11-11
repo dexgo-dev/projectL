@@ -47,6 +47,18 @@ class UsersController < ApplicationController
   def show
   end
 
+  # GET /notification_calendar
+  def notification_calendar
+    get_upcoming_users_notifications_and_major_team_notifications
+
+    @notifications = @upcoming_users_notifications_and_major_team_notifications
+
+    respond_to do |format|
+      format.html
+      # format.csv { send_data @participant.notes.order("updated_at desc").to_csv }
+    end
+  end
+
   # GET /users/1/home
   def home
     # Get all active studies (for filter)
@@ -324,9 +336,9 @@ class UsersController < ApplicationController
 
       #@upcoming_notes_notification = @upcoming_major_team_notifications.paginate(:page => params[:upcoming_notes_notification_page], :per_page => 10)
 
-      get_upcoming_users_notifications_and_major_team_notifications
+      get_upcoming_users_notifications_and_major_team_notifications_this_fortnight
 
-      @upcoming_notes_notification = @upcoming_users_notifications_and_major_team_notification.paginate(:page => params[:upcoming_notes_notification_page], :per_page => 10)
+      @upcoming_notes_notification = @upcoming_users_notifications_and_major_team_notifications_this_fortnight.paginate(:page => params[:upcoming_notes_notification_page], :per_page => 10)
     end
 
     def get_recent_notes_from_user
@@ -349,13 +361,21 @@ class UsersController < ApplicationController
     end
 
     def get_upcoming_users_notifications_and_major_team_notifications
-      @upcoming_users_notifications_and_major_team_notification = Note.where(user_id: @current_user.team.users.select(:id)).upcoming_notifications_this_fortnight.major.or(Note.upcoming_notifications_this_fortnight).distinct
+      @upcoming_users_notifications_and_major_team_notifications = Note.where(user_id: @current_user.team.users.select(:id)).upcoming_notifications.major.or(Note.upcoming_notifications).distinct
+    end
+
+    def get_upcoming_users_notifications_and_major_team_notifications_this_fortnight
+      @upcoming_users_notifications_and_major_team_notifications_this_fortnight = Note.where(user_id: @current_user.team.users.select(:id)).upcoming_notifications_this_fortnight.major.or(Note.upcoming_notifications_this_fortnight).distinct
 
       if (@upcoming_users_notifications_and_major_team_notification.nil? || @upcoming_users_notifications_and_major_team_notification.empty?)
           @upcoming_notes_notification_header = "No Notifications This Fortnight! Yay!"
       else
           @upcoming_notes_notification_header = "Upcoming Notifications (This Fortnight):"
       end
+    end
+
+    def get_upcoming_users_notifications_and_major_team_notifications_this_month
+      @upcoming_users_notifications_and_major_team_notifications_this_month = Note.where(user_id: @current_user.team.users.select(:id)).upcoming_notifications_this_month.major.or(Note.upcoming_notifications_this_month).distinct
     end
 
     def get_active_studies

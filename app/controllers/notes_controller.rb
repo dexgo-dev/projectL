@@ -8,11 +8,11 @@ class NotesController < ApplicationController
   # GET /notes
   # GET /notes.json
   def index
-    @all_participant_notes = @participant.notes.order("updated_at desc").paginate(:page => params[:page], :per_page => 16)
+    @all_participant_notes = @participant.notes.order("notes.updated_at desc").paginate(:page => params[:page], :per_page => 16)
 
     respond_to do |format|
       format.html
-      format.csv { send_data @participant.notes.order("updated_at desc").to_csv }
+      format.csv { send_data @participant.notes.order("notes.updated_at desc").to_csv }
     end
   end
 
@@ -38,7 +38,6 @@ class NotesController < ApplicationController
     @note.updated_by = @user.id
     
     respond_to do |format|
-      format.js
       if @note.save
         format.html { redirect_to [@participant,@note], notice: 'Note was successfully created.' }
         format.json { render :show, status: :created, location: @note }

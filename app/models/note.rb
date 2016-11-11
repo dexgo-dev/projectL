@@ -37,6 +37,10 @@ class Note < ApplicationRecord
     where(notify: true).where(:notify_on => Date.today.beginning_of_month..Date.today.end_of_month).order(:notify_on)
   }
 
+  scope :upcoming_notifications, -> {
+    where(notify: true).order(:notify_on)
+  }
+
   scope :major, -> {
     where(important: true)
   }

@@ -56,6 +56,7 @@
         <div id="navbar" class="navbar-collapse collapse">
           <% unless @current_user.nil? %>
             <ul class="nav navbar-nav navbar-right">
+              <li><%= link_to image_tag('icon/png/calendar-5.png', class: 'icon-links', title:'Notification Calendar'), notification_calendar_path %></li>
               <% if @current_user.isAdmin? %>
                 <li><%= link_to image_tag('icon/png/users.png', class: 'icon-links', title:'All Teams'), teams_path %></li>
               <% else %>
