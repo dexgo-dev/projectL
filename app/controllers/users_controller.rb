@@ -324,6 +324,7 @@ class UsersController < ApplicationController
     end
 
     def get_upcoming_notifications
+      
       @upcoming_notes_notification = @current_user.notes.upcoming_notifications_this_fortnight.paginate(:page => params[:upcoming_notes_notification_page], :per_page => 10)
 
       if @upcoming_notes_notification.empty?
@@ -336,9 +337,6 @@ class UsersController < ApplicationController
 
       #@upcoming_notes_notification = @upcoming_major_team_notifications.paginate(:page => params[:upcoming_notes_notification_page], :per_page => 10)
 
-      get_upcoming_users_notifications_and_major_team_notifications_this_fortnight
-
-      @upcoming_notes_notification = @upcoming_users_notifications_and_major_team_notifications_this_fortnight.paginate(:page => params[:upcoming_notes_notification_page], :per_page => 10)
     end
 
     def get_recent_notes_from_user
