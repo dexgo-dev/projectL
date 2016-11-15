@@ -1,28 +1,54 @@
+# MySQL
+#   brew install mysql
+#
+#   Ensure the MySQL gem is defined in your Gemfile
+#   gem 'mysql'
+#   
+#   bundle install
+#   mysql_secure_installation
+#   brew tap homebrew/services
+#   brew services start mysql
+#   rake db:create && rake db:schema:load && rake db:setup
+#   
+#
+default:
+   
+
 development:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: loggr_development
   pool: 5
-  username: root
-  password: 12345 
   socket: /tmp/mysql.sock
+  username: root
+  password: merrychristmasbirch
+  database: loggr_development
+  
 test:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: loggr_test
   pool: 5
-  username: root
-  password: 12345
   socket: /tmp/mysql.sock
+  username: root
+  password: merrychristmasbirch
+  database: loggr_test
+
+staging:
+  adapter: mysql2
+  database: loggr
+  pool: 5
+  timeout: 5000
+  username: fbirc-deploy
+  password:
 
 production:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: loggr_production
   pool: 5
+  socket: /tmp/mysql.sock
   username: root
-  password: 12345
-  socket: /opt/local/var/run/mysql5/mysqld.sock
+  password: merrychristmasbirch # Don't forget to remove this here
+  database: loggr_production
+
