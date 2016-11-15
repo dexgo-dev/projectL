@@ -12,7 +12,7 @@
 #   
 #
 default:
-  
+   
 
 development:
   adapter: mysql2
@@ -36,13 +36,11 @@ test:
 
 staging:
   adapter: mysql2
-  encoding: utf8
-  reconnect: false
+  database: loggr
   pool: 5
-  socket: /tmp/mysql.sock
+  timeout: 5000
   username: fbirc-deploy
-  password: 
-  database: loggr_staging
+  password:
 
 production:
   adapter: mysql2
