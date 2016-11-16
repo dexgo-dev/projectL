@@ -7,7 +7,7 @@
 <% end %>
 
 <% if @team.contact_user.present? %>
-<p>Contact <%= User.find(@team.contact_user).full_name %> at <%= User.find(@team.contact_user).email %> <%= ' or (' + User.find(@team.contact_user).contact + ')' %>.</p>
+<p>Contact <%= User.find(@team.contact_user).full_name %> at <%= User.find(@team.contact_user).email %> <%= ' or (' + User.find(@team.contact_user).contact_number + ')' %>.</p>
 <% end %>
 
 <% if @team.group_email.present? %>
