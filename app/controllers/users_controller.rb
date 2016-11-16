@@ -361,11 +361,11 @@ class UsersController < ApplicationController
     end
 
     def get_upcoming_users_notifications_and_major_team_notifications
-      @upcoming_users_notifications_and_major_team_notifications = Note.where(user_id: @current_user.team.users.select(:id)).upcoming_notifications.major.or(Note.upcoming_notifications).distinct
+      @upcoming_users_notifications_and_major_team_notifications = Note.where(user_id: @current_user.team.users.select(:id)).upcoming_notifications.major.or(Note.upcoming_notifications.where(user_id: @current_user.id)).distinct
     end
 
     def get_upcoming_users_notifications_and_major_team_notifications_this_fortnight
-      @upcoming_users_notifications_and_major_team_notifications_this_fortnight = Note.where(user_id: @current_user.team.users.select(:id)).upcoming_notifications_this_fortnight.major.or(Note.upcoming_notifications_this_fortnight).distinct
+      @upcoming_users_notifications_and_major_team_notifications_this_fortnight = Note.where(user_id: @current_user.team.users.select(:id)).upcoming_notifications_this_fortnight.major.or(Note.upcoming_notifications_this_fortnight.where(user_id: @current_user.id)).distinct
 
       if (@upcoming_users_notifications_and_major_team_notification.nil? || @upcoming_users_notifications_and_major_team_notification.empty?)
           @upcoming_notes_notification_header = "No Notifications This Fortnight! Yay!"
@@ -375,7 +375,7 @@ class UsersController < ApplicationController
     end
 
     def get_upcoming_users_notifications_and_major_team_notifications_this_month
-      @upcoming_users_notifications_and_major_team_notifications_this_month = Note.where(user_id: @current_user.team.users.select(:id)).upcoming_notifications_this_month.major.or(Note.upcoming_notifications_this_month).distinct
+      @upcoming_users_notifications_and_major_team_notifications_this_month = Note.where(user_id: @current_user.team.users.select(:id)).upcoming_notifications_this_month.major.or(Note.upcoming_notifications_this_month.where(user_id: @current_user.id)).distinct
     end
 
     def get_active_studies
