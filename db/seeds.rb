@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 t = Team.create(name:'No Team', description:'If you are not sure.')
-User.create(email:'d.go@neura.edu.au', password:'password', full_name:'First User', contact_number:'0', team_id: t.id, isApproved: true, isAdmin: true, isActive: true, isBlinded: false, isSupervisor: false)
+User.create(email:'fbirc-dev@neura.edu.au', password:'password', full_name:'First User', contact_number:'0', team_id: t.id, isApproved: true, isAdmin: true, isActive: true, isBlinded: false, isSupervisor: false)
 
 s = Study.create(study_name:'No Study', description:'All participants are to be moved out of this study except for the participant called ToDo which is a dummy participant')
-p = Participant.create(name:'ToDo', gender:3, date_of_birth:Date.today, email:'d.go@neura.edu.au', study_id: s.id, active: true)
+p = Participant.create(name:'ToDo', gender:3, date_of_birth:Date.today, email:'fbirc-dev@neura.edu.au', study_id: s.id, active: true)
