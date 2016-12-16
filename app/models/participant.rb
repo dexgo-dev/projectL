@@ -9,8 +9,9 @@ class Participant < ApplicationRecord
     order("last_contacted_at desc").distinct.limit(10)
   }
 
-  validates :name, presence: true
-  validates :email, presence: true, uniqueness: true, :format => EMAIL_REGEX
+  validates :first_name, presence: true
+  validates :surname, presence: true
+  validates :email, presence: true, :format => EMAIL_REGEX
   validates :active, exclusion: { in: [nil] }
   #validates :gender, presence: true
 
