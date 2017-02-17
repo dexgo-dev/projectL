@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @subscription.user_id %>
+</p>
+
+<p>
+  <strong>Study:</strong>
+  <%= @subscription.study_id %>
+</p>
+
+<p>
+  <strong>Visbility:</strong>
+  <%= @subscription.visbility %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @subscription.status %>
+</p>
+
+<p>
+  <strong>Comment:</strong>
+  <%= @subscription.comment %>
+</p>
+
+<p>
+  <strong>Valid until:</strong>
+  <%= @subscription.valid_until %>
+</p>
+
+<%= link_to 'Edit', edit_subscription_path(@subscription) %> |
+<%= link_to 'Back', subscriptions_path %>
