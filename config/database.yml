@@ -1,34 +1,54 @@
-# SQLite version 3.x
-#   gem install sqlite3
+# MySQL
+#   brew install mysql
 #
-#   Ensure the SQLite 3 gem is defined in your Gemfile
-#   gem 'sqlite3'
+#   Ensure the MySQL gem is defined in your Gemfile
+#   gem 'mysql'
+#   
+#   bundle install
+#   mysql_secure_installation
+#   brew tap homebrew/services
+#   brew services start mysql
+#   rake db:create && rake db:schema:load && rake db:setup
+#   
 #
-default: &default
-  adapter: sqlite3
-  #encoding: utf8
-  #database: db/loggr_dev
-  pool: 5
-  #username: root
-  #password: 12345
-  #socket: /tmp/mysql.sock
-  timeout: 5000
+default:
+   
 
 development:
-  <<: *default
-  database: db/logger_dev.sqlite3
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  pool: 5
+  socket: /tmp/mysql.sock
+  username: root
+  password: merrychristmasbirch
+  database: loggr_development
+  
+test:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  pool: 5
+  socket: /tmp/mysql.sock
+  username: root
+  password: merrychristmasbirch
+  database: loggr_test
 
 staging:
-  <<: *default
-  database: db/logger_staging.sqlite3
-
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
-test:
-  <<: *default
-  database: db/logger_test.sqlite3
+  adapter: mysql2
+  database: loggr
+  pool: 5
+  timeout: 5000
+  username: fbirc-deploy
+  password:
 
 production:
-  <<: *default
-  database: db/logger_prod.sqlite3
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  pool: 5
+  socket: /tmp/mysql.sock
+  username: root
+  password: merrychristmasbirch # Don't forget to remove this here
+  database: loggr_production
+
