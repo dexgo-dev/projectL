@@ -1,11 +1,20 @@
 class AddDetailsToLoggrDatabase < ActiveRecord::Migration[5.0]
   def change
-  	add_column :participants, :participants_blinders_id, :string
-  	add_column :participants, :recruitment_method, :string
+    
+  	add_column :participants, :participants_blinders_id, :string unless column_exists? :participants, :participants_blinders_id
+    unless column_exists? :participants, :recruitment_method
+  	 add_column :participants, :recruitment_method, :string
+    end
 
-  	rename_column :participants, :name, :first_name
-  	add_column :participants, :surname, :string
-  	add_column :participants, :preferred_name, :string
+    unless column_exists? :participants, :first_name
+  	 rename_column :participants, :name, :first_name
+    end
+    unless column_exists? :participants, :surname
+  	 add_column :participants, :surname, :string
+    end
+    unless column_exists? :participants, :preferred_name
+  	 add_column :participants, :preferred_name, :string
+
   	add_column :participants, :title, :string
 
   	rename_column :participants, :home_address, :home_address_line_1
