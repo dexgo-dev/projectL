@@ -63,7 +63,7 @@
                 <td colspan="2">Error - the participant to which this note is attached to no longer exists. This is why we avoid deletion of participant records.</td>
               <% else %>
                 <td><%= truncate(note.note_text, length: 30)  { link_to "See Note...", participant_note_path(note.participant.id,note.id)} %></td>
-                <td><%= link_to note.participant.first_name, participant %> <%= link_to note.participant.surname, participant %></td>
+                <td><%= link_to note.participant.first_name, note.participant %> <%= link_to note.participant.surname, note.participant %></td>
               <% end %>
             </tr>
             <% end %>
