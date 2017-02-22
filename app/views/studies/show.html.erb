@@ -33,7 +33,7 @@
       <% @participants_in_this_study.each do |participant| %>
        <tr>
          <td><% unless participant.last_contacted_at.nil? %> <%=time_ago_in_words(participant.last_contacted_at)%> ago <% end %></td>
-         <td><%= link_to participant.name, participant %></td>
+         <td><%= link_to participant.first_name, participant %> <%= link_to participant.surname, participant %></td>
          <td><%= link_to participant.contact_number %></td>
          <td><%= link_to participant.email %></td>
          <td><%= ((participant.active)? ('Active'):('Dropped Out')) %></td>
