@@ -28,8 +28,21 @@
     <div class="form-group col-xs-2">
       <%= f.text_field :date_of_birth, label: "Birth Date", data: { provide: 'datepicker'} %>
     </div>
+  </div>
+  <div class="row">
     <div class="form-group col-xs-4">
-      <%= f.text_field :primary_contact_number, label: "Primary Contact Number" %> <%= f.text_field :secondary_contact_number, label: "Secondary Contact Number" %>
+      <%= f.text_field :primary_contact_number, label: "Primary Contact Number" %>
+    </div>
+    <div class="form-group col-xs-2">
+      <%= f.select :primary_contact_number_type, Participant.primary_contact_number_types.keys.to_a, label: "Type" %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-4">
+      <%= f.text_field :secondary_contact_number, label: "Secondary Contact Number" %>
+    </div>
+    <div class="form-group col-xs-2">
+      <%= f.select :secondary_contact_number_type, Participant.secondary_contact_number_types.keys.to_a, label: "Type" %>
     </div>
   </div>
 

@@ -29,13 +29,13 @@
                 <% if @participant.primary_contact_number.present? %>
                   <tr>
                     <td class="attribute_data">Primary Contact Number</td>
-                    <td><%= @participant.primary_contact_number %></td>
+                    <td><%= @participant.primary_contact_number %> (<%= @participant.primary_contact_number_type %>)</td>
                   </tr>
                 <% end %>
                 <% if @participant.secondary_contact_number.present? %>
                   <tr>
                     <td class="attribute_data">Secondary Contact Number</td>
-                    <td><%= @participant.secondary_contact_number %></td>
+                    <td><%= @participant.secondary_contact_number %> (<%= @participant.secondary_contact_number_type %>)</td>
                   </tr>
                 <% end %>
                 <% if @participant.home_address_line_1.present? %>
