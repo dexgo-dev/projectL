@@ -12,8 +12,8 @@ class AddDetailsToLoggrDatabase < ActiveRecord::Migration[5.0]
     unless column_exists? :participants, :surname
   	 add_column :participants, :surname, :string
     end
-    unless column_exists? :participants, :preferred_name
-  	 add_column :participants, :preferred_name, :string
+    
+  	add_column :participants, :preferred_name, :string unless column_exists? :participants, :preferred_name
 
   	add_column :participants, :title, :string
 
