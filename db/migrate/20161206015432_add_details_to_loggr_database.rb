@@ -32,7 +32,9 @@ class AddDetailsToLoggrDatabase < ActiveRecord::Migration[5.0]
 
 	add_column :notes, :assign_notification_to, :integer # user_id
 
-	remove_column :users, :blinded 
+	if column_exists? :users, :blinded
+    remove_column :users, :blinded 
+  end 
 
 	add_column :studies, :study_list, :integer
   end
