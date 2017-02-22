@@ -35,13 +35,13 @@
           <td><%= participant.title %></td>
           <td><%= link_to participant.surname, participant %></td>
           <td><%= link_to participant.first_name, participant %></td>
-          <td><%= participant.preferred_name, participant %></td>
+          <td><%= participant.preferred_name %></td>
           <td><%= participant.gender %></td>
-          <td><%= participant.primary_contact_number %></td>
-          <td><%= participant.secondary_contact_number %></td>
-          <td><%=participant.home_address_state %></td>
-          <td><%=participant.home_address_postcode %></td>
-          <td><%=participant.status %></td>
+          <td><%= participant.primary_contact_number %> (<%= participant.primary_contact_number_type %>)</td>
+          <td><%= participant.secondary_contact_number %> <%= participant.secondary_contact_number_type %></td>
+          <td><%= participant.home_address_state %></td>
+          <td><%= participant.home_address_postcode %></td>
+          <td><%= participant.status %></td>
           <td><%= participant.study.study_name %></td>
           <td><%= participant.date_of_birth %></td>
           <td><%= participant.email %></td>
