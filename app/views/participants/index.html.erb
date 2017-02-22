@@ -33,8 +33,8 @@
       <% @participants.each do |participant| %>
         <tr>
           <td><%= participant.title %></td>
-          <td><%= link_to (participant.surname), participant %></td>
-          <td><%= link_to (participant.first_name), participant %></td>
+          <td><%= link_to participant.surname, participant %></td>
+          <td><%= link_to participant.first_name, participant %></td>
           <td><%= participant.preferred_name, participant %></td>
           <td><%= participant.gender %></td>
           <td><%= participant.primary_contact_number %></td>
