@@ -2,49 +2,43 @@ class AddDetailsToLoggrDatabase < ActiveRecord::Migration[5.0]
   def change
     
   	add_column :participants, :participants_blinders_id, :string unless column_exists? :participants, :participants_blinders_id
-    unless column_exists? :participants, :recruitment_method
-  	 add_column :participants, :recruitment_method, :string
-    end
+    add_column :participants, :recruitment_method, :string unless column_exists? :participants, :recruitment_method
 
-    unless column_exists? :participants, :first_name
-  	 rename_column :participants, :name, :first_name
-    end
-    unless column_exists? :participants, :surname
-  	 add_column :participants, :surname, :string
-    end
     
+  	rename_column :participants, :name, :first_name unless column_exists? :participants, :first_name
+    add_column :participants, :surname, :string unless column_exists? :participants, :surname
   	add_column :participants, :preferred_name, :string unless column_exists? :participants, :preferred_name
+  	add_column :participants, :title, :string unless column_exists? :participants, :title
 
-  	add_column :participants, :title, :string
+  	rename_column :participants, :home_address, :home_address_line_1 unless column_exists? :participants, :home_address_line_1
+  	add_column :participants, :home_address_line_2, :string unless column_exists? :participants, :home_address_line_2
+  	add_column :participants, :home_address_suburb, :string unless column_exists? :participants, :home_address_suburb
+  	add_column :participants, :home_address_state, :string unless column_exists? :participants, :home_address_state
+  	add_column :participants, :home_address_postcode, :string unless column_exists? :participants, :home_address_postcode
 
-  	rename_column :participants, :home_address, :home_address_line_1
-  	add_column :participants, :home_address_line_2, :string
-  	add_column :participants, :home_address_suburb, :string
-  	add_column :participants, :home_address_state, :string
-  	add_column :participants, :home_address_postcode, :string
+  	add_column :participants, :mailing_address_line_1, :string unless column_exists? :participants, :mailing_address_line_1
+  	add_column :participants, :mailing_address_line_2, :string unless column_exists? :participants, :mailing_address_line_2
+  	add_column :participants, :mailing_address_suburb, :string unless column_exists? :participants, :mailing_address_suburb
+  	add_column :participants, :mailing_address_state, :string unless column_exists? :participants, :mailing_address_state
+  	add_column :participants, :mailing_address_postcode, :string unless column_exists? :participants, :mailing_address_postcode
 
-  	add_column :participants, :mailing_address_line_1, :string
-  	add_column :participants, :mailing_address_line_2, :string
-  	add_column :participants, :mailing_address_suburb, :string
-  	add_column :participants, :mailing_address_state, :string
-  	add_column :participants, :mailing_address_postcode, :string
+  	rename_column :participants, :contact_number, :primary_contact_number unless column_exists? :participants, :primary_contact_number
+  	add_column :participants, :primary_contact_number_type, :integer  unless column_exists? :participants, :primary_contact_number_type # home, mobile, work
+  	add_column :participants, :secondary_contact_number, :string unless column_exists? :participants, :secondary_contact_number
+  	add_column :participants, :secondary_contact_number_type, :integer unless column_exists? :participants, :secondary_contact_number_type # home, mobile, work
 
-  	rename_column :participants, :contact_number, :primary_contact_number
-  	add_column :participants, :primary_contact_number_type, :integer # home, mobile, work
-  	add_column :participants, :secondary_contact_number, :string
-  	add_column :participants, :secondary_contact_number_type, :integer # home, mobile, work
+    unless column_exists? :participants, :status
+    	rename_column :participants, :active, :status
+    	change_column :participants, :status, :integer # interested, recruited, included, withdrawn, excluded, completed
+    end
 
-  	rename_column :participants, :active, :status
-  	change_column :participants, :status, :integer # interested, recruited, included, withdrawn, excluded, completed
+  	add_column :participants, :screening_document_id, :integer unless column_exists? :participants, :screening_document_id
 
-  	add_column :participants, :screening_document_id, :integer
+	  add_column :notes, :assign_notification_to, :integer unless column_exists? :notes, :assign_notification_to # user_id
 
-	add_column :notes, :assign_notification_to, :integer # user_id
+	
+    remove_column :users, :blinded if column_exists? :users, :blinded
 
-	if column_exists? :users, :blinded
-    remove_column :users, :blinded 
-  end 
-
-	add_column :studies, :study_list, :integer
+	  add_column :studies, :study_list, :integer unless column_exists? :studies, :study_list
   end
 end
