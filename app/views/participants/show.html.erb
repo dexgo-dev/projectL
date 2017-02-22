@@ -3,7 +3,7 @@
   <div class="toppad container-fluid ">
     <div class="panel panel-success">
       <div class="panel-heading">
-        <h3 class="panel-title"><%= @participant.name %><%="[Inactive Participant]" unless @participant.active? %></h3>
+        <h3 class="panel-title"><%= @participant.title %> <%= @participant.first_name %> <%= @participant.surname %> [<%= @participant.status %>]</h3>
       </div>
       <div class="panel-body">
         <div class="row">
@@ -26,16 +26,28 @@
                     <td><%=(Date.today.year - @participant.date_of_birth.year).to_s %></td>
                   </tr>
                 <% end %>
-                <% if @participant.contact_number.present? %>
+                <% if @participant.primary_contact_number.present? %>
                   <tr>
-                    <td class="attribute_data">Contact Number</td>
-                    <td><%= @participant.contact_number %></td>
+                    <td class="attribute_data">Primary Contact Number</td>
+                    <td><%= @participant.primary_contact_number %></td>
                   </tr>
                 <% end %>
-                <% if @participant.home_address.present? %>
+                <% if @participant.secondary_contact_number.present? %>
                   <tr>
-                    <td class="attribute_data">Address</td>
-                    <td><%= @participant.home_address %></td>
+                    <td class="attribute_data">Secondary Contact Number</td>
+                    <td><%= @participant.secondary_contact_number %></td>
+                  </tr>
+                <% end %>
+                <% if @participant.home_address_line_1.present? %>
+                  <tr>
+                    <td class="attribute_data">Home Address</td>
+                    <td><%= @participant.home_address_line_1 %> <%= @participant.home_address_line_2 %>, <%= @participant.home_address_suburb %>, <%= @participant.home_address_state %>, <%= @participant.home_address_postcode %></td>
+                  </tr>
+                <% end %>
+                <% if @participant.mailing_address_line_1.present? %>
+                  <tr>
+                    <td class="attribute_data">Mailing Address</td>
+                    <td><%= @participant.mailing_address_line_1 %> <%= @participant.mailing_address_line_2 %>, <%= @participant.mailing_address_suburb %>, <%= @participant.mailing_address_state %>, <%= @participant.mailing_address_postcode %></td>
                   </tr>
                 <% end %>
                 <% if @participant.gender.present? %>
@@ -61,7 +73,7 @@
                 <% end %>
                 <tr class="container-fluid">
                   <td class="attribute_data">Joined</td>
-                  <td><%= @participant.registeredOn if @participant.registeredOn.present? %><%= " by user " + User.find(@participant.registeredBy) if @participant.registeredBy.present? %></td>
+                  <td><%= @participant.registeredOn if @participant.registeredOn.present? %><%= (" by user " + User.find(@participant.registeredBy)) if @participant.registeredBy.present? %></td>
                 </tr>
               </tbody>
             </table>
@@ -73,8 +85,8 @@
 </p>
 <p align="center">
   <%= link_to 'Back to All Participants', participants_path, class:"btn btn-success" if @current_user.isAdmin? %> 
-  <%= link_to 'Logg New Note for ' +  + @participant.name, new_participant_note_path(@participant), class:"btn btn-warning" %> 
-  <%= link_to "Show all of " + @participant.name + "'s Notes", participant_notes_path(@participant), class:"btn btn-primary" %>
+  <%= link_to 'Logg New Note for ' +  + @participant.first_name, new_participant_note_path(@participant), class:"btn btn-warning" %> 
+  <%= link_to "Show all of " + @participant.first_name + "'s Notes", participant_notes_path(@participant), class:"btn btn-primary" %>
   <%= link_to "Export Notes to CSV", participant_notes_path(@participant, format: "csv"), class:"btn btn-info" %> 
 </p>
 <% unless (@participant_recent_notes.nil? || @participant_recent_notes.empty?) %>
@@ -100,8 +112,8 @@
   </p>
   <p align="center">
     <%= link_to 'Back to All Participants', participants_path, class:"btn btn-success" if @current_user.isAdmin? %> 
-    <%= link_to 'Logg New Note for ' +  + @participant.name, new_participant_note_path(@participant), class:"btn btn-warning" %> 
-    <%= link_to "Show all of " + @participant.name + "'s Notes", participant_notes_path(@participant), class:"btn btn-primary" %>
+    <%= link_to 'Logg New Note for ' +  + @participant.first_name, new_participant_note_path(@participant), class:"btn btn-warning" %> 
+    <%= link_to "Show all of " + @participant.first_name + "'s Notes", participant_notes_path(@participant), class:"btn btn-primary" %>
     <%= link_to "Export Notes to CSV", participant_notes_path(@participant, format: "csv"), class:"btn btn-info" %> 
   </p>
 <% end %>

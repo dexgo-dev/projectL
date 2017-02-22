@@ -4,6 +4,7 @@ class Participant < ApplicationRecord
   belongs_to :study
 
   enum gender: ['Male','Female','Others','Unspecified']
+  enum status: ['Interested','Recruited','Included','Withdrawn','Excluded','Completed']
 
   scope :recently_contacted, -> {
     order("last_contacted_at desc").distinct.limit(10)
@@ -11,8 +12,8 @@ class Participant < ApplicationRecord
 
   validates :first_name, presence: true
   validates :surname, presence: true
-  validates :email, presence: true, :format => EMAIL_REGEX
-  validates :active, exclusion: { in: [nil] }
+  validates :email, :format => EMAIL_REGEX
+  validates :status, exclusion: { in: [nil] }
   #validates :gender, presence: true
 
   def self.to_csv(options = {})

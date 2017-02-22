@@ -8,10 +8,15 @@
   <table class='table table-striped sortable'>
     <thead>
       <tr>
-        <th>Name</th>
+        <th>Title</th>
+        <th>Surname</th>
+        <th>First Name</th>
+        <th>Preferred Name</th>
         <th>Gender</th>
-        <th>Contact Details</th>
-        <th data-defaultsort='disabled'>Home Address</th>
+        <th>Primary Contact Number</th>
+        <th>Secondary Contact Number</th>
+        <th data-defaultsort='disabled'>State</th>
+        <th>Post Code</th>
         <th>Status</th>
         <th>Study</th>
         <th>Birthdate</th>
@@ -27,11 +32,16 @@
     <tbody>
       <% @participants.each do |participant| %>
         <tr>
-          <td><%= link_to participant.name, participant %></td>
+          <td><%= participant.title %></td>
+          <td><%= link_to (participant.surname), participant %></td>
+          <td><%= link_to (participant.first_name), participant %></td>
+          <td><%= participant.preferred_name, participant %></td>
           <td><%= participant.gender %></td>
-          <td><%= participant.contact_number %></td>
-          <td><%= participant.home_address %></td>
-          <td><%= ((participant.active)? ('Active'):('Dropped Out')) %></td>
+          <td><%= participant.primary_contact_number %></td>
+          <td><%= participant.secondary_contact_number %></td>
+          <td><%=participant.home_address_state %></td>
+          <td><%=participant.home_address_postcode %></td>
+          <td><%=participant.status %></td>
           <td><%= participant.study.study_name %></td>
           <td><%= participant.date_of_birth %></td>
           <td><%= participant.email %></td>

@@ -7,15 +7,14 @@
         <%= f.collection_select(:study_id, @current_studies, :id, :study_name, label: "Study") %>
       </div>
       <div class="form-group">
-        <%= f.label 'Status' %>
-        <%= f.check_box :active, data: { toggle: 'toggle', on: 'Active', onstyle: 'info', off: 'Inactive', offstyle: 'danger', width: '100'}, label: '' %>
+        <%= f.select :status, Participant.statuses.keys.to_a, label: "Status" %>
       </div>
     </div>
   </div>
   <br/><br/>
   <div class="row">
     <div class="form-group col-xs-4">
-      <%= f.text_field :name %>
+      <%= f.text_field :title, label: "Title" %> <%= f.text_field :surname, label: "Surname" %> <%= f.text_field :first_name, label: "First Name" %> <%= f.text_field :preferred_name, label: "Preferred Name" %>
     </div>
     <div class="form-group col-xs-4">
       <%= f.text_field :email, label: "E-mail Address" %>
@@ -30,14 +29,33 @@
       <%= f.text_field :date_of_birth, label: "Birth Date", data: { provide: 'datepicker'} %>
     </div>
     <div class="form-group col-xs-4">
-      <%= f.text_field :contact_number, label: "Contact Number" %>
+      <%= f.text_field :primary_contact_number, label: "Primary Contact Number" %> <%= f.text_field :secondary_contact_number, label: "Secondary Contact Number" %>
     </div>
   </div>
 
   <div class="row">
-    <div class="form-group col-xs-8">
-      <%= f.text_area :home_address, label: "Home Address" %>
+    <div class="form-group col-xs-6">
+      <%= f.label 'Home' %>
+      <%= f.text_field :home_address_line_1, label: 'Address Line 1' %>
+      <%= f.text_field :home_address_line_2, label: 'Address Line 2' %>
     </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-2"><%= f.text_field :home_address_suburb, label: 'Suburb' %></div>
+    <div class="form-group col-xs-2"><%= f.text_field :home_address_state, label: 'State' %></div>
+    <div class="form-group col-xs-2"><%= f.text_field :home_address_postcode, label: 'Post Code' %></div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-6">
+      <%= f.label 'Mailing' %>
+      <%= f.text_field :mailing_address_line_1, label: 'Address Line 1' %>
+      <%= f.text_field :mailing_address_line_2, label: 'Address Line 2' %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-2"><%= f.text_field :mailing_address_suburb, label: 'Suburb' %></div>
+    <div class="form-group col-xs-2"><%= f.text_field :mailing_address_state, label: 'State' %></div>
+    <div class="form-group col-xs-2"><%= f.text_field :mailing_address_postcode, label: 'Post Code' %></div>
   </div>
 
   <div class="actions">
