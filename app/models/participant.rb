@@ -6,7 +6,7 @@ class Participant < ApplicationRecord
   enum gender: ['Male','Female','Others','Unspecified']
   enum status: ['Interested','Recruited','Included','Withdrawn','Excluded','Completed']
   enum primary_contact_number_type: ['Home','Mobile','Work']
-  enum secondary_contact_number_type: ['Home','Mobile','Work']
+  enum secondary_contact_number_type: ['Home ','Mobile ','Work ']
 
   scope :recently_contacted, -> {
     order("last_contacted_at desc").distinct.limit(10)
