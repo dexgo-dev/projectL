@@ -2,7 +2,7 @@
 	<%= day_of_month.strftime('%-d') %>
 	<% notifs.each do |note| %>
 		<div>
-			<%=note.notify_on.strftime('%I:%M%p') %> <%=link_to truncate(note.participant.name), participant_note_path(note.participant,note) %>
+			<%=note.notify_on.strftime('%I:%M%p') %> <%=link_to truncate(note.participant.first_name), participant_note_path(note.participant,note) %>
 		</div>
 	<% end %>
 <% end %>
