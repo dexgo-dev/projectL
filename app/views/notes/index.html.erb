@@ -1,10 +1,10 @@
-<h1>Showing All Notes for Participant (<%=@participant.name%>)</h1>
+<h1>Showing All Notes for Participant (<%=@participant.first_name%> <%=@participant.surname%>)</h1>
 <p id="notice"><%= notice %></p>
 <% unless @all_participant_notes.nil? || @all_participant_notes.empty? %>
   <p>
     <%= link_to 'Logg New Note', new_participant_note_path(@participant), class:"btn btn-primary" %> 
     <%= link_to "Export Notes to CSV", participant_notes_path(format: "csv"), class:"btn btn-info" %> 
-    <%= link_to "Back to " + @participant.name + "'s page", participant_path(@participant), class:"btn btn-danger" %>
+    <%= link_to "Back to " + @participant.first_name + "'s page", participant_path(@participant), class:"btn btn-danger" %>
   </p>
   <ul class="post_it_note">
     <p class="post_it_note_legend">
@@ -40,7 +40,7 @@
 <p>
   <%= link_to 'Logg New Note', new_participant_note_path(@participant), class:"btn btn-primary" %> 
   <%= link_to "Export to CSV", participant_notes_path(format: "csv"), class:"btn btn-info" %> 
-    <%= link_to "Back to " + @participant.name + "'s page", participant_path(@participant), class:"btn btn-danger" %>
+    <%= link_to "Back to " + @participant.first_name + "'s page", participant_path(@participant), class:"btn btn-danger" %>
 </p>
 <table class='table table-striped sortable'>
   <thead>
