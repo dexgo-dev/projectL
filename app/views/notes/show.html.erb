@@ -1,4 +1,4 @@
-<h2><%= image_tag("icon/png/flag-4.png", size:"40x40", title:"Important!!!") if @note.important? %> Note for <%= link_to @note.participant.name, participant_path(@note.participant) %></h2>
+<h2><%= image_tag("icon/png/flag-4.png", size:"40x40", title:"Important!!!") if @note.important? %> Note for <%= link_to @note.participant.first_name, participant_path(@note.participant) %> <%= link_to @note.participant.surname, participant_path(@note.participant) %></h2>
 <p id="notice"><%= notice %></p>
 <p class="post_it_note_show">
   "<%= @note.note_text %>"
