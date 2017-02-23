@@ -6,7 +6,10 @@
       <div class="form-group col-xs-4">
         <%= f.collection_select(:study_id, @current_studies, :id, :study_name, label: "Study") %>
       </div>
-      <div class="form-group">
+      <div class="form-group col-xs-2">
+        <%= f.text_field :participants_blinders_id, label: "Blinders ID" %>
+      </div>
+      <div class="form-group col-xs-2">
         <%= f.select :status, Participant.statuses.keys.to_a, label: "Status" %>
       </div>
     </div>

@@ -14,7 +14,7 @@ class Participant < ApplicationRecord
 
   validates :first_name, presence: true
   validates :surname, presence: true
-  validates :email, :format => EMAIL_REGEX
+  #validates :email, :format => EMAIL_REGEX
   validates :status, exclusion: { in: [nil] }
   #validates :gender, presence: true
 

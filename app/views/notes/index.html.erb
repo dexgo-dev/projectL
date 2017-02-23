@@ -1,42 +1,5 @@
 <h1>Showing All Notes for Participant (<%=@participant.first_name%> <%=@participant.surname%>)</h1>
 <p id="notice"><%= notice %></p>
-<% unless @all_participant_notes.nil? || @all_participant_notes.empty? %>
-  <p>
-    <%= link_to 'Logg New Note', new_participant_note_path(@participant), class:"btn btn-primary" %> 
-    <%= link_to "Export Notes to CSV", participant_notes_path(format: "csv"), class:"btn btn-info" %> 
-    <%= link_to "Back to " + @participant.first_name + "'s page", participant_path(@participant), class:"btn btn-danger" %>
-  </p>
-  <ul class="post_it_note">
-    <p class="post_it_note_legend">
-      <br/><%= image_tag('misc/pin_important.png', size: '50') %> Important &nbsp;&nbsp;&nbsp;&nbsp;
-           <%= image_tag('misc/pin_not_important.png', size: '50') %>
-    </p>
-    <% @all_participant_notes.each do |note| %>
-    <% if note.important? %>
-      <li class="post_it_note post_it_note_important">
-    <% else %>
-      <li class="post_it_note post_it_note_unimportant">
-    <% end %>
-        <a href="<%= edit_participant_note_path(note.participant_id,note.id)%>" class="post_it_note" %>
-          <% if note.notify? %>
-            <h2 class="post_it_note">
-              <%= image_tag('misc/notify.png', size: '25') %> <%= note.notify_on.strftime('%D %r') %>
-            </h2>
-          <% end %>
-          <p class="post_it_note">
-            "<%= truncate(note.note_text) %>"
-          </p>
-          <p class="post_it_note_footer">
-            <%= image_tag('icons2/png/pencil.png', size: '25') %> <%= note.updated_at.strftime('%D %r')%><br/>
-            <%= note.user.full_name unless (note.user.nil? || (note.user.id == @current_user.id)) %><br/>
-            <%= note.user.team.name unless (note.user.nil? || (note.user.id == @current_user.id)) %>
-          </p>
-        </a>
-    </li>
-    <% end %>
-  </ul>
-  <%= will_paginate(@all_participant_notes) %>
-<% end %>
 <p>
   <%= link_to 'Logg New Note', new_participant_note_path(@participant), class:"btn btn-primary" %> 
   <%= link_to "Export to CSV", participant_notes_path(format: "csv"), class:"btn btn-info" %> 
