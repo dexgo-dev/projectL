@@ -3,9 +3,10 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
-# Use mysql2 as the database for Active Record
-gem 'sqlite3' #leave this interim
-#gem 'mysql2', '~> 0.3.11'
+
+# PostgreSQL from hereon.
+gem 'pg'
+
 # Support database dump.
 gem 'yaml_db'
 # Use Puma as the app server
@@ -43,7 +44,8 @@ gem 'jbuilder', '~> 2.5'
 # gem 'bcrypt', '~> 3.1.7'
 
 ## Pagination Support
-gem 'will_paginate', '~> 3.1.1'
+# gem 'will_paginate', '~> 3.1.1'
+gem 'will_paginate'
 
 # Use Capistrano for deployment
 gem 'capistrano-rails', group: :development

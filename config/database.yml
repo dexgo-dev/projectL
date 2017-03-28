@@ -15,40 +15,30 @@ default:
    
 
 development:
-  adapter: mysql2
-  encoding: utf8
-  reconnect: false
+  adapter: postgresql
+  host: localhost
+  encoding: unicode
+  timeout: 5000
   pool: 5
-  socket: /tmp/mysql.sock
-  username: root
-  password: merrychristmasbirch
+  username: dexterg
+  password: alpha2
   database: loggr_development
   
-test:
-  adapter: mysql2
-  encoding: utf8
-  reconnect: false
-  pool: 5
-  socket: /tmp/mysql.sock
-  username: root
-  password: merrychristmasbirch
-  database: loggr_test
+#test:
+#  adapter: postgresql
+#  encoding: utf8
+#  timeout: 5000
+#  pool: 5
+#  username: dexterg
+#  password: alpha2
+#  database: loggr_test
 
-staging:
-  adapter: mysql2
-  database: loggr
-  pool: 5
-  timeout: 5000
-  username: fbirc-deploy
-  password:
-
-production:
-  adapter: mysql2
-  encoding: utf8
-  reconnect: false
-  pool: 5
-  socket: /tmp/mysql.sock
-  username: root
-  password: merrychristmasbirch # Don't forget to remove this here
-  database: loggr_production
+#production:
+#  adapter: postgresql
+#  encoding: utf8
+#  timeout: 5000
+#  pool: 5
+#  username: dexterg
+#  password: alpha2 # Don't forget to remove this here
+#  database: loggr_production
 

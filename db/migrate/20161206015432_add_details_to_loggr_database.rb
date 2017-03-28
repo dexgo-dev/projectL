@@ -28,8 +28,8 @@ class AddDetailsToLoggrDatabase < ActiveRecord::Migration[5.0]
   	add_column :participants, :secondary_contact_number_type, :integer unless column_exists? :participants, :secondary_contact_number_type # home, mobile, work
 
     unless column_exists? :participants, :status
-    	rename_column :participants, :active, :status
-    	change_column :participants, :status, :integer # interested, recruited, included, withdrawn, excluded, completed
+    	remove_column :participants, :active, :status
+    	add_column :participants, :status, :integer # interested, recruited, included, withdrawn, excluded, completed
     end
 
   	add_column :participants, :screening_document_id, :integer unless column_exists? :participants, :screening_document_id
