@@ -56,7 +56,7 @@
           <%= f.label 'Blinded User?' %>
           <%= f.check_box :isBlinded, data: { toggle: 'toggle', on: 'Blinded', onstyle: 'info', off: 'Nope', offstyle: 'default', width: '100'}, label: '' %>
           <%= f.label 'Do you want to add yourself to the supervisor list?' %>
-          <%= f.check_box :isSupervisor, data: { toggle: 'toggle', on: 'Supervisor', onstyle: 'info', off: 'Peasant', offstyle: 'default', width: '100'}, label: '' %>
+          <%= f.check_box :isSupervisor, data: { toggle: 'toggle', on: 'Supervisor', onstyle: 'info', off: 'Member', offstyle: 'default', width: '100'}, label: '' %>
         </div>
       <% end %>
     <% else %>
@@ -66,7 +66,7 @@
             <tr>
               <!-- Admin User? -->
               <td align="center">User Type: Admin or Regular User?<br/>
-              <%= f.check_box :isAdmin, data: { toggle: 'toggle', on: 'Admin', onstyle: 'primary', off: 'Peasant', offstyle: 'default', width: '80'}, label: '' %></td>
+              <%= f.check_box :isAdmin, data: { toggle: 'toggle', on: 'Admin', onstyle: 'primary', off: 'Member', offstyle: 'default', width: '80'}, label: '' %></td>
 
               <!-- Active User? -->
               <td align="center">Is This User Active?<br/>
