@@ -23,15 +23,15 @@ class User < ApplicationRecord
   after_initialize :init
 
   def new_user_registration_email
-    UserMailer.new_registration_email_for_user(self).deliver
+    # UserMailer.new_registration_email_for_user(self).deliver
 
     # Get all active approved admins
     admins = User.where(isAdmin: true).where(isApproved: true).where(isActive: true)
 
     # Send an email to all admins
-    admins.each do |admin|
-      UserMailer.new_registration_email_for_admins(self,admin.email).deliver
-    end
+    # admins.each do |admin|
+      # UserMailer.new_registration_email_for_admins(self,admin.email).deliver
+    # end
   end
 
   def self.to_csv(options = {})
