@@ -29,9 +29,9 @@ Rails.application.configure do
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = 'http://assets.example.com'
-  config.action_controller.relative_url_root = '/loggr'
+  config.action_controller.relative_url_root = '/projectloggr'
 
-  config.action_mailer.default_url_options = { :host => 'http://staging-fbirc.neura.edu.au' }
+  config.action_mailer.default_url_options = { :host => 'https://projectloggr.herokuapp.com' }
 
   # Specifies the header that your server uses for sending files.
   # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
@@ -87,11 +87,11 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.action_mailer.default_url_options = { :host => 'http://staging-fbirc.neura.edu.au' }
+  config.action_mailer.default_url_options = { :host => 'https://projectloggr.herokuapp.com' }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-      :address              => 'zen.neura.edu.au',
-      :domain               => 'neura.edu.au',
+      :address              => 'change.this.email.smtp.address.com.au',
+      :domain               => 'change.this.email.smtp.domain.com.au',
   }
 end

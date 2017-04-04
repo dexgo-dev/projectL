@@ -18,9 +18,9 @@
 # Don't use `:all`, it's a meta role.
 
 
-role :app, %w{fbirc-deploy@staging.neura.edu.au}
-role :web, %w{fbirc-deploy@staging.neura.edu.au}
-role :db,  %w{fbirc-deploy@staging.neura.edu.au}
+role :app, %w{dexterfgo@gmail.com}
+role :web, %w{dexterfgo@gmail.com}
+role :db,  %w{dexterfgo@gmail.com}
 
 
 # Configuration

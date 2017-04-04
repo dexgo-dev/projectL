@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'no-reply@neura.edu.au'
+  default from: 'dexterfgo@gmail.com'
   layout 'mailer'
 end

@@ -56,8 +56,8 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-      :address              => 'zen.neura.edu.au',
-      :domain               => 'neura.edu.au',
+      :address              => 'change.this.email.smtp.address.com.au',
+      :domain               => 'change.this.email.smtp.domain.com.au',
   }
   
 end

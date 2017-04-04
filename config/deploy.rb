@@ -1,8 +1,8 @@
 # config valid only for current version of Capistrano
 lock '3.6.1'
 
-set :application, 'loggr'
-set :repo_url, 'git@gitlab.neura.edu.au:delbaere-lab/neura-loggr.git'
+set :application, 'projectloggr'
+set :repo_url, 'git@github.com:dexterfgo/projectL.git'
 
 set :rvm_type, :system
 set :rvm_ruby_version, File.read("#{File.dirname(__FILE__)}/../.ruby-version").chomp
@@ -11,7 +11,7 @@ set :rvm_ruby_version, File.read("#{File.dirname(__FILE__)}/../.ruby-version").c
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, '/var/www/fbirc/RailsApps/loggr'
+set :deploy_to, '/var/www/projectloggr'
 
 # Default value for :scm is :git
 # set :scm, :git

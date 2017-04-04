@@ -32,7 +32,7 @@ gem 'coffee-rails', '~> 4.2'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 
-# Dex Go <d.go@neura.edu.au> Disabled because this does several things to rile up JQuery Bootstrap features.
+# Dex Go <dexterfgo@gmail.com> Disabled because this does several things to rile up JQuery Bootstrap features.
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 # gem 'turbolinks', '~> 5'
 
