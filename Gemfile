@@ -10,7 +10,8 @@ gem 'pg'
 # Support database dump.
 gem 'yaml_db'
 # Use Puma as the app server
-gem 'puma', '~> 3.0'
+# gem 'puma', '~> 3.0'
+gem 'puma'
 
 # Use BootStrap 3
 gem 'bootstrap-sass'
@@ -98,6 +99,3 @@ gem 'simple_calendar'
 
 # Tabs in the home page
 gem 'tabulous'
-
-# MySQL
-gem 'mysql2'
