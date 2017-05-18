@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 20161216061022) do
 
   create_table "participants", force: :cascade do |t|
     t.string   "first_name"
-    t.string   "gender"
+    t.integer  "gender"
     t.string   "primary_contact_number"
     t.text     "home_address_line_1"
     t.integer  "study_id"

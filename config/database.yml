@@ -24,21 +24,21 @@ development:
   password: alpha2
   database: loggr_development
   
-#test:
-#  adapter: postgresql
-#  encoding: utf8
-#  timeout: 5000
-#  pool: 5
-#  username: dexterg
-#  password: alpha2
-#  database: loggr_test
+test:
+  adapter: postgresql
+  encoding: utf8
+  timeout: 5000
+  pool: 5
+  username: dexterg
+  password: alpha2
+  database: loggr_test
 
-#production:
-#  adapter: postgresql
-#  encoding: utf8
-#  timeout: 5000
-#  pool: 5
-#  username: dexterg
-#  password: alpha2 # Don't forget to remove this here
-#  database: loggr_production
+production:
+  adapter: postgresql
+  encoding: utf8
+  timeout: 5000
+  pool: 5
+  username: dexterg
+  password: alpha2 # Don't forget to remove this here
+  database: loggr_production
 
