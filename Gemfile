@@ -81,12 +81,12 @@ gem 'rails_bootstrap_sortable'
 # Get latest datepicker bootstrap
 # gem 'bootstrap-datepicker-rails'
 gem 'bootstrap-datepicker-rails', :require => 'bootstrap-datepicker-rails',
-                              :git => 'git://github.com/Nerian/bootstrap-datepicker-rails.git'
+                              :git => 'https://github.com/Nerian/bootstrap-datepicker-rails.git'
 # Datepicker with time
 # gem 'bootstrap3-datetimepicker-rails', '~> 4.17.42'
 
 # DateTimePicker (zpaulovics)
-gem 'datetimepicker-rails', github: 'zpaulovics/datetimepicker-rails', branch: 'master', submodules: true
+gem 'datetimepicker-rails', :git => 'https://github.com/zpaulovics/datetimepicker-rails.git', branch: 'master', submodules: true
 # Don't forget to run these:
 # rails generate datetimepicker_rails:install
 # rails generate datetimepicker_rails:install Font-Awesome
