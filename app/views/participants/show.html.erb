@@ -20,10 +20,10 @@
                     <td><%= link_to @participant.study.study_name, @participant.study %></td>
                   </tr>
                 <% end %>
-                <% if @participant.participants_blinders_id.present? %>
+                <% if @participant.participants_system_id.present? %>
                   <tr>
-                    <td class="attribute_data">Blinders ID</td>
-                    <td><%= @participant.participants_blinders_id %></td>
+                    <td class="attribute_data">System ID</td>
+                    <td><%= @participant.participants_system_id %></td>
                   </tr>
                 <% end %>
                 <% if @participant.date_of_birth.present? %>
