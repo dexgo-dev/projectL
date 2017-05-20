@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161216061022) do
+ActiveRecord::Schema.define(version: 20170520110138) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20161216061022) do
     t.datetime "last_contacted_at"
     t.integer  "registeredBy"
     t.datetime "registeredOn"
-    t.string   "participants_blinders_id"
+    t.string   "participants_system_id"
     t.string   "recruitment_method"
     t.string   "surname"
     t.string   "preferred_name"

@@ -92,6 +92,6 @@ class ParticipantsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def participant_params
-      params.require(:participant).permit(:participants_blinders_id, :first_name, :surname, :preferred_name, :title, :gender, :primary_contact_number, :primary_contact_number_type, :secondary_contact_number, :secondary_contact_number_type, :home_address_line_1, :home_address_line_2, :home_address_suburb, :home_address_state, :home_address_postcode, :mailing_address_line_1, :mailing_address_line_2, :mailing_address_suburb, :mailing_address_state, :mailing_address_postcode, :status, :study_id, :date_of_birth, :email, :last_contacted_by, :last_contacted_at)
+      params.require(:participant).permit(:participants_system_id, :first_name, :surname, :preferred_name, :title, :gender, :primary_contact_number, :primary_contact_number_type, :secondary_contact_number, :secondary_contact_number_type, :home_address_line_1, :home_address_line_2, :home_address_suburb, :home_address_state, :home_address_postcode, :mailing_address_line_1, :mailing_address_line_2, :mailing_address_suburb, :mailing_address_state, :mailing_address_postcode, :status, :study_id, :date_of_birth, :email, :last_contacted_by, :last_contacted_at)
     end
 end
