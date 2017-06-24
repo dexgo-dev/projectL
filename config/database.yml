@@ -38,7 +38,5 @@ production:
   encoding: utf8
   timeout: 5000
   pool: 5
-  username: dexterg
-  password: alpha2 # Don't forget to remove this here
-  database: loggr_production
+  database: loggr
 

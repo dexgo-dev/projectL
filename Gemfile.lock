@@ -82,6 +82,10 @@ GEM
     capistrano-rvm (0.1.2)
       capistrano (~> 3.0)
       sshkit (~> 1.2)
+    capistrano3-puma (3.1.0)
+      capistrano (~> 3.7)
+      capistrano-bundler
+      puma (~> 3.4)
     coffee-rails (4.2.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.2.x)
@@ -96,6 +100,8 @@ GEM
     faker (1.7.3)
       i18n (~> 0.5)
     ffi (1.9.18)
+    figaro (1.1.1)
+      thor (~> 0.14)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
     i18n (0.8.1)
@@ -222,11 +228,15 @@ DEPENDENCIES
   bootstrap-toggle-rails
   bootstrap_form
   byebug
+  capistrano
+  capistrano-bundler
   capistrano-rails
   capistrano-rvm
+  capistrano3-puma
   coffee-rails (~> 4.2)
   datetimepicker-rails!
   faker
+  figaro
   jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.0.5)

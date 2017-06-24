@@ -9,9 +9,6 @@ gem 'pg'
 
 # Support database dump.
 gem 'yaml_db'
-# Use Puma as the app server
-# gem 'puma', '~> 3.0'
-gem 'puma'
 
 # Use BootStrap 3
 gem 'bootstrap-sass'
@@ -48,10 +45,15 @@ gem 'jbuilder', '~> 2.5'
 # gem 'will_paginate', '~> 3.1.1'
 gem 'will_paginate'
 
-# Use Capistrano for deployment
-gem 'capistrano-rails', group: :development
-gem 'capistrano-rvm', group: :development
-
+gem 'figaro'
+gem 'puma'
+group :development do
+  gem 'capistrano'
+  gem 'capistrano3-puma'
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rvm'
+end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
