@@ -26,6 +26,11 @@ Rails.application.configure do
   config.assets.compile = false
 
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
+  # Bower asset paths
+  root.join('vendor', 'assets', 'components').to_s.tap do |bower_path|
+    config.sass.load_paths << bower_path
+    config.assets.paths << bower_path
+  end
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = 'http://assets.example.com'
