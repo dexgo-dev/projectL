@@ -4,9 +4,6 @@ require "capistrano/setup"
 # Include default deployment tasks
 require "capistrano/deploy"
 
-# Plugin for rails console
-require 'capistrano/rails/console'
-
 # Include tasks from other gems included in your Gemfile
 #
 # For documentation on these, see for example:
@@ -28,6 +25,7 @@ install_plugin Capistrano::Puma
 require 'capistrano/rails'
 require 'capistrano/rails/assets' # for asset handling add
 require 'capistrano/rails/migrations' # for running migrations
+require 'capistrano/rails/console'
 # require 'capistrano/rails/migrations'
 # require 'capistrano/passenger'
 require "capistrano/scm/git"
