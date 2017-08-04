@@ -56,6 +56,7 @@ group :development do
 end
 
 gem 'capistrano-rails-console', require: false
+gem 'capistrano-rails-collection'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

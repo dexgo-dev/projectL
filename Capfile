@@ -26,6 +26,7 @@ require 'capistrano/rails'
 require 'capistrano/rails/assets' # for asset handling add
 require 'capistrano/rails/migrations' # for running migrations
 require 'capistrano/rails/console'
+require 'capistrano/rails/collection'
 # require 'capistrano/rails/migrations'
 # require 'capistrano/passenger'
 require "capistrano/scm/git"
